@@ -1,6 +1,6 @@
 # YouCarryIt
 
-## Resources
+Hackathon link: TBA
 
 Facebook group: https://www.facebook.com/groups/1087007924773790/1093054324169150/
 
@@ -8,13 +8,11 @@ Google doc: https://docs.google.com/document/d/11fCVZsOVHcyp2VarMWTSK5Lj54vBf29a
 
 ## How to build and first time setup
 
-#### Install Ruby (Windows)
+#### Install Ruby
 
-Download the installer at http://rubyinstaller.org/.
+If you're on Windows, download the installer at http://rubyinstaller.org/.
 
-#### Install Ruby (OS X)
-
-It's already installed! You don't need to do anything at all! Wow!
+If you're on OS X, it's already installed! You don't need to do anything at all! Wow!
 
 #### Install Ruby on Rails
 
