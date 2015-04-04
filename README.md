@@ -40,6 +40,10 @@ Get into the project
 
     cd YouCarryIt
 
+From now on, you can access the project via
+
+    cd <your directory here>/YouCarryIt
+
 #### Run the rails application setup
 
 Install add-ons (note: run this every time someone edits the Gemfile)
@@ -60,3 +64,7 @@ The application will run at http://localhost:3000. [Click here to access the ser
 
     rake db:reset
     rake db:migrate
+
+#### Appendix: What if I don't want to use the command line x))))?
+
+Apply yourself.
