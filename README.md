@@ -16,7 +16,7 @@ If you're on OS X, it's already installed! You don't need to do anything at all!
 
 #### Install Ruby on Rails
 
-Open up the command line. You will need it for the rest of these steps. (Please immerse yourself in it.)
+Open up the command line. You will need it for the rest of these steps. **(Please immerse yourself in it.)**
 
 In the command line, if you do not have an existing copy of rails, run:
 
@@ -26,10 +26,18 @@ Otherwise, run:
 
     gem update rails
 
-#### Clone the repository
+#### Retrieving the codebase
 
-    cd /Documents/.../wherever-you-want
+Change into the directory into which you want to dump the code
+
+    cd <your directory here>
+    
+Clone the project
+    
     git clone https://github.com/jdtang13/YouCarryIt.git
+
+Get into the project    
+
     cd YouCarryIt
 
 #### Run the rails application setup
