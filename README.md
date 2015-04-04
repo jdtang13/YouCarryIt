@@ -44,7 +44,7 @@ Run the web server
 
 The application will run at http://localhost:3000. [Click here to access the server.](http://localhost:3000)
 
-#### Clean out the database
+#### Appendix: What do I do if I want to clean out the database?
 
     rake db:reset
     rake db:migrate
