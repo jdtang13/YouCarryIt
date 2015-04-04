@@ -4,7 +4,7 @@
 
 #### Install Ruby (Windows)
 
-[Download the installer](http://rubyinstaller.org/) at http://rubyinstaller.org/.
+Download the installer at http://rubyinstaller.org/.
 
 #### Install Ruby (OS X)
 
@@ -18,7 +18,7 @@ In the command line, if you do not have an existing copy of rails, run:
 
     gem install rails
     
-Otherwise, run::
+Otherwise, run:
 
     gem update rails
 
