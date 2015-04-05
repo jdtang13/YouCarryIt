@@ -28,31 +28,7 @@
         <article>
             <h3>You Carry It</h3>
             <div id="game"></div>
-            <script>
-                var scene = new THREE.Scene();
-                var camera = new THREE.OrthographicCamera( 800 / - 2, 800 / 2, 600 / 2, 600 / - 2, 0.1, 3000 );
-                var renderer = new THREE.WebGLRenderer();
-                renderer.setSize( 800,600 );
-                document.getElementById("game").appendChild( renderer.domElement );
-                    
-                var geometry = new THREE.BoxGeometry( 50, 50, 50 );
-                var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-                var cube = new THREE.Mesh( geometry, material );
-                scene.add( cube );
-                
-                camera.position.z = 100;
-                camera.position.x = -5;
-                cube.rotation.x += 0.2;
-                var render = function () {
-                    requestAnimationFrame( render );
-
-                    cube.rotation.y += 0.1;
-
-                    renderer.render(scene, camera);
-                };
-
-                render();
-            </script>
+            <script src="js/game.js"></script>
             
         </article>
        
