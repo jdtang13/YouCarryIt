@@ -2,7 +2,7 @@ var scene = new THREE.Scene();
 var camera = new THREE.OrthographicCamera( 800 / - 2, 800 / 2, 600 / 2, 600 / - 2, 0.1, 3000 );
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize( 800,600 );
-document.getElementById("game").appendChild( renderer.domElement );
+document.getElementById("3JSGame").appendChild( renderer.domElement );
     
 var geometry = new THREE.BoxGeometry( 50, 50, 50 );
 var red = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
