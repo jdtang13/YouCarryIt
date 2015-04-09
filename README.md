@@ -10,9 +10,11 @@ Google doc: https://docs.google.com/document/d/11fCVZsOVHcyp2VarMWTSK5Lj54vBf29a
 
 #### Install Ruby 2.1
 
-If you're on Windows, download the installer at http://rubyinstaller.org/. IT IS VERY IMPORTANT that you install 2.1 ruby, otherwise it won't work on Windows.
+If you're on Windows, download the Ruby 2.1 installer. IT IS VERY IMPORTANT that you install Ruby 2.1, otherwise it won't work on Windows. Here are quick links to Ruby 2.1 [32-bit](http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.1.5.exe) and [64-bit](http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.1.5-x64.exe).
 
-Install the Ruby on Rails DevKit if you're on Windows.
+Install the [Ruby on Rails DevKit](http://rubyinstaller.org/add-ons/devkit/) if you're on Windows.
+
+Use this [network workaround](https://gist.github.com/luislavena/f064211759ee0f806c88) to fix DevKit bugs.
 
 If you're on OS X, it's already installed! You don't need to do anything at all! Wow!
 
