@@ -8,9 +8,11 @@ Google doc: https://docs.google.com/document/d/11fCVZsOVHcyp2VarMWTSK5Lj54vBf29a
 
 ## How to build and first time setup
 
-#### Install Ruby
+#### Install Ruby 2.1
 
-If you're on Windows, download the installer at http://rubyinstaller.org/.
+If you're on Windows, download the installer at http://rubyinstaller.org/. IT IS VERY IMPORTANT that you install 2.1 ruby, otherwise it won't work on Windows.
+
+Install the Ruby on Rails DevKit if you're on Windows.
 
 If you're on OS X, it's already installed! You don't need to do anything at all! Wow!
 
