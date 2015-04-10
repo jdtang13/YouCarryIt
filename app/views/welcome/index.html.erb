@@ -30,11 +30,11 @@
         <article>
             <h3>3JS Example</h3>
             <div id="3JSGame"></div>
-            <script src="js/3JSGame.js"></script>
+            <%= javascript_include_tag "threejsgame", "data-turbolinks-track" => true %>
             
             <h3>HTML Canvas Example</h3>
             <canvas id="canvasGame"></canvas>
-            <script src="js/canvasGame.js"></script>
+            <%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>
             
                         
         </article>
