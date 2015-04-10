@@ -58,6 +58,10 @@ Setup the database (note: run this every time someone adds a new migration .rb f
 
     rake db:migrate
 
+Precompile assets like javascript and CSS
+
+    rake assets:precompile
+
 Run the web server    
 
     rails server
