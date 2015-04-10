@@ -15,6 +15,4 @@
 //= require turbolinks
 //= require_tree .
 
-//= require threejsgame
-//= require canvasgame
 //= require three
