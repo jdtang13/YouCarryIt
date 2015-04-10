@@ -14,3 +14,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+//= require 3JSGame
+//= require canvasGame
+//= require three
+//= require three.min
