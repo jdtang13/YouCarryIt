@@ -1,19 +1,20 @@
 //  Creating canvas
-var ctx = document.getElementById('canvasGame').getContext('2d');  
+function runGame()
+{
 
-//  Loading images
-var img = new Image();
-img.src = '<%= asset_path 'images/seal.jpg' %>'
+var ctx = document.getElementById('canvasGame').getContext('2d');  
 /* more info: http://stackoverflow.com/questions/7381041/url-of-images-in-javascript-code-using-rails-3-1-asset-pipeline */
+
+
+
+var cell = new Cell(100,100);
+
 
 var update = function(dt)
 {
 	input(dt);
+	cell.update(dt);
 };
-
-img.onload = function () {
-   ctx.drawImage(img,0,0);
-}
 
 // Old and new keyboard states
 var keysDown = {};
@@ -36,8 +37,14 @@ var input = function(dt)
 
 var render = function()
 {
+	ctx.beginPath();
+	ctx.fillStyle = 'white';
+	ctx.fillRect(0,0,800,600);
+	ctx.closePath();
 	//  Check if images is ready
 	//		Dislay image, ctx.drawImage();
+
+	cell.render(ctx);
 }
 
 
@@ -72,3 +79,6 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 //  Starting game loop
 var then = Date.now();
 main();
+}
+
+window.onload = runGame;
