@@ -1,6 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <link rel="stylesheet" media="only screen and (max-width: 820px)" href="css/shrunk.css" />
+    <link rel="stylesheet" media="only screen and (max-width: 520px)" href="css/mobile.css" />
+
   <title>YouCarryIt</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -8,7 +14,29 @@
 </head>
 <body>
 
+        <header>
+            <h2>You Carry It</h2>
+            <nav>
+              <% if current_user == nil or not user_signed_in? %>
+              <%= link_to "Sign in with Facebook", omniauth_authorize_path(User, :facebook) %>
+              <% else %>
+              Logged in as: <%= current_user.name %> [<%= link_to "Log out", destroy_user_session_path, :method => :delete  %>]
+              <% end %>
+
+            </nav>
+            
+        </header>
+
+            <div id="container">
+
 <%= yield %>
+
+
+        <footer>
+            <p>Made by <a href="http://jondtang.com">Jonathan Tang</a>, <a href="http://oliverbarnum.com">Oliver Barnum</a>, <a href="https://www.linkedin.com/pub/dan-shiferaw/9a/934/18b">Dan Shiferaw</a>, and <a href="https://github.com/foche">Tuan Anh Phan Le</a> for HackPrinceton 2015.</p>
+        </footer>
+
+    </div>
 
 </body>
 </html>

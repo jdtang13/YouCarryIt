@@ -1,10 +1,14 @@
 # YouCarryIt
 
-Hackathon link: TBA
+ChallengePost link: http://challengepost.com/software/youcarryit
 
 Facebook group: https://www.facebook.com/groups/1087007924773790/1093054324169150/
 
 Google doc: https://docs.google.com/document/d/11fCVZsOVHcyp2VarMWTSK5Lj54vBf29a8RCTZxgLQMc/edit
+
+Facebook: https://developers.facebook.com/apps/1625178294385266/
+
+Twitter: https://apps.twitter.com/app/8178765
 
 ## How to build and first time setup
 

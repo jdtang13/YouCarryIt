@@ -1,42 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-   
-    <link rel="stylesheet" media="only screen and (max-width: 820px)" href="css/shrunk.css" />
-    <link rel="stylesheet" media="only screen and (max-width: 520px)" href="css/mobile.css" />
-    
-    <title>You Carry It</title>
-    
-    <!--
-     <link rel="stylesheet" href="css/style.css" />
-    <script src="js/three.min.js"></script> -->
+<article>
+<p><b>Twitter stream with Indico analysis (<%= @tweet_limit %> scraped)</b></p>
 
-</head>
+<% for i in 0..(@tweet_limit-1) %>
+<p><b><%= @sentiments[i].to_s %></b>: <%= @statuses[i].to_s %></p>
+<% end %>
 
-<body>
-    
-    <div id="container">
-        
-        <header>
-            <h1>You Carry It</h1>
-            <nav>
-            </nav>
-            
-        </header>
-        
-        <article>
+<canvas id="canvasGame" width="800" height="600">></canvas>
+<%= javascript_include_tag "cell", "data-turbolinks-track" => true %>
+<%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>
 
-            <canvas id="canvasGame"></canvas>
-            <%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>
-
-        </article>
+</article>
        
-       
-        <footer>
-            <p>Made by <a href="http://jondtang.com">Jonathan Tang</a>, <a href="http://oliverbarnum.com">Oliver Barnum</a>, <a href="https://www.linkedin.com/pub/dan-shiferaw/9a/934/18b">Dan Shiferaw</a>, and <a href="https://www.facebook.com/tlephan">Tuan Anh Phan Le</a> for HackPrinceton 2015.</p>
-        </footer>
-    </div>
-</body>
 </html>

@@ -1,21 +1,20 @@
 //  Creating canvas
-var ctx = document.getElementById('canvasGame').getContext('2d');  
+function runGame()
+{
 
-//  Loading images
-var img = new Image();
-img.src = '<%= asset_path 'images/seal.jpg' %>'
+var ctx = document.getElementById('canvasGame').getContext('2d');  
 /* more info: http://stackoverflow.com/questions/7381041/url-of-images-in-javascript-code-using-rails-3-1-asset-pipeline */
+
+
+
+var cell = new Cell(100,100);
+
 
 var update = function(dt)
 {
 	input(dt);
+	cell.update(dt);
 };
-
-
-var sealReady = false;
-img.onload = function () {
-   sealReady = true;
-}
 
 // Old and new keyboard states
 var keysDown = {};
@@ -28,28 +27,24 @@ addEventListener("keyup", function (e) {
 	delete keysDown[e.keyCode];
 }, false);
 
-var x = 0 ;
-var y = 0 ; 
 
 var input = function(dt)
 {
-	if(sealReady)
-	{
-		x+=1;
-		y+=1;
-	}
+
 };
 
 //  TODO: Wrap image in class that knows if its loaded
 
 var render = function()
 {
+	ctx.beginPath();
+	ctx.fillStyle = 'white';
+	ctx.fillRect(0,0,800,600);
+	ctx.closePath();
 	//  Check if images is ready
 	//		Dislay image, ctx.drawImage();
-	if(sealReady)
-	{
-		ctx.drawImage(img,x,y);
-	}
+
+	cell.render(ctx);
 }
 
 
@@ -84,3 +79,6 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 //  Starting game loop
 var then = Date.now();
 main();
+}
+
+window.onload = runGame;
