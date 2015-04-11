@@ -11,8 +11,10 @@ var update = function(dt)
 	input(dt);
 };
 
+
+var sealReady = false;
 img.onload = function () {
-   ctx.drawImage(img,0,0);
+   sealReady = true;
 }
 
 // Old and new keyboard states
@@ -26,10 +28,16 @@ addEventListener("keyup", function (e) {
 	delete keysDown[e.keyCode];
 }, false);
 
+var x = 0 ;
+var y = 0 ; 
 
 var input = function(dt)
 {
-
+	if(sealReady)
+	{
+		x+=1;
+		y+=1;
+	}
 };
 
 //  TODO: Wrap image in class that knows if its loaded
@@ -38,6 +46,10 @@ var render = function()
 {
 	//  Check if images is ready
 	//		Dislay image, ctx.drawImage();
+	if(sealReady)
+	{
+		ctx.drawImage(img,x,y);
+	}
 }
 
 
