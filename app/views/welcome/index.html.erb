@@ -2,9 +2,9 @@
 <html lang="en">
 
 <article>
-<p><b>Twitter stream with Indico analysis:</b></p>
+<p><b>Twitter stream with Indico analysis (<%= @tweet_limit %> scraped)</b></p>
 
-<% for i in 0..@tweet_limit %>
+<% for i in 0..(@tweet_limit-1) %>
 <p><b><%= @sentiments[i].to_s %></b>: <%= @statuses[i].to_s %></p>
 <% end %>
 

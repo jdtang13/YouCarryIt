@@ -23,6 +23,11 @@ class WelcomeController < ApplicationController
 
 	 	client.sample do |status| 
 	 		if status.is_a?(Twitter::Tweet) and count < @tweet_limit
+
+	 			if status.text.to_s == ""
+	 				continue
+	 			end
+
 	 			text = (status.text).to_s
 	  			@statuses.push(text)
 	  			@sentiments.push(Indico.sentiment(text))
@@ -34,7 +39,7 @@ class WelcomeController < ApplicationController
 	  		end
 	  	end
 
-	  	tweet_limit = count
+	  	@tweet_limit = count
 
 	  	#puts "loop finished"
 
