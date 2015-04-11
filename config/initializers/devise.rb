@@ -13,7 +13,7 @@ Devise.setup do |config|
   config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
 
   # TODO secret seeds
-  config.omniauth :facebook, "KEY", "SECRET"
+  config.omniauth :facebook, "1625178294385266", "b7d3bc250ccd1312c727d97ec6c8b958"
   config.omniauth :twitter, "KEY", "SECRET"
   config.omniauth :linked_in, "KEY", "SECRET"
 

@@ -1,42 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-   
-    <link rel="stylesheet" media="only screen and (max-width: 820px)" href="css/shrunk.css" />
-    <link rel="stylesheet" media="only screen and (max-width: 520px)" href="css/mobile.css" />
-    
-    <title>You Carry It</title>
-    
-    <!--
-     <link rel="stylesheet" href="css/style.css" />
-    <script src="js/three.min.js"></script> -->
+<article>
 
-</head>
+<canvas id="canvasGame"></canvas>
+<%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>
 
-<body>
-    
-    <div id="container">
-        
-        <header>
-            <h1>You Carry It</h1>
-            <nav>
-            </nav>
-            
-        </header>
-        
-        <article>
-
-            <canvas id="canvasGame"></canvas>
-            <%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>
-
-        </article>
+</article>
        
-       
-        <footer>
-            <p>Made by <a href="http://jondtang.com">Jonathan Tang</a>, <a href="http://oliverbarnum.com">Oliver Barnum</a>, <a href="https://www.linkedin.com/pub/dan-shiferaw/9a/934/18b">Dan Shiferaw</a>, and <a href="https://github.com/foche">Tuan Anh Phan Le</a> for HackPrinceton 2015.</p>
-        </footer>
-    </div>
-</body>
 </html>
