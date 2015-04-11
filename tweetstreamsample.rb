@@ -1,7 +1,3 @@
-class WelcomeController < ApplicationController
-
-  def index
-
   require 'tweetstream'
 
   TweetStream.configure do |config|  
@@ -12,11 +8,6 @@ class WelcomeController < ApplicationController
     config.auth_method        = :oauth
   end  
 
-  @tweets = TweetStream::Client.new
-  @texts = []
-  @tweets.sample do |status| 
-  	@texts << status
-  end
-
-  end
-end
+TweetStream::Client.new.track('Pink Floyd') do |status|  
+  puts "#{status.text}"
+end  
