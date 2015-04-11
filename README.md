@@ -1,6 +1,6 @@
 # YouCarryIt
 
-Hackathon link: TBA
+ChallengePost link: http://challengepost.com/software/youcarryit
 
 Facebook group: https://www.facebook.com/groups/1087007924773790/1093054324169150/
 
