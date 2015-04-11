@@ -26,18 +26,14 @@ function Cell (worldX,worldY)
     {
         //  The undulating of cell walls
         this.undulationAngle += this.undulationSpeed;
-        //this.undulationAngle *= 1.1;
 
         for (var i = 0; i < this.cellWallX.length; i++) 
         {
 			var atEveryRadians = Math.PI*2/this.cellWallX.length;
         	var undulation = (Math.sin(this.undulationAngle + atEveryRadians*i) * undulationAmplitude);
-        	
-        	var xs = Math.cos(atEveryRadians*i) * (distanceFromCenter+undulation);
-            this.cellWallX[i] = worldX + xs ;
-            
-			var ys = Math.sin(atEveryRadians*i) * (distanceFromCenter + undulation);
-            this.cellWallY[i] = worldY + ys;
+        	 
+            this.cellWallX[i] = Math.cos(atEveryRadians*i) * (distanceFromCenter + undulation);
+            this.cellWallY[i] = Math.sin(atEveryRadians*i) * (distanceFromCenter + undulation);
         };
     };
 	this.render = function(ctx)
@@ -52,7 +48,7 @@ function Cell (worldX,worldY)
         //  "Wall" rendering
         for (var i = 0; i < this.cellWallX.length; i++) {
         	ctx.beginPath();
-            ctx.arc(this.cellWallX[i],this.cellWallY[i], wallPieceRadius, 0 , 2*Math.PI, false);
+            ctx.arc(this.worldX + this.cellWallX[i], this.worldY + this.cellWallY[i], wallPieceRadius, 0 , 2*Math.PI, false);
             ctx.fillStyle = 'blue';
         	ctx.fill();  
             ctx.closePath();          
