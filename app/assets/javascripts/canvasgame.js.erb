@@ -16,6 +16,9 @@ var update = function(dt)
 	input(dt);
 };
 
+img.onload = function () {
+   ctx.drawImage(img,0,0);
+}
 
 // Old and new keyboard states
 var keysDown = {};
