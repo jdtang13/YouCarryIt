@@ -175,12 +175,13 @@ function Ribosome(worldX, worldY)
 		ctx.beginPath();
 		this.worldX += RIBOSOME_RADIUS * Math.cos(this.theta);
 		this.worldY += RIBOSOME_RADIUS * Math.sin(this.theta);
-		if (!cx) ctx.arc(this.worldX, this.worldY , RIBOSOME_RADIUS, 0, Math.PI*2);
+		if (!cx) ctx.arc(this.worldX, this.worldY, RIBOSOME_RADIUS, 0, Math.PI*2);
 		else {
-			ctx.arc(relativeX + RIBOSOME_RADIUS * Math.cos(this.theta), 
-				this.worldY + RIBOSOME_RADIUS * Math.sin(theta), RIBOSOME_RADIUS, 0, Math.PI*2);
-			this.worldX = relativeX;
-			this.worldY = relativeY;
+			this.relativeX += RIBOSOME_RADIUS * Math.cos(this.theta);
+			this.relativeY += RIBOSOME_RADIUS * Math.sin(this.theta);
+			ctx.arc(this.relativeX, this.relativeY, RIBOSOME_RADIUS, 0, Math.PI*2);
+			this.worldX = this.relativeX;
+			this.worldY = this.relativeY;
 		}
 		ctx.closePath();
 		ctx.fillStyle = "#A52A2A";
@@ -203,7 +204,6 @@ function Ribosome(worldX, worldY)
 		});
 
 		this.theta += THETA_CHANGE;
-
 	};
 }
 
@@ -222,13 +222,15 @@ function Vacuole ()
 	this.render = function(ctx)
 	{
 		ctx.beginPath();
-		if (!cx) ctx.arc(this.worldX + VACUOLE_RADIUS * Math.cos(this.theta),  
-			this.worldY + VACUOLE_RADIUS * Math.sin(theta), VACUOLE_RADIUS, 0, Math.PI*2);
+		this.worldX += VACUOLE_RADIUS * Math.cos(this.theta);
+		this.worldY += VACUOLE_RADIUS * Math.sin(this.theta);
+		if (!cx) ctx.arc(this.worldX,  this.worldY, VACUOLE_RADIUS, 0, Math.PI*2);
 		else {
-			ctx.arc(this.relativeX + VACUOLE_RADIUS * Math.cos(this.theta), 
-				this.worldY + VACUOLE_RADIUS * Math.sin(theta), VACUOLE_RADIUS, 0, Math.PI*2);
-			this.worldX = relativeX;
-			this.worldY = relativeY;
+			this.relativeX += VACUOLE_RADIUS * Math.cos(this.theta);
+			this.relativeY += VACUOLE_RADIUS * Math.sin(this.theta);
+			ctx.arc(this.relativeX, this.relativeY, VACUOLE_RADIUS, 0, Math.PI*2);
+			this.worldX = this.relativeX;
+			this.worldY = this.relativeY;
 		}
 		ctx.closePath();
 		ctx.fillStyle = "#0000CD"
