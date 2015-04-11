@@ -20,7 +20,7 @@ gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'omniauth-linkedin'
 
-gem 'tweetstream'
+gem 'twitter'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

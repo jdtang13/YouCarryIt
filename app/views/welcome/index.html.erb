@@ -2,13 +2,13 @@
 <html lang="en">
 
 <article>
-<p>Twitter stream:</p>
+<p><b>Twitter stream:</b></p>
 
-<% @texts do |status| %>
-<p><%= status.text %></p>
+<% @statuses.each do |status| %>
+<p><%= status %></p>
 <% end %>
 
-<p>Indico analysis:</p>
+<p><b>Indico analysis:</b></p>
 
 <canvas id="canvasGame"></canvas>
 <%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>
