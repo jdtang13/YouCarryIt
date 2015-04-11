@@ -2,13 +2,11 @@
 <html lang="en">
 
 <article>
-<p><b>Twitter stream:</b></p>
+<p><b>Twitter stream with Indico analysis:</b></p>
 
-<% @statuses.each do |status| %>
-<p><%= status %></p>
+<% for i in 0..@tweet_limit %>
+<p><b><%= @sentiments[i].to_s %></b>: <%= @statuses[i].to_s %></p>
 <% end %>
-
-<p><b>Indico analysis:</b></p>
 
 <canvas id="canvasGame"></canvas>
 <%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>

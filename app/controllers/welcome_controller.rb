@@ -12,13 +12,20 @@ class WelcomeController < ApplicationController
 	    #config.auth_method        = :oauth
 	  end  
 
-	  tweet_limit = 15
+	  @tweet_limit = 15
 	  count = 0
 
+	  require 'indico'
+	  Indico.api_key = 'a20e64f1e4fd1dd002ec661f62caa444'
+
 	  @statuses = []
+	  @sentiments = []
+
 	 	client.sample do |status| 
-	 		if status.is_a?(Twitter::Tweet) and count < tweet_limit
-	  			@statuses.push((status.text).to_s)
+	 		if status.is_a?(Twitter::Tweet) and count < @tweet_limit
+	 			text = (status.text).to_s
+	  			@statuses.push(text)
+	  			@sentiments.push(Indico.sentiment(text))
 	  			count += 1
 	  			#puts count
 	  			#puts status.text.to_s
@@ -26,6 +33,8 @@ class WelcomeController < ApplicationController
 	  			break
 	  		end
 	  	end
+
+	  	tweet_limit = count
 
 	  	#puts "loop finished"
 
