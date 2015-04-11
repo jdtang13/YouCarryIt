@@ -10,7 +10,7 @@ Rails.application.configure do
   config.eager_load = false
 
   # General Settings
-  config.app_domain = 'somedomain.com'
+  config.app_domain = 'youcarryit.com'
 
   # Email
   config.action_mailer.delivery_method = :smtp
@@ -20,10 +20,10 @@ Rails.application.configure do
     address: 'smtp.gmail.com', 
     port: '587',
     enable_starttls_auto: true,
-    user_name: 'someuser',
-    password: 'somepass',
+    user_name: 'ReverendofFryers@gmail.com',
+    password: 'thosefryers',
     authentication: :plain,
-    domain: 'somedomain.com'
+    domain: 'gmail.com'
   }
 
   # Show full error reports and disable caching.

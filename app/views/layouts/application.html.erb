@@ -17,8 +17,10 @@
         <header>
             <h2>You Carry It</h2>
             <nav>
-              <% if current_user == nil or not current_user.signed_in? %>
+              <% if current_user == nil or not user_signed_in? %>
               <%= link_to "Sign in with Facebook", omniauth_authorize_path(User, :facebook) %>
+              <% else %>
+              Logged in as: <%= current_user.name %>
               <% end %>
 
             </nav>
