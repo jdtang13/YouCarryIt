@@ -63,49 +63,70 @@ var createNutrient = function(type, worldX, worldY, streamSentiment, streamTweet
 	}
 };
 
-var firstStreamSentiments = [.6, .6, .7];
-var secondStreamSentiments = [.4, .7, .9];
-var thirdStreamSentiments = [.6, .55, .7];
-var firstStreamTweets = ["Hello nerds", "xDDDD here we go", "we gucci"];
-var secondStreamTweets = ["GAME DEV BOYS", "what?", "why?"];
-var thirdStreamTweets = ["ayy lmao", "this is the end", "you had a good run"];
+var firstStreamSentiments = [];//[0.10205818815304715, 0.3506799629915738];
+var secondStreamSentiments = [];//[0.8173114933262084];
+var thirdStreamSentiments = [];//[0.9644229431726448];
 
-var hash;
-for (var i = 0; i < firstStreamSentiments.length; i++) {
-	// create nutrient
-	if (firstStreamSentiments[i] > .5) {
-		hash = hasher(firstStreamTweets[i]);
-		createNutrient("glucose", (hash % 600), (hash % 400), 
-			firstStreamSentiments[i], firstStreamTweets[i]);
+var firstStreamTweets = []; //["RT @Ashton5SOS: http://t.co/j8usF8QTem", "Même chez nous cette série éblouie tous le monde https://t.co/k4xILiolWS"];
+var secondStreamTweets = []; //["RT @PourLesSportifs: Ton corps reflète l'image de ton alimentation. http://t.co/9C6VhBqvbn"];
+var thirdStreamTweets = []; //["@mzveegh Dancehall Queen! mi so proud of u.. more awards ahead #workhard"];
+
+var populateTweets = function()
+{
+	var rawRailsData = (document.getElementById("rails-data").innerHTML).split("~");
+
+	for (var i = 0; i < rawRailsData.length - 1; i += 2) {
+		var tweets = firstStreamTweets;
+		var sents = firstStreamSentiments;
+		if (i % 3 == 1) {
+			tweets = secondStreamTweets;
+			sents = secondStreamSentiments;
+		}
+		else if (i % 3 == 2) {
+			tweets = thirdStreamTweets;
+			sents = thirdStreamSentiments;
+		}
+
+		tweets.push(rawRailsData[i+1]);
+		sents.push(rawRailsData[i])
 	}
-};
 
-for (var i = 0; i < secondStreamSentiments.length; i++) {
-	// create nutrient
-	if (secondStreamSentiments[i] > .5) {
-		hash = hasher(secondStreamTweets[i]);
-		createNutrient("protein", (hash % 600), (hash % 400), 
-			secondStreamSentiments[i], secondStreamTweets[i]);
-	}
-};
+	var hash;
+	for (var i = 0; i < firstStreamSentiments.length; i++) {
+		// create nutrient
+		if (firstStreamSentiments[i] > .5) {
+			hash = hasher(firstStreamTweets[i]);
+			createNutrient("glucose", (hash % 600), (hash % 400), 
+				firstStreamSentiments[i], firstStreamTweets[i]);
+		}
+	};
 
-for (var i = 0; i < thirdStreamSentiments.length; i++) {
-	// create nutrient
-	if (thirdStreamSentiments[i] > .5) {
-		hash = hasher(thirdStreamTweets[i]);
-		createNutrient("water", (hash % 600), (hash % 400), 
-			thirdStreamSentiments[i], thirdStreamTweets[i]);
-	}
-};
+	for (var i = 0; i < secondStreamSentiments.length; i++) {
+		// create nutrient
+		if (secondStreamSentiments[i] > .5) {
+			hash = hasher(secondStreamTweets[i]);
+			createNutrient("protein", (hash % 600), (hash % 400), 
+				secondStreamSentiments[i], secondStreamTweets[i]);
+		}
+	};
 
+	for (var i = 0; i < thirdStreamSentiments.length; i++) {
+		// create nutrient
+		if (thirdStreamSentiments[i] > .5) {
+			hash = hasher(thirdStreamTweets[i]);
+			createNutrient("water", (hash % 600), (hash % 400), 
+				thirdStreamSentiments[i], thirdStreamTweets[i]);
+		}
+	};
+
+	// create organelles based off of tweets, randomly, or what?
+	createOrganelle("ribo",600,200);
+	createOrganelle("mito",400,400);
+	createOrganelle("vacu",200,200);
+
+}
 
 var cell = new Cell(100,100);
-
-// create organelles based off of tweets, randomly, or what?
-createOrganelle("ribo",600,200);
-createOrganelle("mito",400,400);
-createOrganelle("vacu",200,200);
-
 
 var update = function(dt)
 {
@@ -294,4 +315,5 @@ function createGame()
       dataType: "script",
       data: { first : firstVal, second : secondVal, third : thirdVal }
     });
+
 };
