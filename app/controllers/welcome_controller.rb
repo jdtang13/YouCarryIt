@@ -48,7 +48,8 @@ class WelcomeController < ApplicationController
 
 	  puts "topics are: " + topics.join(",")
 
-	 	client.filter(track: topics.join(",")) do |status| 
+	  client.sample do |status| 
+	 	#client.filter(track: topics.join(",")) do |status| 
 	 		if status.is_a?(Twitter::Tweet) and count < @tweet_limit
 
 	 			if status.text.to_s == ""
