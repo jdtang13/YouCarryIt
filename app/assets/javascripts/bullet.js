@@ -1,6 +1,6 @@
 var bulletRadius = 7;
 var bulletVelocity =200;
-var deathCooldown = 1;
+var deathCooldown = 2;
 function Bullet (worldX,worldY,xVelocity,yVelocity) 
 {
     this.worldX = worldX;

@@ -20,7 +20,7 @@ var wallPieceRadius = 1.75;
 
 var cellCollisionRadius = 30;
 var minimumOrganelleDistance = 15;
-var maxOrganelleDistance = 20;
+var maxOrganelleDistance = 35;
 
 function Cell (worldX,worldY) 
 {

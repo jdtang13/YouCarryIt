@@ -56,6 +56,11 @@ var createNutrient = function(type, worldX, worldY, streamData)
 	}
 }
 
+var createEnemy = function(worldX, worldY)
+{
+	enemies.push(new Enemy(worldX,worldY));
+}
+
 var cell = new Cell(100,100);
 createOrganelle("ribo",600,200);
 createOrganelle("mito",400,400);
@@ -64,9 +69,8 @@ createOrganelle("vacu",200,400);
 createOrganelle("vacu",200,500);
 createOrganelle("vacu",200,600);
 createOrganelle("vacu",300,200);
-enemies.push(new Enemy(450,350));
-enemies.push(new Enemy(350,350));
-enemies.push(new Enemy(350,450));
+createEnemy(450,350);
+createEnemy(350,350);
 
 var update = function(dt)
 {
