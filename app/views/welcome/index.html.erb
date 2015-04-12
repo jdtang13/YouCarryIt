@@ -5,9 +5,9 @@
 
 <!-- <p><b>Twitter stream with Indico analysis (<%= @tweet_limit %> scraped)</b></p> -->
 
-
     <%= javascript_include_tag "cell",       "data-turbolinks-track" => true %>
     <%= javascript_include_tag "organelle",  "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "nutrients", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>
 
 <script>
@@ -37,13 +37,11 @@
     <canvas id="canvasGame" width="800" height="600">></canvas>
     <p><b>Use the arrow keys to move!</b></p>
 
+    
 <div id = "rails-data">
 
 </div>
 
 </article>
 
-<canvas id="canvasGame" width="800" height="600">></canvas>
-
-       
 </html>

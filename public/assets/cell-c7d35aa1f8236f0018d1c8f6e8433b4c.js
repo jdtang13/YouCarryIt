@@ -167,3 +167,4 @@ function Cell (worldX,worldY)
         // TODO: Create nutrient classes, draw nutrients, handle nutrient ingestion, and passage of nutrients to bacterium 
 
 }
+;

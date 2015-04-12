@@ -285,3 +285,4 @@ function Vacuole (worldX, worldY)
 	};
 }
 
+;
