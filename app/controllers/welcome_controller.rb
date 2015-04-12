@@ -2,7 +2,7 @@ class WelcomeController < ApplicationController
 
   require 'twitter'
 
-  MAX_TWEETS = 25
+  MAX_TWEETS = 0
 
   $first = ""
   $second = ""

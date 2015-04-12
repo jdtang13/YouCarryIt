@@ -5,9 +5,9 @@ var THETA_CHANGE = .25;
 // maximum factor of radius from which ingested organelle can be from center 
 var ORGANELLE_DISTANCE_FACTOR = (2/3);
 
-var MAXIMUM_NUTRIENT_LEVEL = 1000; 
-var DEFAULT_NUTRIENT_LEVEL = 500;
-var NUTRIENT_LOSS_QUANTITY = 5;
+var MAXIMUM_NUTRIENT_LEVEL = 10000; 
+var DEFAULT_NUTRIENT_LEVEL = 5000;
+var NUTRIENT_LOSS_QUANTITY = 1;
 var NUTRIENT_EFFICIENCY_FACTOR = 1.1;
 
 var cellRadius = 50;
@@ -26,6 +26,7 @@ function Cell (worldX,worldY)
 {
     this.worldX = worldX;
     this.worldY = worldY;
+    this.isDead = false;
 
     //Cell wall
     this.cellWallX = new Array();
@@ -90,6 +91,32 @@ function Cell (worldX,worldY)
         this.nutrientLevels.energyLevel -= this.nutrientLossQuantity.energyLoss;
         this.nutrientLevels.proteinLevel -= this.nutrientLossQuantity.proteinLoss;
         this.nutrientLevels.waterLevel -= this.nutrientLossQuantity.waterLoss;
+        if (this.nutrientLevels.energyLevel <= 0 || this.nutrientLevels.proteinLevel <= 0
+            ||  this.nutrientLevels.waterLevel <= 0) this.isDead = true;
+        document.getElementById("Nutrient Information").innerHTML = 
+            ("Energy: " + this.nutrientLevels.proteinLevel + " " + "Protein: " + this.nutrientLevels.proteinLevel 
+            + " " + "Water: " + this.nutrientLevels.waterLevel);
+    };
+
+    this.addNutrient = function(nutrient) {
+        var value = nutrient.nutritiousFactor * DEFAULT_NUTRITION_BOOST;
+        if(isNaN(value))
+        {
+            var wo = true;
+        }
+        if (nutrient.feature === "energy") {
+            
+            this.nutrientLevels.energyLevel +=  5;
+        };      
+
+        if (nutrient.feature === "protein") {
+            this.nutrientLevels.proteinLevel +=  5;        
+        }
+
+        if (nutrient.feature === "water") {
+            this.nutrientLevels.waterLevel += 5;
+        }
+
     };
 
     this.update = function(dt)
@@ -157,13 +184,5 @@ function Cell (worldX,worldY)
         };
 	};
 
-    
-   
-        // If you die (have no nutrient levels for at least one nutrient), die.
-        // If you have ripe nutrient levels for all, engage in asexual reproduction.
-        // Battle?
-
-    
-        // TODO: Create nutrient classes, draw nutrients, handle nutrient ingestion, and passage of nutrients to bacterium 
 
 }

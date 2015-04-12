@@ -26,62 +26,6 @@ var THETA_CHANGE = .25;
 // maximum factor of radius from which ingested organelle can be from center 
 var ORGANELLE_DISTANCE_FACTOR = (2/3);
 
-/** Main bacterium */
-function Eukaryote () 
-{
-	this.organelles = {mitochondria: 0, ribosomes: 0, vacuoles: 0};
-
-    this.nutrientLevels = { energyLevel: DEFAULT_NUTRIENT_LEVEL, proteinLevel: DEFAULT_NUTRIENT_LEVEL, 
-    	waterLevel: DEFAULT_NUTRIENT_LEVEL};
-
-    this.nutrientLossQuantity = { energyLoss: NUTRIENT_LOSS_QUANTITY, proteinLoss: NUTRIENT_LOSS_QUANTITY, 
-    	waterLoss: NUTRIENT_LOSS_QUANTITY};
-
-
-
-    this.addOrganelle = function(organelle) {
-    	if (ORGANELLE_NUTRIENTS[organelle] === "energy") {
-    		this.nutrientLossQuantity.energyLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
-    		organelles[mitochondria]++;
-    	}
-
-    	if (ORGANELLE_NUTRIENTS[organelle] === "protein") {
-    		this.nutrientLossQuantity.proteinLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
-    		organelles[ribosomes]++;
-    	}
-
-    	if (ORGANELLE_NUTRIENTS[organelle] === "vacuole") {
-    		this.nutrientLossQuantity.waterLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
-    		organelles[vacuoles]++;
-    	}
-    };
-
-    this.expendResources = function() {
-    	this.nutrientLevels.energyLevel -= this.nutrientLossQuantity.energyLoss;
-    	this.nutrientLevels.proteinLevel -= this.nutrientLossQuantity.proteinLoss;
-    	this.nutrientLevels.waterLevel -= this.nutrientLossQuantity.waterLoss;
-    };
-
-    this.addNutrient = function(nutrient) {
-    	if (nutrient.feature === "energy") {
-    		this.nutrientLevel.energyLevel +=  nutrient.nutritiousFactor * DEFAULT_NUTRITION_BOOST;
-    	};    	
-
-    	if (nutrient.feature === "protein") {
-    		this.nutrientLevel.proteinLevel +=  nutrient.nutritiousFactor * DEFAULT_NUTRITION_BOOST;    	}
-
-    	if (nutrient.feature === "water") {
-    		this.nutrientLevel.waterLevel += nutrient.nutriousFactor * DEFAULT_NUTRITION_BOOST;
-    	}
-
-    };
-	
-	/* Make sure everything in TODO is covered in update.*/
-		// If you die (have no nutrient levels for at least one nutrient), die.
-		// If you have ripe nutrient levels for all, engage in asexual reproduction.
-		// Battle?
-
-	};
 
 /** Main organelles */
 function Mitochondrion (worldX, worldY) 
