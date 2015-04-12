@@ -2,6 +2,8 @@
 var img = new Image();
 img.src = '<%= asset_path 'images/backdrop0.jpg' %>'
 
+var playerSpeed = 200;
+
 function runGame(first,second,third)
 {
 var ctx = document.getElementById('canvasGame').getContext('2d');  
@@ -86,19 +88,19 @@ var input = function(dt)
 {
 	if(keysDown[39])//Right
 	{
-		cell.worldX += 5;
+		cell.worldX += playerSpeed*dt;
 	}
 	if(keysDown[38])//Up
 	{
-		cell.worldY -= 5;
+		cell.worldY -= playerSpeed*dt;
 	}
 	if(keysDown[37])//Left
 	{
-		cell.worldX -= 5;
+		cell.worldX -= playerSpeed*dt;
 	}
 	if(keysDown[40])//Down
 	{
-		cell.worldY += 5;
+		cell.worldY += playerSpeed*dt;
 	}
 };
 
