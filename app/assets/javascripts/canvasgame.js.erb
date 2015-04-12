@@ -199,10 +199,20 @@ function createGame()
 	var game = document.getElementById('canvasGame');
 	game.style.display = "block";
 
+	var firstVal =  document.getElementById("first").value;
+	var secondVal = document.getElementById("second").value;
+	var thirdVal = document.getElementById("third").value;
+
 	//Pull the text box's value
 	runGame(
-		document.getElementById("first").value,
-		document.getElementById("second").value,
-		document.getElementById("third").value);
-};
+		firstVal,
+		secondVal,
+		thirdVal);
 
+    jQuery.ajax({
+      url: "welcome_controller/sendVals",
+      type: "post",
+      dataType: "script",
+      data: { first : firstVal, second : secondVal, third : thirdVal }
+    });
+};

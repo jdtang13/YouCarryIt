@@ -5,38 +5,37 @@
 
 <!-- <p><b>Twitter stream with Indico analysis (<%= @tweet_limit %> scraped)</b></p> -->
 
-    <p><b>Use the arrow keys to move!</b></p>
 
     <%= javascript_include_tag "cell",       "data-turbolinks-track" => true %>
     <%= javascript_include_tag "organelle",  "data-turbolinks-track" => true %>
     <%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>
 
+<script>
+
+    setInterval(function() {
+    jQuery.ajax({
+      url: "welcome_controller/updateSocial",
+      type: "GET",
+      dataType: "script"
+    });
+    }, 10000); // in milliseconds, focus on many tweets and few requests rather than vice versa
+
+</script>
+
     <div id="threeOptions">
         <ul style="list-style-type: none;">
-            <li>First Item (Mitochrondia):  <input id="first" type="text" name="first" value="Rose Bowl"></li>
-            <li>Second Item (Ribosome):     <input id="second" type="text" name="second" value="Hack Princeton"></li>
-            <li>Third Item (Vacuole):       <input id="third" type="text" name="third" value="#gaming"></li>
+            <li>First:  <input id="first" type="text" name="first" value="Thomas Aquinas"></li>
+            <li>Second: <input id="second" type="text" name="second" value="#dota2"></li>
+            <li>Third:  <input id="third" type="text" name="third" value="personal fitness"></li>
         </ul>
-        <input type="submit" onclick="createGame()">
+        <input type="button" value="Submit" id="button_1" onclick = "createGame();" >
     </div>
 
     <canvas id="canvasGame" width="800" height="600">></canvas>
-
-<script>
-setInterval(function() {
-jQuery.ajax({
-  url: "welcome_controller/updateSocial",
-  type: "GET",
-  dataType: "script"
-});
-}, 15000); // in milliseconds, focus on many tweets and few requests rather than vice versa
-</script>
+    <p><b>Use the arrow keys to move!</b></p>
 
 <div id = "rails-data">
-<% for i in 0..(@tweet_limit-1) %>
-<%= @sentiments[i].to_s.gsub('~', '') %>~
-<%= @statuses[i].to_s.gsub('~', '') %>~
-<% end %>
+
 </div>
 
 </article>

@@ -2,7 +2,11 @@ class WelcomeController < ApplicationController
 
   require 'twitter'
 
-  MAX_TWEETS = 20
+  MAX_TWEETS = 7
+
+  $first = ""
+  $second = ""
+  $third = ""
 
   def makeClient
 		client = Twitter::Streaming::Client.new do |config|
@@ -13,6 +17,12 @@ class WelcomeController < ApplicationController
 	    #config.auth_method        = :oauth
 	  end  
 	  return client
+  end
+
+  def sendVals
+  	$first = params[:first]
+  	$second = params[:second]
+  	$third = params[:third]
   end
 
   def updateSocial
@@ -28,7 +38,11 @@ class WelcomeController < ApplicationController
 	  @statuses = []
 	  @sentiments = []
 
-	 	client.sample do |status| 
+	  topics = [$first, $second, $third]
+
+	  puts "topics are: " + topics.join(",")
+
+	 	client.filter(track: topics.join(",")) do |status| 
 	 		if status.is_a?(Twitter::Tweet) and count < @tweet_limit
 
 	 			if status.text.to_s == ""
@@ -38,6 +52,7 @@ class WelcomeController < ApplicationController
 	 			text = (status.text).to_s
 	  			@statuses.push(text)
 	  			@sentiments.push(Indico.sentiment(text))
+
 	  			count += 1
 	  			
 	  			puts count
@@ -57,38 +72,38 @@ class WelcomeController < ApplicationController
 
   def index
 
-	  client = makeClient
+	  # client = makeClient
 
-	  @tweet_limit = MAX_TWEETS
-	  count = 0
+	  # @tweet_limit = MAX_TWEETS
+	  # count = 0
 
-	  require 'indico'
-	  Indico.api_key = 'a20e64f1e4fd1dd002ec661f62caa444'
+	  # require 'indico'
+	  # Indico.api_key = 'a20e64f1e4fd1dd002ec661f62caa444'
 
-	  @statuses = []
-	  @sentiments = []
+	  # @statuses = []
+	  # @sentiments = []
 
-	 	client.sample do |status| 
-	 		if status.is_a?(Twitter::Tweet) and count < @tweet_limit
+	 	# client.sample do |status| 
+	 	# 	if status.is_a?(Twitter::Tweet) and count < @tweet_limit
 
-	 			if status.text.to_s == ""
-	 				continue
-	 			end
+	 	# 		if status.text.to_s == ""
+	 	# 			continue
+	 	# 		end
 
-	 			text = (status.text).to_s
-	  			@statuses.push(text)
-	  			@sentiments.push(Indico.sentiment(text))
-	  			count += 1
-	  			#puts count
-	  			#puts status.text.to_s
-	  		else
-	  			break
-	  		end
-	  	end
+	 	# 		text = (status.text).to_s
+	  # 			@statuses.push(text)
+	  # 			@sentiments.push(Indico.sentiment(text))
+	  # 			count += 1
+	  # 			#puts count
+	  # 			#puts status.text.to_s
+	  # 		else
+	  # 			break
+	  # 		end
+	  # 	end
 
-	  	@tweet_limit = count
+	  # 	@tweet_limit = count
 
-	  	#puts "loop finished"
+	  # 	#puts "loop finished"
 
   end
 
