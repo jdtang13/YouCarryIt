@@ -77,3 +77,4 @@ function Enemy (worldX,worldY)
 	};
 >>>>>>> df0ec83fc2d13c2d9cdcfcd23d1d608103440ee8
 }
+;

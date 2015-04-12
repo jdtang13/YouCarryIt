@@ -1,3 +1,6 @@
+function Enemy(worldX, worldY, streamData) {
+	// TODO: Create enemy if streamData <= .5, the lower the streamData, the more powerful the enemy.
+	// Enemy launches enzymes at nearby bacteria to potentially harm/destroy them (THE HORROR!)
 var enemyRadius = 30;
 var enemyCenterRadius = 5;
 var enemyRange = 300;
@@ -71,3 +74,4 @@ function Enemy (worldX,worldY)
         };
 	};
 }
+;

@@ -13,9 +13,12 @@ function hasher(tweet) {
 
 //  Creating canvas
 var img = new Image();
-img.src = '<%= asset_path 'images/backdrop0.jpg' %>'
+img.src = '/assets/images/backdrop0-2c363a96759b923e853c1dae858ac3bb.jpg'
 
+<<<<<<< HEAD
+=======
 var playerSpeed = 200;
+>>>>>>> df0ec83fc2d13c2d9cdcfcd23d1d608103440ee8
 
 function runGame(first,second,third)
 {
@@ -24,13 +27,16 @@ var ctx = document.getElementById('canvasGame').getContext('2d');
 
 var freeFloatingOrganelles = new Array();
 var freeFloatingNutrients = new Array();
+<<<<<<< HEAD
 var cell = new Cell(100,100);
+=======
 var enemies = new Array();
 var bullets = new Array();
 
 var cameraX = 0;
 var cameraY = 0;
 
+>>>>>>> df0ec83fc2d13c2d9cdcfcd23d1d608103440ee8
 
 var createOrganelle = function(type, worldX, worldY)
 {
@@ -70,6 +76,7 @@ var createNutrient = function(type, worldX, worldY, streamSentiment, streamTweet
 	}
 };
 
+<<<<<<< HEAD
 var firstStreamSentiments = [.4, .8, .9, .45, .78, 88];
 var secondStreamSentiments = [.4, .7, .3, .79, .66, .85];
 var thirdStreamSentiments = [.6, .55, .7, .85, .98, .54];
@@ -124,12 +131,14 @@ for (var i = 0; i < thirdStreamSentiments.length; i++) {
 
 
 // create organelles based off of tweets, randomly, or what?
+=======
 var createEnemy = function(worldX, worldY)
 {
 	enemies.push(new Enemy(worldX,worldY));
 }
 
 var cell = new Cell(100,100);
+>>>>>>> df0ec83fc2d13c2d9cdcfcd23d1d608103440ee8
 createOrganelle("ribo",600,200);
 createOrganelle("mito",400,400);
 createOrganelle("vacu",200,200);
@@ -165,11 +174,14 @@ var update = function(dt)
 		}
 	};
 
+<<<<<<< HEAD
 	for (var i = 0; i < freeFloatingNutrients.length; i++) {
 		freeFloatingNutrients[i].update(dt);
 	}
 
+=======
 	enemyAI();
+>>>>>>> df0ec83fc2d13c2d9cdcfcd23d1d608103440ee8
 	checkCollisions();
 };
 
@@ -320,12 +332,15 @@ var render = function()
 		enemies[i].render(ctx, cameraX,cameraY);
 	};
 
+<<<<<<< HEAD
 	for (var i = 0; i < freeFloatingNutrients.length; i++) {
 		freeFloatingNutrients[i].render(ctx);
 	};
 
 	cell.render(ctx);
+=======
 	cell.render(ctx, cameraX,cameraY);
+>>>>>>> df0ec83fc2d13c2d9cdcfcd23d1d608103440ee8
 }
 
 
