@@ -10,8 +10,8 @@ var DEFAULT_NUTRIENT_LEVEL = 500;
 var NUTRIENT_LOSS_QUANTITY = 5;
 var NUTRIENT_EFFICIENCY_FACTOR = 1.1;
 
-var distanceFromCenter = 30;
-var undulationAmplitude = 2;
+var distanceFromCenter = 50;
+var undulationAmplitude = 5;
 
 var plasmidRadius = 4;
 var wallPieceRadius = 0.5;

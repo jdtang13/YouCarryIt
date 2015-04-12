@@ -5,15 +5,19 @@ function runGame()
 var ctx = document.getElementById('canvasGame').getContext('2d');  
 /* more info: http://stackoverflow.com/questions/7381041/url-of-images-in-javascript-code-using-rails-3-1-asset-pipeline */
 
-
-
 var cell = new Cell(100,100);
+var mito = new Mitochondrion(400,200);
+var ribo = new Ribosome(600,200);
+var vacu = new Vacuole(200,400);
 
 
 var update = function(dt)
 {
 	input(dt);
 	cell.update(dt);
+	mito.update(dt);
+	ribo.update(dt);
+	vacu.update(dt);
 };
 
 // Old and new keyboard states
@@ -36,19 +40,19 @@ var input = function(dt)
 {
 	if(keysDown[39])//Right
 	{
-		cell.worldX += 1;
+		cell.worldX += 5;
 	}
 	if(keysDown[38])//Up
 	{
-		cell.worldY -= 1;
+		cell.worldY -= 5;
 	}
 	if(keysDown[37])//Left
 	{
-		cell.worldX -= 1;
+		cell.worldX -= 5;
 	}
 	if(keysDown[40])//Down
 	{
-		cell.worldY += 1;
+		cell.worldY += 5;
 	}
 };
 
@@ -64,6 +68,10 @@ var render = function()
 	//		Dislay image, ctx.drawImage();
 
 	cell.render(ctx);
+
+	mito.render(ctx);
+	ribo.render(ctx);
+	vacu.render(ctx);
 }
 
 
