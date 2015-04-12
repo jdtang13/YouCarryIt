@@ -4,18 +4,19 @@
 <article>
 <!-- <p><b>Twitter stream with Indico analysis (<%= @tweet_limit %> scraped)</b></p> -->
 
-<div id = "rails-data">
-<% for i in 0..(@tweet_limit-1) %>
-<b><%= @sentiments[i].to_s %></b>: <%= @statuses[i].to_s %>
-<% end %>
-</div>
-
 <p><b>Use the arrow keys to move!</b></p>
 
 <canvas id="canvasGame" width="800" height="600">></canvas>
 <%= javascript_include_tag "cell", "data-turbolinks-track" => true %>
 <%= javascript_include_tag "organelle", "data-turbolinks-track" => true %>
 <%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>
+
+<div id = "rails-data">
+<% for i in 0..(@tweet_limit-1) %>
+sentiment: <%= @sentiments[i].to_s %>,
+status: <%= @statuses[i].to_s %>;
+<% end %>
+</div>
 
 </article>
        
