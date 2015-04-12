@@ -1,11 +1,7 @@
 // TODO: Specify actual parameters of our game.
-var MAXIMUM_NUTRIENT_LEVEL = 1000; 
-var DEFAULT_NUTRIENT_LEVEL = 500;
-var NUTRIENT_LOSS_QUANTITY = 5;
-var NUTRIENT_EFFICIENCY_FACTOR = 1.1;
+
 // associated nutrients for each organelle 
 var ORGANELLE_NUTRIENTS = {mitchondrion: "energy", ribosome: "protein", vacuole: "water" };
-
 
 var RIBOSOME_RADIUS = 5;
 
@@ -21,6 +17,7 @@ var GLUCOSE_HEIGHT = 3;
 // stores all bacteria cells. TODO: make sure you store all bacteria cells
 var allCells;
 
+<<<<<<< HEAD:app/assets/javascripts/organelleclasses.js
 // change in angle in radians by which free organelle moves */
 var THETA_CHANGE = .25;
 
@@ -82,6 +79,8 @@ function Eukaryote ()
 	// TODO: Create nutrient classes, draw nutrients, handle nutrient ingestion, and passage of nutrients to bacterium 
 }
 
+=======
+>>>>>>> f12a61b579deb79438a69ca5f7f585699de7e6cd:app/assets/javascripts/organelle.js
 /** Main organelles */
 function Mitochondrion (worldX, worldY) 
 {
@@ -92,7 +91,6 @@ function Mitochondrion (worldX, worldY)
 	this.worldOuterX = worldX;
 	this.worldOuterY = worldY;
 
-	
 	this.relativeInnerX = 0;
 	this.relativeInnerY = 0;
 	this.relativeOuterX = 0;

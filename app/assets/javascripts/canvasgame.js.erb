@@ -21,6 +21,9 @@ var keysDown = {};
 
 addEventListener("keydown", function (e) {
 	keysDown[e.keyCode] = true;
+	if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+    }
 }, false);
 
 addEventListener("keyup", function (e) {
@@ -28,9 +31,25 @@ addEventListener("keyup", function (e) {
 }, false);
 
 
+
 var input = function(dt)
 {
-
+	if(keysDown[39])//Right
+	{
+		cell.worldX += 1;
+	}
+	if(keysDown[38])//Up
+	{
+		cell.worldY -= 1;
+	}
+	if(keysDown[37])//Left
+	{
+		cell.worldX -= 1;
+	}
+	if(keysDown[40])//Down
+	{
+		cell.worldY += 1;
+	}
 };
 
 //  TODO: Wrap image in class that knows if its loaded
