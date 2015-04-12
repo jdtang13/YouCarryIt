@@ -24577,3 +24577,16 @@ Processing by WelcomeController#index as HTML
   Rendered welcome/index.html.erb within layouts/application (44.7ms)
 Completed 200 OK in 125ms (Views: 125.0ms | ActiveRecord: 0.0ms)
 >>>>>>> 6111cd62d1a54c92836a0334cceae1c183ce2cfc
+
+
+Started GET "/" for ::1 at 2015-04-12 03:37:11 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (71.6ms)
+Completed 200 OK in 208ms (Views: 200.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-04-12 03:37:44 -0400
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (36.1ms)
+Completed 200 OK in 116ms (Views: 115.6ms | ActiveRecord: 0.0ms)
