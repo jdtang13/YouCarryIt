@@ -5,45 +5,48 @@
 
 <!-- <p><b>Twitter stream with Indico analysis (<%= @tweet_limit %> scraped)</b></p> -->
 
-    <p><b>Use the arrow keys to move!</b></p>
-
+<<<<<<< HEAD
+=======
+    <%= javascript_include_tag "bullet",     "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "enemy",      "data-turbolinks-track" => true %>
+>>>>>>> df0ec83fc2d13c2d9cdcfcd23d1d608103440ee8
     <%= javascript_include_tag "cell",       "data-turbolinks-track" => true %>
     <%= javascript_include_tag "organelle",  "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "nutrients", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>
 
-    <div id="threeOptions">
-        <ul style="list-style-type: none;">
-            <li>First Item (Mitochrondia):  <input id="first" type="text" name="first" value="Rose Bowl"></li>
-            <li>Second Item (Ribosome):     <input id="second" type="text" name="second" value="Hack Princeton"></li>
-            <li>Third Item (Vacuole):       <input id="third" type="text" name="third" value="#gaming"></li>
-        </ul>
-        <input type="submit" onclick="createGame()">
-    </div>
-
-<<<<<<< HEAD
-<canvas id="canvasGame" width="800" height="600">></canvas>
-<%= javascript_include_tag "cell",       "data-turbolinks-track" => true %>
-<%= javascript_include_tag "organelle",  "data-turbolinks-track" => true %>
-<%= javascript_include_tag "nutrients", "data-turbolinks-track" => true %>
-<%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>
-=======
-    <canvas id="canvasGame" width="800" height="600">></canvas>
->>>>>>> 9d78b93a4d3fd248f06940f21ba539cbae646fa2
-
 <script>
-/*setInterval(function() {
-jQuery.ajax({
-  url: "/updateSocial",
-  type: "GET",
-  dataType: "script"
-});
-}, 10000); */
-// in milliseconds
+
+    setInterval(function() {
+    jQuery.ajax({
+      url: "welcome_controller/updateSocial",
+      type: "GET",
+      dataType: "script"
+    });
+    }, 30000); // in milliseconds, focus on many tweets and few requests rather than vice versa
+
 </script>
 
+    <div id="threeOptions">
+
+        <h2>What are your favorite things? </h2>
+
+        <ul style="list-style-type: none;">
+            <li>First:  <input id="first" type="text" name="first" value="Thomas Aquinas"></li>
+            <li>Second: <input id="second" type="text" name="second" value="Dota 2"></li>
+            <li>Third:  <input id="third" type="text" name="third" value="personal fitness"></li>
+        </ul>
+        <input type="button" value="Submit" id="button_1" onclick = "createGame();" >
+    </div>
+
+    <canvas id="canvasGame" width="800" height="600">></canvas>
+    <p id = "Tweet Paragraph"><b>Use the arrow keys to move!</b></p>
+    <p id = "Nutrient Information"><b>Nutrient information goes here.<b></p>
+
 <div id = "rails-data">
+
 </div>
 
 </article>
-       
+
 </html>
