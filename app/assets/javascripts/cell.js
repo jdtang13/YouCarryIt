@@ -10,7 +10,7 @@ var DEFAULT_NUTRIENT_LEVEL = 500;
 var NUTRIENT_LOSS_QUANTITY = 5;
 var NUTRIENT_EFFICIENCY_FACTOR = 1.1;
 
-var distanceFromCenter = 50;
+var cellRadius = 50;
 var undulationAmplitude = 5;
 
 var plasmidRadius = 4;
@@ -91,8 +91,8 @@ function Cell (worldX,worldY)
 			var atEveryRadians = Math.PI*2/this.cellWallX.length;
         	var undulation = (Math.sin(this.undulationAngle + atEveryRadians*i) * undulationAmplitude);
         	 
-            this.cellWallX[i] = Math.cos(atEveryRadians*i) * (distanceFromCenter + undulation);
-            this.cellWallY[i] = Math.sin(atEveryRadians*i) * (distanceFromCenter + undulation);
+            this.cellWallX[i] = Math.cos(atEveryRadians*i) * (cellRadius + undulation);
+            this.cellWallY[i] = Math.sin(atEveryRadians*i) * (cellRadius + undulation);
         };
     };
 	this.render = function(ctx)
