@@ -1,5 +1,3 @@
-// TODO: Specify actual parameters of our game.
-
 // associated nutrients for each organelle 
 var ORGANELLE_NUTRIENTS = {mitchondrion: "energy", ribosome: "protein", vacuole: "water" };
 

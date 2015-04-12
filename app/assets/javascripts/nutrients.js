@@ -12,9 +12,10 @@ var THETA_CHANGE = .25;
 
 
 /* Glucose nutrient: a rectangle with defined width and height */ 
-function Glucose(worldX, worldY, streamData) {
+function Glucose(worldX, worldY, streamSentiment, streamTweet) {
 	// nutrient is only created when streamData > .5 so  1 <= nutrious Factor <= 2
-	this.nutritiousFactor = streamData * 2; 
+	this.nutritiousFactor = streamSentiment * 2; 
+	this.streamTweet = streamTweet;
 	this.clockwise = false;
 
 	this.feature = "energy";
@@ -49,11 +50,12 @@ function Glucose(worldX, worldY, streamData) {
 
 
 /* Protein nutrient: two diagonal lines */ 
-function Protein(worldX, worldY, streamData) {
+function Protein(worldX, worldY, streamSentiment, streamTweet) {
 	// nutrient is only created when streamData > .5 so  1 <= nutrious Factor <= 2
-	var nutritiousFactor = streamData * 2; 
+	var nutritiousFactor = streamSentiment * 2;
 
 	this.feature = "protein";
+	this.streamTweet = streamTweet;
 
 	this.worldX = worldX;
 	this.worldY = worldY;
@@ -91,9 +93,11 @@ function Protein(worldX, worldY, streamData) {
 }
 
 /* Water nutrient: small blue circle */ 
-function Water(worldX, worldY, streamData) {
+function Water(worldX, worldY, streamSentiment, streamTweet) {
 	// nutrient is only created when streamData > .5 so  1 <= nutrious Factor <= 2
-	this.nutritiousFactor = streamData * 2; 
+	this.nutritiousFactor = streamSentiment * 2; 
+	this.streamTweet = streamTweet;
+	
 	this.clockwise = false;
 
 	this.feature = "water";
