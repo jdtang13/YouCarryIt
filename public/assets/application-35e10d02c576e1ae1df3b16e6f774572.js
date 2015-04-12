@@ -11594,6 +11594,48 @@ return jQuery;
   };
 
 }).call(this);
+var bulletRadius = 7;
+var bulletVelocity =200;
+var deathCooldown = 2;
+function Bullet (worldX,worldY,xVelocity,yVelocity) 
+{
+    this.worldX = worldX;
+    this.worldY = worldY;
+
+    this.xVelocity = xVelocity;
+    this.yVelocity = yVelocity;
+
+    this.deathTimer = 0;
+    this.dead = false;
+
+    this.update = function(dt)
+    {
+        if(!this.dead)
+        {
+            this.deathTimer += dt;
+            if(this.deathTimer > deathCooldown)
+            {
+                this.dead = true;
+            }
+        }
+
+        this.worldX += this.xVelocity * dt * bulletVelocity;
+        this.worldY += this.yVelocity * dt * bulletVelocity;
+    };
+	this.render = function(ctx, cameraX, cameraY)
+    {
+        var screenX = this.worldX - cameraX + 400;
+        var screenY = this.worldY - cameraY + 300;
+
+        //  Rendering center of bacteria 
+        ctx.beginPath();
+        ctx.arc(screenX, screenY, bulletRadius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = 'orange';
+        ctx.fill();
+        ctx.closePath();
+	};
+}
+;
 var updating = true; 
 
 // find hash for String
@@ -11613,6 +11655,9 @@ function hasher(tweet) {
 var img = new Image();
 img.src = '/assets/images/backdrop0-2c363a96759b923e853c1dae858ac3bb.jpg'
 
+var playerSpeed = 200;
+
+
 function runGame(first,second,third)
 {
 var ctx = document.getElementById('canvasGame').getContext('2d');  
@@ -11620,6 +11665,12 @@ var ctx = document.getElementById('canvasGame').getContext('2d');
 
 var freeFloatingOrganelles = new Array();
 var freeFloatingNutrients = new Array();
+var enemies = new Array();
+var bullets = new Array();
+
+var cameraX = 0;
+var cameraY = 0;
+
 
 var createOrganelle = function(type, worldX, worldY)
 {
@@ -11737,7 +11788,7 @@ var populateTweets = function()
 				}
 			};
 
-			// create organelles based off of tweets, randomly, or what?
+			// create organelles based off of tweets, Math.random()omly, or what?
 
 			createOrganelle("mito",hash % 650,hash % 500);
 
@@ -11746,50 +11797,67 @@ var populateTweets = function()
 }
 
 else {
-	var limitRails = 15;
+
+	var limitRails = 3;
 
 	var hash;
 	for (var i = 0; i < limitRails; i++) {
 		// create nutrient
-		if (rand > .5) {
-			createNutrient("glucose", (rand * 600), (rand * 400), 
-				rand, "Gonna be some tough matches for Man");
+		if (Math.random() > .5) {
+			createNutrient("glucose", (Math.random() * 800), (Math.random() * 600), 
+				Math.random(), "Gonna be some tough matches for Man");
 		}
 	};
 
-	createOrganelle("vacu",rand * 650,rand * 500);
+	createOrganelle("vacu",Math.random() * 800,Math.random() * 600);
 
 
 	for (var i = 0; i < limitRails; i++) {
 		// create nutrient
-		if (rand > .5) {
-			createNutrient("protein", (rand * 600), (rand * 400), 
-				rand, "THE VENUE IS SO HUGE! SEATING CAPACITY IS THE SAME AS TOKYO DOME!");
+		if (Math.random() > .5) {
+			createNutrient("protein", (Math.random() * 800), (Math.random() * 600), 
+				Math.random(), "THE VENUE IS SO HUGE! SEATING CAPACITY IS THE SAME AS TOKYO DOME!");
 		}
 	};
 
-	createOrganelle("ribo",rand * 650,rand * 500);
+	createOrganelle("ribo",Math.random() * 800,Math.random() * 600);
 
 	for (var i = 0; i < limitRails; i++) {
 		// create nutrient
-		if (rand > .5) {
-			createNutrient("water", (rand * 600), (rand * 400), 
-				rand, "RT @NiallOfficial: What a day @TheMasters ");
+		if (Math.random() > .5) {
+			createNutrient("water", (Math.random() * 800), (Math.random() * 600), 
+				Math.random(), "RT @NiallOfficial: What a day @TheMasters ");
 		}
 	};
 
-	// create organelles based off of tweets, randomly, or what?
+	// create organelles based off of tweets, Math.random()omly, or what?
 
-	createOrganelle("mito",rand * 650,rand * 500);
+	createOrganelle("mito",Math.random() * 800,Math.random() * 600);
 }
 
 };
+var createEnemy = function(worldX, worldY)
+{
+	enemies.push(new Enemy(worldX,worldY));
+}
+
 
 var cell = new Cell(100,100);
 
+var oldTime = Date.now() - 10001;
+
+createOrganelle("vacu",200,400);
+createOrganelle("vacu",200,500);
+createOrganelle("vacu",200,600);
+createOrganelle("vacu",300,200);
+createEnemy(450,350);
+createEnemy(350,350);
+
 var update = function(dt)
 {
-    populateTweets();
+
+	cameraX = cell.worldX;
+	cameraY = cell.worldY;
 
 	input(dt);
 
@@ -11799,9 +11867,20 @@ var update = function(dt)
 		freeFloatingOrganelles[i].update(dt);
 	};
 
-	for (var i = 0; i < freeFloatingNutrients.length; i++) {
-		freeFloatingNutrients[i].update(dt);
-	}
+
+	for (var i = 0; i < enemies.length; i++) {
+		enemies[i].update(dt);
+	};
+	for (var i = 0; i < bullets.length; i++) {
+		bullets[i].update(dt);
+		if(bullets[i].dead)
+		{
+			bullets.splice(i,1);
+			i--;
+		}
+	};
+
+	enemyAI();
 
 	checkCollisions();
 };
@@ -11826,19 +11905,19 @@ var input = function(dt)
 {
 	if(keysDown[39])//Right
 	{
-		cell.worldX += 5;
+		cell.worldX += playerSpeed*dt;
 	}
 	if(keysDown[38])//Up
 	{
-		cell.worldY -= 5;
+		cell.worldY -= playerSpeed*dt;
 	}
 	if(keysDown[37])//Left
 	{
-		cell.worldX -= 5;
+		cell.worldX -= playerSpeed*dt;
 	}
 	if(keysDown[40])//Down
 	{
-		cell.worldY += 5;
+		cell.worldY += playerSpeed*dt;
 	}
 };
 
@@ -11853,12 +11932,15 @@ var checkCollisions = function()
 		if(distanceBetweenCellAndOrganelle < cellRadius + organelleRadius)
 		{
 			//  We have a collision	between cell and organelle
+
 			cell.addOrganelle(freeFloatingOrganelles[i]);//	Add to cells organelle list		
 			freeFloatingOrganelles.splice(i,1);//  Delete from array add to cell 
 			//		Play absorption sound
 			//		Create particle effect
 		}
-	};	
+	};
+
+	//  Collecting nutrients	
 	for (var i = 0; i < freeFloatingNutrients.length; i++) 
 	{
 		var distanceBetweenCellAndNutrient = 
@@ -11886,28 +11968,77 @@ var checkCollisions = function()
 		}
 	};	
 
+	//  Collecting bullets
+	for (var i = 0; i < bullets.length; i++) 
+	{
+		var distanceBetweenCellAndBullet = 
+			Math.sqrt(Math.pow(cell.worldX-bullets[i].worldX,2) + 
+					  Math.pow(cell.worldY-bullets[i].worldY,2));
+
+		if(distanceBetweenCellAndBullet < cellCollisionRadius + bulletRadius)
+		{
+			//  We have a collision	between cell and bullet
+			bullets.splice(i,1);//  Delete from array
+			//		Hurt player
+			//		Create particle effect		
+			//		Play ouch sound	
+
+		}
+	};	
 };
 
 
+var enemyAI = function()
+{
+	for (var i = 0; i < enemies.length; i++) {
+			if(enemies[i].canShoot)
+			{
+				var xToPlayer = cell.worldX-enemies[i].worldX;
+				var yToPlayer = cell.worldY-enemies[i].worldY;
+
+				var distanceBetweenCellAndEnemy = 
+					Math.sqrt(Math.pow(xToPlayer,2) + 
+					  	      Math.pow(yToPlayer,2));
+				if(distanceBetweenCellAndEnemy< enemyRange)
+				{
+					//  Enemy is in range of player
+					enemies[i].canShoot = false;
+
+
+					bullets.push(new Bullet(
+						enemies[i].worldX,
+						enemies[i].worldY,
+						xToPlayer/distanceBetweenCellAndEnemy,
+						yToPlayer/distanceBetweenCellAndEnemy));
+				}
+			}
+		};	
+};
+
 var render = function()
 {
+	// Drawing background
+	ctx.beginPath();
+	ctx.fillStyle = 'black';
+	ctx.fillRect(0,0,800,600);
+	ctx.closePath();
+
+
 	ctx.drawImage(img,0,0);
-	// ctx.beginPath();
-	// ctx.fillStyle = 'white';
-	// ctx.fillRect(0,0,800,600);
-	// ctx.closePath();
-	//  Check if images is ready
-	//		Dislay image, ctx.drawImage();
-
+	
 	for (var i = 0; i < freeFloatingOrganelles.length; i++) {
-		freeFloatingOrganelles[i].render(ctx);
+		freeFloatingOrganelles[i].render(ctx,cameraX,cameraY);
 	};
 
-	for (var i = 0; i < freeFloatingNutrients.length; i++) {
-		freeFloatingNutrients[i].render(ctx);
+	for (var i = 0; i < bullets.length; i++) {
+		bullets[i].render(ctx, cameraX,cameraY);
 	};
 
-	cell.render(ctx);
+	for (var i = 0; i < enemies.length; i++) {
+		enemies[i].render(ctx, cameraX,cameraY);
+	};
+
+	cell.render(ctx, cameraX,cameraY);
 }
 
 
@@ -11952,6 +12083,7 @@ main();
 }//  End of run game
 
 
+
 function createGame()
 {
 	var forms = document.getElementById('threeOptions');
@@ -11979,8 +12111,10 @@ function createGame()
 
 };
 
+
 // change in angle in radians by which free organelle moves */
 var THETA_CHANGE = .25;
+
 
 // maximum factor of radius from which ingested organelle can be from center 
 var ORGANELLE_DISTANCE_FACTOR = (2/3);
@@ -12000,7 +12134,7 @@ var wallPieceRadius = 1.75;
 
 var cellCollisionRadius = 30;
 var minimumOrganelleDistance = 15;
-var maxOrganelleDistance = 20;
+var maxOrganelleDistance = 35;
 
 function Cell (worldX,worldY) 
 {
@@ -12021,7 +12155,9 @@ function Cell (worldX,worldY)
     };
 
     this.organelles = {mitochondria: {}, ribosomes: {}, vacuoles: {}};
+
     this.allOrganelles = new Array();
+
 
     this.nutrientLevels = { 
         energyLevel: DEFAULT_NUTRIENT_LEVEL, 
@@ -12034,6 +12170,7 @@ function Cell (worldX,worldY)
         waterLoss: NUTRIENT_LOSS_QUANTITY};
 
     this.addOrganelle = function(organelle) {
+
         var xToOrganelle = organelle.worldX - this.worldX;
         var yToOrganelle = organelle.worldY - this.worldY;
 
@@ -12052,16 +12189,20 @@ function Cell (worldX,worldY)
         if (ORGANELLE_NUTRIENTS[organelle] === "energy") {
             this.nutrientLossQuantity.energyLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
             this.organelles["mitochondria"].push(organelle);
+
         }
 
         if (ORGANELLE_NUTRIENTS[organelle] === "protein") {
             this.nutrientLossQuantity.proteinLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
+
             this.organelles["ribosomes"].push(organelle);
         }
 
         if (ORGANELLE_NUTRIENTS[organelle] === "vacuole") {
             this.nutrientLossQuantity.waterLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
+
             this.organelles["vacuoles"].push(organelle);
+
         }
     };
 
@@ -12076,18 +12217,10 @@ function Cell (worldX,worldY)
     {
         this.expendResources();
 
+
         for (var i = 0; i < this.allOrganelles.length; i++) {
             this.allOrganelles[i].update(dt);
-        };
 
-        for (var i = 0; i < this.organelles["mitochondria"].length; i++) {
-            this.organelles["mitochondria"][i].update(dt);
-        };
-        for (var i = 0; i < this.organelles["ribosomes"].length; i++) {
-            this.organelles["ribosomes"][i].update(dt);
-        };
-        for (var i = 0; i < this.organelles["vacuoles"].length; i++) {
-            this.organelles["vacuoles"][i].update(dt);
         };
 
         //  The undulating of cell walls
@@ -12105,24 +12238,20 @@ function Cell (worldX,worldY)
             this.cellWallY[i] = Math.sin(atEveryRadians*i) * (cellRadius + undulation + growth);
         };
     };
-	this.render = function(ctx)
+	this.render = function(ctx, cameraX,cameraY)
 	{
+
+        var screenX = this.worldX - cameraX + 400;
+        var screenY = this.worldY - cameraY + 300;
+
         for (var i = 0; i < this.allOrganelles.length; i++) {
-            this.allOrganelles[i].render(ctx,this.worldX,this.worldY);
+            this.allOrganelles[i].render(ctx,0,0,screenX,screenY);
         };
-        //  Rendering this.organelles
-        for (var i = 0; i < this.organelles["mitochondria"].length; i++) {
-            this.organelles["mitochondria"][i].render(ctx,this.worldX,this.worldY);
-        };
-        for (var i = 0; i < this.organelles["ribosomes"].length; i++) {
-            this.organelles["ribosomes"][i].render(ctx,this.worldX,this.worldY);
-        };
-        for (var i = 0; i < this.organelles["vacuoles"].length; i++) {
-            this.organelles["vacuoles"][i].render(ctx,this.worldX,this.worldY);
-        };
+
         //  Rendering center of bacteria 
         ctx.beginPath();
-        ctx.arc(this.worldX, this.worldY, this.centerRadius, 0, 2 * Math.PI, false);
+        ctx.arc(screenX,screenY, this.centerRadius, 0, 2 * Math.PI, false);
+
         ctx.fillStyle = 'red';
         ctx.fill();
         ctx.closePath();
@@ -12130,27 +12259,90 @@ function Cell (worldX,worldY)
         //  "Wall" rendering
         for (var i = 0; i < this.cellWallX.length; i++) {
         	ctx.beginPath();
-            ctx.arc(this.worldX + this.cellWallX[i], this.worldY + this.cellWallY[i], wallPieceRadius, 0 , 2*Math.PI, false);
+
+            ctx.arc(screenX + this.cellWallX[i], screenY + this.cellWallY[i], wallPieceRadius, 0 , 2*Math.PI, false);
+
             ctx.fillStyle = 'blue';
         	ctx.fill();  
             ctx.closePath();          
         };
 	};
 
-    
-   
-        // If you die (have no nutrient levels for at least one nutrient), die.
-        // If you have ripe nutrient levels for all, engage in asexual reproduction.
-        // Battle?
-
-    
-        // TODO: Create nutrient classes, draw nutrients, handle nutrient ingestion, and passage of nutrients to bacterium 
-
 }
 ;
-function Enemy(worldX, worldY, streamData) {
-	// TODO: Create enemy if streamData <= .5, the lower the streamData, the more powerful the enemy.
-	// Enemy launches enzymes at nearby bacteria to potentially harm/destroy them (THE HORROR!)
+
+var enemyRadius = 30;
+var enemyCenterRadius = 5;
+var enemyRange = 300;
+var enemyWallThickness = 1;
+var enemyBulletCooldown = 2;
+function Enemy (worldX,worldY) 
+{
+    this.canShoot = true;
+    this.canShootTimer = 0;
+
+    this.worldX = worldX;
+    this.worldY = worldY;
+
+    //Cell wall
+    this.cellWallX = new Array();
+    this.cellWallY = new Array();
+    this.undulationAngle = 0;
+    this.undulationSpeed = 0.01;
+
+    this.centerRadius = plasmidRadius;
+
+    for (var i = 0; i < 360; i++) {
+        this.cellWallX.push(0);
+        this.cellWallY.push(0);
+    };
+
+    this.update = function(dt)
+    {
+        //Resetting cooldowns
+        if(!this.canShoot)
+        {
+            this.canShootTimer+=dt;
+            if(this.canShootTimer>enemyBulletCooldown)
+            {
+                this.canShootTimer -= enemyBulletCooldown;
+                this.canShoot = true;
+            }
+        }
+
+        //  The undulating of cell walls
+        this.undulationAngle += this.undulationSpeed*2;
+
+        for (var i = 0; i < this.cellWallX.length; i++) 
+        {
+			var atEveryRadians = Math.PI*2/this.cellWallX.length;
+        	var undulation = Math.sin((this.undulationAngle + atEveryRadians*i)*4) * undulationAmplitude;
+        	 
+            this.cellWallX[i] = Math.cos(atEveryRadians*i) * (enemyRadius + undulation);
+            this.cellWallY[i] = Math.sin(atEveryRadians*i) * (enemyRadius + undulation);
+        };
+    };
+	this.render = function(ctx, cameraX, cameraY)
+    {
+        var screenX = this.worldX - cameraX + 400;
+        var screenY = this.worldY - cameraY + 300;
+
+        //  Rendering center of bacteria 
+        ctx.beginPath();
+        ctx.arc(screenX, screenY, enemyCenterRadius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = 'black';
+        ctx.fill();
+        ctx.closePath();
+
+        //  "Wall" rendering
+        for (var i = 0; i < this.cellWallX.length; i++) {
+        	ctx.beginPath();
+            ctx.arc(screenX + this.cellWallX[i], screenY + this.cellWallY[i], enemyWallThickness, 0 , 2*Math.PI, false);
+            ctx.fillStyle = 'red';
+        	ctx.fill();  
+            ctx.closePath();          
+        };
+	};
 }
 ;
 
@@ -12384,26 +12576,27 @@ function Mitochondrion (worldX, worldY)
 	this.angleFromCenter = 0;
 
 	this.distanceFromCenter = 0;
+
 	this.relativeX = 0;
 	this.relativeY = 0;
 
-	this.theta = 0;
 
 	this.floatDirection = 0;
 	if(Math.random()>0.5)
 	{
 		this.floatDirection = 1;
 	}
+	this.speed = organelleFloatSpeed + (Math.random()/4);
 	
 	this.update = function(dt) 
 	{
 		if(this.floatDirection == 0)
 		{
-			this.angleFromCenter -= organelleFloatSpeed;
+			this.angleFromCenter -= this.speed;
 		}
 		else
 		{
-			this.angleFromCenter += organelleFloatSpeed;
+			this.angleFromCenter += this.speed;
 		}
 
 
@@ -12414,19 +12607,26 @@ function Mitochondrion (worldX, worldY)
 	};
 
 	// handle stylistics
-	this.render = function(ctx, cx, cy)
+	this.render = function(ctx,cameraX, cameraY, cx, cy )
 	{
+		if(cameraX !== undefined)
+		{
+			var screenX = this.worldX - cameraX + 400;
+	        var screenY = this.worldY - cameraY + 300;
+		}
+
 		ctx.beginPath();
 
 		// if organelle is not ingested
 		if (cx === undefined) 
 		{
-			ctx.arc(this.worldX,  this.worldY, MITOCHONDRION_OUTER_RADIUS, 0, Math.PI*2);
+
+			ctx.arc(screenX,  screenY, MITOCHONDRION_OUTER_RADIUS, 0, Math.PI*2);
 			ctx.closePath();
 			ctx.fillStyle = "#00ff00";
 			ctx.fill();
 			ctx.beginPath();
-			ctx.arc(this.worldX,  this.worldY, MITOCHONDRION_INNER_RADIUS, 0, Math.PI*2);
+			ctx.arc(screenX,  screenY, MITOCHONDRION_INNER_RADIUS, 0, Math.PI*2);
 			ctx.closePath();
 			ctx.fillStyle = "#8FFF8F";
 			ctx.fill();
@@ -12448,6 +12648,7 @@ function Mitochondrion (worldX, worldY)
 			ctx.fill();
 			this.worldX = cx + this.relativeX;
 			this.worldX = cy + this.relativeY;
+
 		}
 	};
 }
@@ -12462,6 +12663,7 @@ function Ribosome(worldX, worldY)
 
 	this.angleFromCenter = 0;
 	this.distanceFromCenter = 0;
+
 	this.relativeX = 0;
 	this.relativeY = 0;
 
@@ -12472,36 +12674,44 @@ function Ribosome(worldX, worldY)
 	{
 		this.floatDirection = 1;
 	}
+	this.speed = organelleFloatSpeed + (Math.random()/4);
 	
 	this.update = function(dt) 
 	{
 		if(this.floatDirection == 0)
 		{
-			this.angleFromCenter -= organelleFloatSpeed;
+			this.angleFromCenter -= this.speed;
 		}
 		else
 		{
-			this.angleFromCenter += organelleFloatSpeed;
+			this.angleFromCenter += this.speed;
 		}
-
 
 		this.relativeX = (Math.cos(this.angleFromCenter) * this.distanceFromCenter);
 		this.relativeY = (Math.sin(this.angleFromCenter) * this.distanceFromCenter);
-		this.theta += THETA_CHANGE;
+
 	};
 
 	// Ribosome is rendered as small circle
 	// TODO: stylistics
-	this.render = function(ctx, cx, cy)
+
+	this.render = function(ctx, cameraX, cameraY,cx, cy)
 	{
+		if(cameraX !== undefined)
+		{
+			var screenX = this.worldX - cameraX + 400;
+	        var screenY = this.worldY - cameraY + 300;
+		}
+
 		ctx.beginPath();
 		if (cx === undefined)
 		{ 
-			ctx.arc(this.worldX, this.worldY, RIBOSOME_RADIUS, 0, Math.PI*2);
+			ctx.arc(screenX, screenY, RIBOSOME_RADIUS, 0, Math.PI*2);
 		}
 		else 
 		{
 			ctx.arc(cx + this.relativeX, cy + this.relativeY, RIBOSOME_RADIUS, 0, Math.PI*2);
+
 			this.worldX = this.relativeX;
 			this.worldY = this.relativeY;
 		}
@@ -12520,6 +12730,7 @@ function Vacuole (worldX, worldY)
 
 	this.angleFromCenter = 0;
 	this.distanceFromCenter = 0;
+
 	this.relativeX = 0;
 	this.relativeY = 0;
 
@@ -12530,16 +12741,17 @@ function Vacuole (worldX, worldY)
 	{
 		this.floatDirection = 1;
 	}
+	this.speed = organelleFloatSpeed + (Math.random()/4);
 	
 	this.update = function(dt) 
 	{
 		if(this.floatDirection == 0)
 		{
-			this.angleFromCenter -= organelleFloatSpeed;
+			this.angleFromCenter -= this.speed;
 		}
 		else
 		{
-			this.angleFromCenter += organelleFloatSpeed;
+			this.angleFromCenter += this.speed;
 		}
 
 
@@ -12547,17 +12759,24 @@ function Vacuole (worldX, worldY)
 		this.relativeY = (Math.sin(this.angleFromCenter) * this.distanceFromCenter);
 	};
 
-	this.render = function(ctx, cx, cy)
+	this.render = function(ctx,cameraX, cameraY, cx, cy )
 	{
+		if(cameraX !== undefined)
+		{
+			var screenX = this.worldX - cameraX + 400;
+	        var screenY = this.worldY - cameraY + 300;
+		}
+
 		ctx.beginPath();
 
 		if (cx === undefined) 
 		{
-			ctx.arc(this.worldX,  this.worldY, VACUOLE_RADIUS, 0, Math.PI*2);
+			ctx.arc(screenX, screenY, VACUOLE_RADIUS, 0, Math.PI*2);
 		}
 		else 
 		{
 			ctx.arc(cx + this.relativeX, cy + this.relativeY, VACUOLE_RADIUS, 0, Math.PI*2);
+
 			this.worldX = this.relativeX;
 			this.worldY = this.relativeY;
 		}

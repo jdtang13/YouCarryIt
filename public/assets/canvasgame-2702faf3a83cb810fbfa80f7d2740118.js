@@ -17,6 +17,9 @@ function hasher(tweet) {
 var img = new Image();
 img.src = '/assets/images/backdrop0-2c363a96759b923e853c1dae858ac3bb.jpg'
 
+var playerSpeed = 200;
+
+
 function runGame(first,second,third)
 {
 var ctx = document.getElementById('canvasGame').getContext('2d');  
@@ -24,6 +27,12 @@ var ctx = document.getElementById('canvasGame').getContext('2d');
 
 var freeFloatingOrganelles = new Array();
 var freeFloatingNutrients = new Array();
+var enemies = new Array();
+var bullets = new Array();
+
+var cameraX = 0;
+var cameraY = 0;
+
 
 var createOrganelle = function(type, worldX, worldY)
 {
@@ -63,7 +72,7 @@ var createNutrient = function(type, worldX, worldY, streamSentiment, streamTweet
 	}
 };
 
-var twitter_factor = 1;
+var twitter_factor = 0;
 
 var firstStreamSentiments = [0.10205818815304715, 0.3506799629915738];
 var secondStreamSentiments = [0.8173114933262084];
@@ -86,72 +95,131 @@ var populateTweets = function()
 		var rawRailsData = rawRailsString.split("~");
 	}
 
-	if (rawRailsData.length > 1 && rawRailsData[rawRailsData.length-1] != lastTweet) {
+	if (twitter_factor) {
 
-		for (var i = 0; i < rawRailsData.length - 1; i += 2) {
-			var tweets = firstStreamTweets;
-			var sents = firstStreamSentiments;
-			if (i % 3 == 1) {
-				tweets = secondStreamTweets;
-				sents = secondStreamSentiments;
+		if (rawRailsData.length > 1 && rawRailsData[rawRailsData.length-1] != lastTweet) {
+
+			for (var i = 0; i < rawRailsData.length - 1; i += 2) {
+				var tweets = firstStreamTweets;
+				var sents = firstStreamSentiments;
+				if (i % 3 == 1) {
+					tweets = secondStreamTweets;
+					sents = secondStreamSentiments;
+				}
+				else if (i % 3 == 2) {
+					tweets = thirdStreamTweets;
+					sents = thirdStreamSentiments;
+				}
+
+				tweets.push(rawRailsData[i+1]);
+				sents.push(rawRailsData[i])
+
+				lastTweet = rawRailsData[i+1];
 			}
-			else if (i % 3 == 2) {
-				tweets = thirdStreamTweets;
-				sents = thirdStreamSentiments;
-			}
 
-			tweets.push(rawRailsData[i+1]);
-			sents.push(rawRailsData[i])
+			var hash;
+			for (var i = 0; i < firstStreamSentiments.length; i++) {
+				// create nutrient
+				if (firstStreamSentiments[i] > .5) {
+					hash = hasher(firstStreamTweets[i]);
+					createNutrient("glucose", (hash % 600), (hash % 400), 
+						firstStreamSentiments[i], firstStreamTweets[i]);
+				}
+			};
 
-			lastTweet = rawRailsData[i+1];
+			createOrganelle("vacu",hash % 650,hash % 500);
+
+
+			for (var i = 0; i < secondStreamSentiments.length; i++) {
+				// create nutrient
+				if (secondStreamSentiments[i] > .5) {
+					hash = hasher(secondStreamTweets[i]);
+					createNutrient("protein", (hash % 600), (hash % 400), 
+						secondStreamSentiments[i], secondStreamTweets[i]);
+				}
+			};
+
+			createOrganelle("ribo",hash % 650,hash % 500);
+
+			for (var i = 0; i < thirdStreamSentiments.length; i++) {
+				// create nutrient
+				if (thirdStreamSentiments[i] > .5) {
+					hash = hasher(thirdStreamTweets[i]);
+					createNutrient("water", (hash % 600), (hash % 400), 
+						thirdStreamSentiments[i], thirdStreamTweets[i]);
+				}
+			};
+
+			// create organelles based off of tweets, Math.random()omly, or what?
+
+			createOrganelle("mito",hash % 650,hash % 500);
+
 		}
 
-		var hash;
-		for (var i = 0; i < firstStreamSentiments.length; i++) {
-			// create nutrient
-			if (firstStreamSentiments[i] > .5) {
-				hash = hasher(firstStreamTweets[i]);
-				createNutrient("glucose", (hash % 600), (hash % 400), 
-					firstStreamSentiments[i], firstStreamTweets[i]);
-			}
-		};
+}
 
-		createOrganelle("vacu",hash % 650,hash % 500);
+else {
+
+	var limitRails = 3;
+
+	var hash;
+	for (var i = 0; i < limitRails; i++) {
+		// create nutrient
+		if (Math.random() > .5) {
+			createNutrient("glucose", (Math.random() * 800), (Math.random() * 600), 
+				Math.random(), "Gonna be some tough matches for Man");
+		}
+	};
+
+	createOrganelle("vacu",Math.random() * 800,Math.random() * 600);
 
 
-		for (var i = 0; i < secondStreamSentiments.length; i++) {
-			// create nutrient
-			if (secondStreamSentiments[i] > .5) {
-				hash = hasher(secondStreamTweets[i]);
-				createNutrient("protein", (hash % 600), (hash % 400), 
-					secondStreamSentiments[i], secondStreamTweets[i]);
-			}
-		};
+	for (var i = 0; i < limitRails; i++) {
+		// create nutrient
+		if (Math.random() > .5) {
+			createNutrient("protein", (Math.random() * 800), (Math.random() * 600), 
+				Math.random(), "THE VENUE IS SO HUGE! SEATING CAPACITY IS THE SAME AS TOKYO DOME!");
+		}
+	};
 
-		createOrganelle("ribo",hash % 650,hash % 500);
+	createOrganelle("ribo",Math.random() * 800,Math.random() * 600);
 
-		for (var i = 0; i < thirdStreamSentiments.length; i++) {
-			// create nutrient
-			if (thirdStreamSentiments[i] > .5) {
-				hash = hasher(thirdStreamTweets[i]);
-				createNutrient("water", (hash % 600), (hash % 400), 
-					thirdStreamSentiments[i], thirdStreamTweets[i]);
-			}
-		};
+	for (var i = 0; i < limitRails; i++) {
+		// create nutrient
+		if (Math.random() > .5) {
+			createNutrient("water", (Math.random() * 800), (Math.random() * 600), 
+				Math.random(), "RT @NiallOfficial: What a day @TheMasters ");
+		}
+	};
 
-		// create organelles based off of tweets, randomly, or what?
+	// create organelles based off of tweets, Math.random()omly, or what?
 
-		createOrganelle("mito",hash % 650,hash % 500);
-
-	}
+	createOrganelle("mito",Math.random() * 800,Math.random() * 600);
+}
 
 };
+var createEnemy = function(worldX, worldY)
+{
+	enemies.push(new Enemy(worldX,worldY));
+}
+
 
 var cell = new Cell(100,100);
 
+var oldTime = Date.now() - 10001;
+
+createOrganelle("vacu",200,400);
+createOrganelle("vacu",200,500);
+createOrganelle("vacu",200,600);
+createOrganelle("vacu",300,200);
+createEnemy(450,350);
+createEnemy(350,350);
+
 var update = function(dt)
 {
-    populateTweets();
+
+	cameraX = cell.worldX;
+	cameraY = cell.worldY;
 
 	input(dt);
 
@@ -161,9 +229,20 @@ var update = function(dt)
 		freeFloatingOrganelles[i].update(dt);
 	};
 
-	for (var i = 0; i < freeFloatingNutrients.length; i++) {
-		freeFloatingNutrients[i].update(dt);
-	}
+
+	for (var i = 0; i < enemies.length; i++) {
+		enemies[i].update(dt);
+	};
+	for (var i = 0; i < bullets.length; i++) {
+		bullets[i].update(dt);
+		if(bullets[i].dead)
+		{
+			bullets.splice(i,1);
+			i--;
+		}
+	};
+
+	enemyAI();
 
 	checkCollisions();
 };
@@ -188,19 +267,19 @@ var input = function(dt)
 {
 	if(keysDown[39])//Right
 	{
-		cell.worldX += 5;
+		cell.worldX += playerSpeed*dt;
 	}
 	if(keysDown[38])//Up
 	{
-		cell.worldY -= 5;
+		cell.worldY -= playerSpeed*dt;
 	}
 	if(keysDown[37])//Left
 	{
-		cell.worldX -= 5;
+		cell.worldX -= playerSpeed*dt;
 	}
 	if(keysDown[40])//Down
 	{
-		cell.worldY += 5;
+		cell.worldY += playerSpeed*dt;
 	}
 };
 
@@ -215,12 +294,15 @@ var checkCollisions = function()
 		if(distanceBetweenCellAndOrganelle < cellRadius + organelleRadius)
 		{
 			//  We have a collision	between cell and organelle
+
 			cell.addOrganelle(freeFloatingOrganelles[i]);//	Add to cells organelle list		
 			freeFloatingOrganelles.splice(i,1);//  Delete from array add to cell 
 			//		Play absorption sound
 			//		Create particle effect
 		}
-	};	
+	};
+
+	//  Collecting nutrients	
 	for (var i = 0; i < freeFloatingNutrients.length; i++) 
 	{
 		var distanceBetweenCellAndNutrient = 
@@ -248,28 +330,77 @@ var checkCollisions = function()
 		}
 	};	
 
+	//  Collecting bullets
+	for (var i = 0; i < bullets.length; i++) 
+	{
+		var distanceBetweenCellAndBullet = 
+			Math.sqrt(Math.pow(cell.worldX-bullets[i].worldX,2) + 
+					  Math.pow(cell.worldY-bullets[i].worldY,2));
+
+		if(distanceBetweenCellAndBullet < cellCollisionRadius + bulletRadius)
+		{
+			//  We have a collision	between cell and bullet
+			bullets.splice(i,1);//  Delete from array
+			//		Hurt player
+			//		Create particle effect		
+			//		Play ouch sound	
+
+		}
+	};	
 };
 
 
+var enemyAI = function()
+{
+	for (var i = 0; i < enemies.length; i++) {
+			if(enemies[i].canShoot)
+			{
+				var xToPlayer = cell.worldX-enemies[i].worldX;
+				var yToPlayer = cell.worldY-enemies[i].worldY;
+
+				var distanceBetweenCellAndEnemy = 
+					Math.sqrt(Math.pow(xToPlayer,2) + 
+					  	      Math.pow(yToPlayer,2));
+				if(distanceBetweenCellAndEnemy< enemyRange)
+				{
+					//  Enemy is in range of player
+					enemies[i].canShoot = false;
+
+
+					bullets.push(new Bullet(
+						enemies[i].worldX,
+						enemies[i].worldY,
+						xToPlayer/distanceBetweenCellAndEnemy,
+						yToPlayer/distanceBetweenCellAndEnemy));
+				}
+			}
+		};	
+};
+
 var render = function()
 {
+	// Drawing background
+	ctx.beginPath();
+	ctx.fillStyle = 'black';
+	ctx.fillRect(0,0,800,600);
+	ctx.closePath();
+
+
 	ctx.drawImage(img,0,0);
-	// ctx.beginPath();
-	// ctx.fillStyle = 'white';
-	// ctx.fillRect(0,0,800,600);
-	// ctx.closePath();
-	//  Check if images is ready
-	//		Dislay image, ctx.drawImage();
-
+	
 	for (var i = 0; i < freeFloatingOrganelles.length; i++) {
-		freeFloatingOrganelles[i].render(ctx);
+		freeFloatingOrganelles[i].render(ctx,cameraX,cameraY);
 	};
 
-	for (var i = 0; i < freeFloatingNutrients.length; i++) {
-		freeFloatingNutrients[i].render(ctx);
+	for (var i = 0; i < bullets.length; i++) {
+		bullets[i].render(ctx, cameraX,cameraY);
 	};
 
-	cell.render(ctx);
+	for (var i = 0; i < enemies.length; i++) {
+		enemies[i].render(ctx, cameraX,cameraY);
+	};
+
+	cell.render(ctx, cameraX,cameraY);
 }
 
 
@@ -314,6 +445,7 @@ main();
 }//  End of run game
 
 
+
 function createGame()
 {
 	var forms = document.getElementById('threeOptions');
@@ -340,3 +472,4 @@ function createGame()
     });
 
 };
+

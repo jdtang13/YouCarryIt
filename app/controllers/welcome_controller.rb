@@ -93,9 +93,6 @@ class WelcomeController < ApplicationController
 
   def index
 
-	  # client = makeClient
-
-	  # @tweet_limit = MAX_TWEETS
 	  # count = 0
 
 	  # require 'indico'

@@ -2,6 +2,7 @@
 // change in angle in radians by which free organelle moves */
 var THETA_CHANGE = .25;
 
+
 // maximum factor of radius from which ingested organelle can be from center 
 var ORGANELLE_DISTANCE_FACTOR = (2/3);
 
@@ -20,7 +21,7 @@ var wallPieceRadius = 1.75;
 
 var cellCollisionRadius = 30;
 var minimumOrganelleDistance = 15;
-var maxOrganelleDistance = 20;
+var maxOrganelleDistance = 35;
 
 function Cell (worldX,worldY) 
 {
@@ -41,7 +42,9 @@ function Cell (worldX,worldY)
     };
 
     this.organelles = {mitochondria: {}, ribosomes: {}, vacuoles: {}};
+
     this.allOrganelles = new Array();
+
 
     this.nutrientLevels = { 
         energyLevel: DEFAULT_NUTRIENT_LEVEL, 
@@ -54,6 +57,7 @@ function Cell (worldX,worldY)
         waterLoss: NUTRIENT_LOSS_QUANTITY};
 
     this.addOrganelle = function(organelle) {
+
         var xToOrganelle = organelle.worldX - this.worldX;
         var yToOrganelle = organelle.worldY - this.worldY;
 
@@ -72,16 +76,20 @@ function Cell (worldX,worldY)
         if (ORGANELLE_NUTRIENTS[organelle] === "energy") {
             this.nutrientLossQuantity.energyLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
             this.organelles["mitochondria"].push(organelle);
+
         }
 
         if (ORGANELLE_NUTRIENTS[organelle] === "protein") {
             this.nutrientLossQuantity.proteinLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
+
             this.organelles["ribosomes"].push(organelle);
         }
 
         if (ORGANELLE_NUTRIENTS[organelle] === "vacuole") {
             this.nutrientLossQuantity.waterLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
+
             this.organelles["vacuoles"].push(organelle);
+
         }
     };
 
@@ -96,18 +104,10 @@ function Cell (worldX,worldY)
     {
         this.expendResources();
 
+
         for (var i = 0; i < this.allOrganelles.length; i++) {
             this.allOrganelles[i].update(dt);
-        };
 
-        for (var i = 0; i < this.organelles["mitochondria"].length; i++) {
-            this.organelles["mitochondria"][i].update(dt);
-        };
-        for (var i = 0; i < this.organelles["ribosomes"].length; i++) {
-            this.organelles["ribosomes"][i].update(dt);
-        };
-        for (var i = 0; i < this.organelles["vacuoles"].length; i++) {
-            this.organelles["vacuoles"][i].update(dt);
         };
 
         //  The undulating of cell walls
@@ -125,24 +125,20 @@ function Cell (worldX,worldY)
             this.cellWallY[i] = Math.sin(atEveryRadians*i) * (cellRadius + undulation + growth);
         };
     };
-	this.render = function(ctx)
+	this.render = function(ctx, cameraX,cameraY)
 	{
+
+        var screenX = this.worldX - cameraX + 400;
+        var screenY = this.worldY - cameraY + 300;
+
         for (var i = 0; i < this.allOrganelles.length; i++) {
-            this.allOrganelles[i].render(ctx,this.worldX,this.worldY);
+            this.allOrganelles[i].render(ctx,0,0,screenX,screenY);
         };
-        //  Rendering this.organelles
-        for (var i = 0; i < this.organelles["mitochondria"].length; i++) {
-            this.organelles["mitochondria"][i].render(ctx,this.worldX,this.worldY);
-        };
-        for (var i = 0; i < this.organelles["ribosomes"].length; i++) {
-            this.organelles["ribosomes"][i].render(ctx,this.worldX,this.worldY);
-        };
-        for (var i = 0; i < this.organelles["vacuoles"].length; i++) {
-            this.organelles["vacuoles"][i].render(ctx,this.worldX,this.worldY);
-        };
+
         //  Rendering center of bacteria 
         ctx.beginPath();
-        ctx.arc(this.worldX, this.worldY, this.centerRadius, 0, 2 * Math.PI, false);
+        ctx.arc(screenX,screenY, this.centerRadius, 0, 2 * Math.PI, false);
+
         ctx.fillStyle = 'red';
         ctx.fill();
         ctx.closePath();
@@ -150,21 +146,14 @@ function Cell (worldX,worldY)
         //  "Wall" rendering
         for (var i = 0; i < this.cellWallX.length; i++) {
         	ctx.beginPath();
-            ctx.arc(this.worldX + this.cellWallX[i], this.worldY + this.cellWallY[i], wallPieceRadius, 0 , 2*Math.PI, false);
+
+            ctx.arc(screenX + this.cellWallX[i], screenY + this.cellWallY[i], wallPieceRadius, 0 , 2*Math.PI, false);
+
             ctx.fillStyle = 'blue';
         	ctx.fill();  
             ctx.closePath();          
         };
 	};
-
-    
-   
-        // If you die (have no nutrient levels for at least one nutrient), die.
-        // If you have ripe nutrient levels for all, engage in asexual reproduction.
-        // Battle?
-
-    
-        // TODO: Create nutrient classes, draw nutrients, handle nutrient ingestion, and passage of nutrients to bacterium 
 
 }
 ;

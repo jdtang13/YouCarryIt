@@ -17,6 +17,9 @@ function hasher(tweet) {
 var img = new Image();
 img.src = '<%= asset_path 'images/backdrop0.jpg' %>'
 
+var playerSpeed = 200;
+
+
 function runGame(first,second,third)
 {
 var ctx = document.getElementById('canvasGame').getContext('2d');  
@@ -24,6 +27,12 @@ var ctx = document.getElementById('canvasGame').getContext('2d');
 
 var freeFloatingOrganelles = new Array();
 var freeFloatingNutrients = new Array();
+var enemies = new Array();
+var bullets = new Array();
+
+var cameraX = 0;
+var cameraY = 0;
+
 
 var createOrganelle = function(type, worldX, worldY)
 {
@@ -189,21 +198,28 @@ else {
 }
 
 };
+var createEnemy = function(worldX, worldY)
+{
+	enemies.push(new Enemy(worldX,worldY));
+}
+
 
 var cell = new Cell(100,100);
 
 var oldTime = Date.now() - 10001;
 
+createOrganelle("vacu",200,400);
+createOrganelle("vacu",200,500);
+createOrganelle("vacu",200,600);
+createOrganelle("vacu",300,200);
+createEnemy(450,350);
+createEnemy(350,350);
+
 var update = function(dt)
 {
 
-	var newTime = Date.now();
-
-	if (newTime - oldTime > 10000) {
-    	populateTweets();
-    	oldTime = Date.now();
-    	newTime = Date.now() + 1;
-	}
+	cameraX = cell.worldX;
+	cameraY = cell.worldY;
 
 	input(dt);
 
@@ -213,9 +229,20 @@ var update = function(dt)
 		freeFloatingOrganelles[i].update(dt);
 	};
 
-	for (var i = 0; i < freeFloatingNutrients.length; i++) {
-		freeFloatingNutrients[i].update(dt);
-	}
+
+	for (var i = 0; i < enemies.length; i++) {
+		enemies[i].update(dt);
+	};
+	for (var i = 0; i < bullets.length; i++) {
+		bullets[i].update(dt);
+		if(bullets[i].dead)
+		{
+			bullets.splice(i,1);
+			i--;
+		}
+	};
+
+	enemyAI();
 
 	checkCollisions();
 };
@@ -240,19 +267,19 @@ var input = function(dt)
 {
 	if(keysDown[39])//Right
 	{
-		cell.worldX += 5;
+		cell.worldX += playerSpeed*dt;
 	}
 	if(keysDown[38])//Up
 	{
-		cell.worldY -= 5;
+		cell.worldY -= playerSpeed*dt;
 	}
 	if(keysDown[37])//Left
 	{
-		cell.worldX -= 5;
+		cell.worldX -= playerSpeed*dt;
 	}
 	if(keysDown[40])//Down
 	{
-		cell.worldY += 5;
+		cell.worldY += playerSpeed*dt;
 	}
 };
 
@@ -267,12 +294,15 @@ var checkCollisions = function()
 		if(distanceBetweenCellAndOrganelle < cellRadius + organelleRadius)
 		{
 			//  We have a collision	between cell and organelle
+
 			cell.addOrganelle(freeFloatingOrganelles[i]);//	Add to cells organelle list		
 			freeFloatingOrganelles.splice(i,1);//  Delete from array add to cell 
 			//		Play absorption sound
 			//		Create particle effect
 		}
-	};	
+	};
+
+	//  Collecting nutrients	
 	for (var i = 0; i < freeFloatingNutrients.length; i++) 
 	{
 		var distanceBetweenCellAndNutrient = 
@@ -300,28 +330,77 @@ var checkCollisions = function()
 		}
 	};	
 
+	//  Collecting bullets
+	for (var i = 0; i < bullets.length; i++) 
+	{
+		var distanceBetweenCellAndBullet = 
+			Math.sqrt(Math.pow(cell.worldX-bullets[i].worldX,2) + 
+					  Math.pow(cell.worldY-bullets[i].worldY,2));
+
+		if(distanceBetweenCellAndBullet < cellCollisionRadius + bulletRadius)
+		{
+			//  We have a collision	between cell and bullet
+			bullets.splice(i,1);//  Delete from array
+			//		Hurt player
+			//		Create particle effect		
+			//		Play ouch sound	
+
+		}
+	};	
 };
 
 
+var enemyAI = function()
+{
+	for (var i = 0; i < enemies.length; i++) {
+			if(enemies[i].canShoot)
+			{
+				var xToPlayer = cell.worldX-enemies[i].worldX;
+				var yToPlayer = cell.worldY-enemies[i].worldY;
+
+				var distanceBetweenCellAndEnemy = 
+					Math.sqrt(Math.pow(xToPlayer,2) + 
+					  	      Math.pow(yToPlayer,2));
+				if(distanceBetweenCellAndEnemy< enemyRange)
+				{
+					//  Enemy is in range of player
+					enemies[i].canShoot = false;
+
+
+					bullets.push(new Bullet(
+						enemies[i].worldX,
+						enemies[i].worldY,
+						xToPlayer/distanceBetweenCellAndEnemy,
+						yToPlayer/distanceBetweenCellAndEnemy));
+				}
+			}
+		};	
+};
+
 var render = function()
 {
+	// Drawing background
+	ctx.beginPath();
+	ctx.fillStyle = 'black';
+	ctx.fillRect(0,0,800,600);
+	ctx.closePath();
+
+
 	ctx.drawImage(img,0,0);
-	// ctx.beginPath();
-	// ctx.fillStyle = 'white';
-	// ctx.fillRect(0,0,800,600);
-	// ctx.closePath();
-	//  Check if images is ready
-	//		Dislay image, ctx.drawImage();
-
+	
 	for (var i = 0; i < freeFloatingOrganelles.length; i++) {
-		freeFloatingOrganelles[i].render(ctx);
+		freeFloatingOrganelles[i].render(ctx,cameraX,cameraY);
 	};
 
-	for (var i = 0; i < freeFloatingNutrients.length; i++) {
-		freeFloatingNutrients[i].render(ctx);
+	for (var i = 0; i < bullets.length; i++) {
+		bullets[i].render(ctx, cameraX,cameraY);
 	};
 
-	cell.render(ctx);
+	for (var i = 0; i < enemies.length; i++) {
+		enemies[i].render(ctx, cameraX,cameraY);
+	};
+
+	cell.render(ctx, cameraX,cameraY);
 }
 
 
@@ -366,6 +445,7 @@ main();
 }//  End of run game
 
 
+
 function createGame()
 {
 	var forms = document.getElementById('threeOptions');
@@ -392,3 +472,4 @@ function createGame()
     });
 
 };
+
