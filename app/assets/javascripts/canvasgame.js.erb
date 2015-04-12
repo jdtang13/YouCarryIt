@@ -63,22 +63,21 @@ var createNutrient = function(type, worldX, worldY, streamSentiment, streamTweet
 	}
 };
 
-var firstStreamSentiments = [];//[0.10205818815304715, 0.3506799629915738];
-var secondStreamSentiments = [];//[0.8173114933262084];
-var thirdStreamSentiments = [];//[0.9644229431726448];
+var firstStreamSentiments = [0.10205818815304715, 0.3506799629915738];
+var secondStreamSentiments = [0.8173114933262084];
+var thirdStreamSentiments = [0.9644229431726448];
 
-var firstStreamTweets = []; //["RT @Ashton5SOS: http://t.co/j8usF8QTem", "Même chez nous cette série éblouie tous le monde https://t.co/k4xILiolWS"];
-var secondStreamTweets = []; //["RT @PourLesSportifs: Ton corps reflète l'image de ton alimentation. http://t.co/9C6VhBqvbn"];
-var thirdStreamTweets = []; //["@mzveegh Dancehall Queen! mi so proud of u.. more awards ahead #workhard"];
+var firstStreamTweets = ["RT @Ashton5SOS: http://t.co/j8usF8QTem", "Même chez nous cette série éblouie tous le monde https://t.co/k4xILiolWS"];
+var secondStreamTweets = ["RT @PourLesSportifs: Ton corps reflète l'image de ton alimentation. http://t.co/9C6VhBqvbn"];
+var thirdStreamTweets = ["@mzveegh Dancehall Queen! mi so proud of u.. more awards ahead #workhard"];
 
 var lastTweet = "";
 
 var populateTweets = function()
 {
-
 	var rawRailsData = (document.getElementById("rails-data").innerHTML).split("~");
 
-	if (!(rawRailsData.length <= 1 || (rawRailsData.length > 0 && rawRailsData[rawRailsData.length-1] == lastTweet))) {
+	if (rawRailsData.length > 1 && rawRailsData[rawRailsData.length-1] != lastTweet) {
 
 		for (var i = 0; i < rawRailsData.length - 1; i += 2) {
 			var tweets = firstStreamTweets;
@@ -130,14 +129,15 @@ var populateTweets = function()
 		createOrganelle("ribo",600,200);
 		createOrganelle("mito",400,400);
 		createOrganelle("vacu",200,200);
-}
+
+	}
 
 };
+
 var cell = new Cell(100,100);
 
 var update = function(dt)
 {
-
     populateTweets();
 
 	input(dt);

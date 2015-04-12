@@ -31,6 +31,8 @@ class WelcomeController < ApplicationController
 
 	  client = makeClient
 
+	  puts "attempting to log into twitter..."
+
 	  @tweet_limit = MAX_TWEETS
 	  count = 0
 
