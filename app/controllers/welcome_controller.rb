@@ -34,7 +34,7 @@ class WelcomeController < ApplicationController
 	  @tweet_limit = MAX_TWEETS
 	  count = 0
 
-	  indico_enabled = 0
+	  indico_enabled = 1
 
 	  if (indico_enabled)
 	  	require 'indico'
