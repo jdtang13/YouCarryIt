@@ -1,5 +1,5 @@
 
 <% for i in 0..(@tweet_limit-1) %>
-<%= @sentiments[i].to_s.gsub('~', '') %>~ 
-<%= @statuses[i].to_s.gsub('~', '') %>~ 
+<%= @sentiments[i].to_s.gsub('~', '') %>~
+<%= @statuses[i].to_s.gsub('~', '') %>~
 <% end %>

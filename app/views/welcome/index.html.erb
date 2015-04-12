@@ -18,13 +18,13 @@ jQuery.ajax({
   type: "GET",
   dataType: "script"
 });
-}, 10000); // in milliseconds
+}, 15000); // in milliseconds, focus on many tweets and few requests rather than vice versa
 </script>
 
 <div id = "rails-data">
 <% for i in 0..(@tweet_limit-1) %>
-<%= @sentiments[i].to_s.gsub('~', '') %>~ 
-<%= @statuses[i].to_s.gsub('~', '') %>~ 
+<%= @sentiments[i].to_s.gsub('~', '') %>~
+<%= @statuses[i].to_s.gsub('~', '') %>~
 <% end %>
 </div>
 
