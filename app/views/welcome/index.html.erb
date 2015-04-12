@@ -2,16 +2,28 @@
 <html lang="en">
 
 <article>
-<p><b>Twitter stream with Indico analysis (<%= @tweet_limit %> scraped)</b></p>
+<!-- <p><b>Twitter stream with Indico analysis (<%= @tweet_limit %> scraped)</b></p> -->
 
-<% for i in 0..(@tweet_limit-1) %>
-<p><b><%= @sentiments[i].to_s %></b>: <%= @statuses[i].to_s %></p>
-<% end %>
+<p><b>Use the arrow keys to move!</b></p>
 
 <canvas id="canvasGame" width="800" height="600">></canvas>
-<%= javascript_include_tag "cell", "data-turbolinks-track" => true %>
-<%= javascript_include_tag "organelle", "data-turbolinks-track" => true %>
+<%= javascript_include_tag "cell",       "data-turbolinks-track" => true %>
+<%= javascript_include_tag "organelle",  "data-turbolinks-track" => true %>
 <%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>
+
+<script>
+/*setInterval(function() {
+jQuery.ajax({
+  url: "/updateSocial",
+  type: "GET",
+  dataType: "script"
+});
+}, 10000); */
+// in milliseconds
+</script>
+
+<div id = "rails-data">
+</div>
 
 </article>
        

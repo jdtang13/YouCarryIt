@@ -85,16 +85,13 @@ function Protein(worldX, worldY, streamData) {
 
 	this.update = function(dt) {
 		counter_++;
-		
 		// TODO: make tweet appear and gracefully slide off screen
-
 		this.theta += THETA_CHANGE;
 	};
 }
 
 /* Water nutrient: small blue circle */ 
 function Water(worldX, worldY) {
-
 	// nutrient is only created when streamData > .5 so  1 <= nutrious Factor <= 2
 	this.nutritiousFactor = streamData * 2; 
 	this.clockwise = false;
@@ -111,15 +108,18 @@ function Water(worldX, worldY) {
 	this.render = function(ctx) {
 		if (counter % 5 == 0) clockwise = !clockwise;
 		if (!clockwise){
-			this.worldX +=  GLUCOSE_WIDTH * Math.cos(this.theta);
-			this.worldY +=  GLUCOSE_HEIGHT * Math.sin(this.theta);
+			this.worldX +=  WATER_RADIUS * Math.cos(this.theta);
+			this.worldY +=  WATER_RADIUS * Math.sin(this.theta);
 		}
 		else {
-			this.worldX -= GLUCOSE_WIDTH * Math.cos(this.theta);
-			this.worldY -= GLUCOSE_HEIGHT * Math.sin(this.theta);
+			this.worldX -= WATER_RADIUS * Math.cos(this.theta);
+			this.worldY -= WATER_RADIUS * Math.sin(this.theta);
 		}
-		ctx.fillStyle = "green";
-		ctx.fillRect(this.worldX, this.worldY, GLUCOSE_WIDTH, GLUCOSE_HEIGHT);
+		ctx.beginPath();
+		ctx.arc(this.worldX, this.worldY, WATER_RADIUS, 0, Math.PI*2);
+		ctx.closePath();
+		ctx.fillStyle = "#F0FFFF";
+		ctx.fill();
 	};
 
 	this.update = function(dt) {
@@ -127,14 +127,5 @@ function Water(worldX, worldY) {
 		// TODO: make tweet appear and gracefully slide off screen
 		this.theta += THETA_CHANGE;
 	};
-	// Establish nutrient identifier as "water"
-
-	// Render: Update worldX and worldY by movement around circle based
-	// off of theta and the radius (WATER_RADIUS * cos/sin(theta)). make sure that it is sychronized
-
-	// In update, determine whether bacterium swallows protein molecule. If it does,
-	// delete the moecule (or move off screen) and call bacterium.addNutrient(this). you need
-	// to code bacterium.addNutrient to simply update nutrient levels.
-
-
+	
 }

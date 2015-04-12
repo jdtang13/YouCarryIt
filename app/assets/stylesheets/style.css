@@ -32,14 +32,32 @@ a:active {
 	position: relative;
 	padding-bottom:4em;
 }
+
+h2 {
+  margin-top:0.3em;
+  margin-bottom:0em;
+}
+
+#masthead
+{
+  margin-top:-2em;
+  margin-bottom:0em;
+  text-align: right;
+}
+
 header
 {
-    height:6em;
+    height:4em;
     background:#DDDDDD;
     box-shadow: 1px 1px 1px #111111;
     
     padding:0.3em 1em 0em 5em;
 }
+
+#rails-data {
+  display: none;
+}
+
 article
 {
     padding: 1em 2em 2em 2em;
@@ -59,7 +77,6 @@ content
     
 }
 
-
 canvas
 {
     display:block;
@@ -72,10 +89,12 @@ canvas
 footer
 {
    text-align: center;
-   position:absolute;
-   left:0;
-   bottom:0;
-   width:100%;
-   height: 4em;
+
+  width:100%;
+  height:150px;
+  position:absolute;
+  bottom:0;
+  left:0;
+
    background:#DDDDDD;
 }
