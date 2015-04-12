@@ -99,16 +99,6 @@ function Cell (worldX,worldY)
             this.allOrganelles[i].update(dt);
         };
 
-        for (var i = 0; i < this.organelles["mitochondria"].length; i++) {
-            this.organelles["mitochondria"][i].update(dt);
-        };
-        for (var i = 0; i < this.organelles["ribosomes"].length; i++) {
-            this.organelles["ribosomes"][i].update(dt);
-        };
-        for (var i = 0; i < this.organelles["vacuoles"].length; i++) {
-            this.organelles["vacuoles"][i].update(dt);
-        };
-
         //  The undulating of cell walls
         this.undulationAngle += this.undulationSpeed*3;
 
@@ -124,24 +114,18 @@ function Cell (worldX,worldY)
             this.cellWallY[i] = Math.sin(atEveryRadians*i) * (cellRadius + undulation + growth);
         };
     };
-	this.render = function(ctx)
+	this.render = function(ctx, cameraX,cameraY)
 	{
+        var screenX = this.worldX - cameraX + 400;
+        var screenY = this.worldY - cameraY + 300;
+
         for (var i = 0; i < this.allOrganelles.length; i++) {
-            this.allOrganelles[i].render(ctx,this.worldX,this.worldY);
+            this.allOrganelles[i].render(ctx,0,0,screenX,screenY);
         };
-        //  Rendering this.organelles
-        for (var i = 0; i < this.organelles["mitochondria"].length; i++) {
-            this.organelles["mitochondria"][i].render(ctx,this.worldX,this.worldY);
-        };
-        for (var i = 0; i < this.organelles["ribosomes"].length; i++) {
-            this.organelles["ribosomes"][i].render(ctx,this.worldX,this.worldY);
-        };
-        for (var i = 0; i < this.organelles["vacuoles"].length; i++) {
-            this.organelles["vacuoles"][i].render(ctx,this.worldX,this.worldY);
-        };
+
         //  Rendering center of bacteria 
         ctx.beginPath();
-        ctx.arc(this.worldX, this.worldY, this.centerRadius, 0, 2 * Math.PI, false);
+        ctx.arc(screenX,screenY, this.centerRadius, 0, 2 * Math.PI, false);
         ctx.fillStyle = 'red';
         ctx.fill();
         ctx.closePath();
@@ -149,7 +133,7 @@ function Cell (worldX,worldY)
         //  "Wall" rendering
         for (var i = 0; i < this.cellWallX.length; i++) {
         	ctx.beginPath();
-            ctx.arc(this.worldX + this.cellWallX[i], this.worldY + this.cellWallY[i], wallPieceRadius, 0 , 2*Math.PI, false);
+            ctx.arc(screenX + this.cellWallX[i], screenY + this.cellWallY[i], wallPieceRadius, 0 , 2*Math.PI, false);
             ctx.fillStyle = 'blue';
         	ctx.fill();  
             ctx.closePath();          

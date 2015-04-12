@@ -56,19 +56,25 @@ function Mitochondrion (worldX, worldY)
 	};
 
 	// handle stylistics
-	this.render = function(ctx, cx, cy)
+	this.render = function(ctx,cameraX, cameraY, cx, cy )
 	{
+		if(cameraX !== undefined)
+		{
+			var screenX = this.worldX - cameraX + 400;
+	        var screenY = this.worldY - cameraY + 300;
+		}
+
 		ctx.beginPath();
 
 		// if organelle is not ingested
 		if (cx === undefined) 
 		{
-			ctx.arc(this.worldX,  this.worldY, MITOCHONDRION_OUTER_RADIUS, 0, Math.PI*2);
+			ctx.arc(screenX,  screenY, MITOCHONDRION_OUTER_RADIUS, 0, Math.PI*2);
 			ctx.closePath();
 			ctx.fillStyle = "#00ff00";
 			ctx.fill();
 			ctx.beginPath();
-			ctx.arc(this.worldX,  this.worldY, MITOCHONDRION_INNER_RADIUS, 0, Math.PI*2);
+			ctx.arc(screenX,  screenY, MITOCHONDRION_INNER_RADIUS, 0, Math.PI*2);
 			ctx.closePath();
 			ctx.fillStyle = "#8FFF8F";
 			ctx.fill();
@@ -133,12 +139,18 @@ function Ribosome(worldX, worldY)
 
 	// Ribosome is rendered as small circle
 	// TODO: stylistics
-	this.render = function(ctx, cx, cy)
+	this.render = function(ctx, cameraX, cameraY,cx, cy)
 	{
+		if(cameraX !== undefined)
+		{
+			var screenX = this.worldX - cameraX + 400;
+	        var screenY = this.worldY - cameraY + 300;
+		}
+
 		ctx.beginPath();
 		if (cx === undefined)
 		{ 
-			ctx.arc(this.worldX, this.worldY, RIBOSOME_RADIUS, 0, Math.PI*2);
+			ctx.arc(screenX, screenY, RIBOSOME_RADIUS, 0, Math.PI*2);
 		}
 		else 
 		{
@@ -189,13 +201,18 @@ function Vacuole (worldX, worldY)
 		this.relativeY = (Math.sin(this.angleFromCenter) * this.distanceFromCenter);
 	};
 
-	this.render = function(ctx, cx, cy)
+	this.render = function(ctx,cameraX, cameraY, cx, cy )
 	{
+		if(cameraX !== undefined)
+		{
+			var screenX = this.worldX - cameraX + 400;
+	        var screenY = this.worldY - cameraY + 300;
+		}
 		ctx.beginPath();
 
 		if (cx === undefined) 
 		{
-			ctx.arc(this.worldX,  this.worldY, VACUOLE_RADIUS, 0, Math.PI*2);
+			ctx.arc(screenX, screenY, VACUOLE_RADIUS, 0, Math.PI*2);
 		}
 		else 
 		{

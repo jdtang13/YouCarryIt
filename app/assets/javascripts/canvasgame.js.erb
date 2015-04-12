@@ -14,6 +14,9 @@ var freeFloatingNutrients = new Array();
 var enemies = new Array();
 var bullets = new Array();
 
+var cameraX = 0;
+var cameraY = 0;
+
 
 var createOrganelle = function(type, worldX, worldY)
 {
@@ -67,6 +70,9 @@ enemies.push(new Enemy(350,450));
 
 var update = function(dt)
 {
+	cameraX = cell.worldX;
+	cameraY = cell.worldY;
+
 	input(dt);
 
 	cell.update(dt);
@@ -213,27 +219,27 @@ var enemyAI = function()
 
 var render = function()
 {
-	ctx.drawImage(img,0,0);
-	// ctx.beginPath();
-	// ctx.fillStyle = 'white';
-	// ctx.fillRect(0,0,800,600);
-	// ctx.closePath();
-	//  Check if images is ready
-	//		Dislay image, ctx.drawImage();
+	// Drawing background
+	ctx.beginPath();
+	ctx.fillStyle = 'black';
+	ctx.fillRect(0,0,800,600);
+	ctx.closePath();
 
+	ctx.drawImage(img,0,0);
+	
 	for (var i = 0; i < freeFloatingOrganelles.length; i++) {
-		freeFloatingOrganelles[i].render(ctx);
+		freeFloatingOrganelles[i].render(ctx,cameraX,cameraY);
 	};
 
 	for (var i = 0; i < bullets.length; i++) {
-		bullets[i].render(ctx);
+		bullets[i].render(ctx, cameraX,cameraY);
 	};
 
 	for (var i = 0; i < enemies.length; i++) {
-		enemies[i].render(ctx);
+		enemies[i].render(ctx, cameraX,cameraY);
 	};
 
-	cell.render(ctx);
+	cell.render(ctx, cameraX,cameraY);
 }
 
 

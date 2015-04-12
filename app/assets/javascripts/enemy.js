@@ -49,11 +49,14 @@ function Enemy (worldX,worldY)
             this.cellWallY[i] = Math.sin(atEveryRadians*i) * (enemyRadius + undulation);
         };
     };
-	this.render = function(ctx)
-	{
+	this.render = function(ctx, cameraX, cameraY)
+    {
+        var screenX = this.worldX - cameraX + 400;
+        var screenY = this.worldY - cameraY + 300;
+
         //  Rendering center of bacteria 
         ctx.beginPath();
-        ctx.arc(this.worldX, this.worldY, enemyCenterRadius, 0, 2 * Math.PI, false);
+        ctx.arc(screenX, screenY, enemyCenterRadius, 0, 2 * Math.PI, false);
         ctx.fillStyle = 'black';
         ctx.fill();
         ctx.closePath();
@@ -61,7 +64,7 @@ function Enemy (worldX,worldY)
         //  "Wall" rendering
         for (var i = 0; i < this.cellWallX.length; i++) {
         	ctx.beginPath();
-            ctx.arc(this.worldX + this.cellWallX[i], this.worldY + this.cellWallY[i], enemyWallThickness, 0 , 2*Math.PI, false);
+            ctx.arc(screenX + this.cellWallX[i], screenY + this.cellWallY[i], enemyWallThickness, 0 , 2*Math.PI, false);
             ctx.fillStyle = 'red';
         	ctx.fill();  
             ctx.closePath();          

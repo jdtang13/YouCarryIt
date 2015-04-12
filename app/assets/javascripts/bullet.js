@@ -26,11 +26,14 @@ function Bullet (worldX,worldY,xVelocity,yVelocity)
         this.worldX += this.xVelocity * dt * bulletVelocity;
         this.worldY += this.yVelocity * dt * bulletVelocity;
     };
-	this.render = function(ctx)
-	{
+	this.render = function(ctx, cameraX, cameraY)
+    {
+        var screenX = this.worldX - cameraX + 400;
+        var screenY = this.worldY - cameraY + 300;
+
         //  Rendering center of bacteria 
         ctx.beginPath();
-        ctx.arc(this.worldX, this.worldY, bulletRadius, 0, 2 * Math.PI, false);
+        ctx.arc(screenX, screenY, bulletRadius, 0, 2 * Math.PI, false);
         ctx.fillStyle = 'orange';
         ctx.fill();
         ctx.closePath();
