@@ -20621,3 +20621,510 @@ Processing by WelcomeController#updateSocial as JS
   Rendered welcome/_rails_data_partial.erb (0.0ms)
   Rendered welcome/updateSocial.js.erb (8.0ms)
 Completed 200 OK in 718ms (Views: 19.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-04-12 05:25:37 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (46.0ms)
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+Completed 200 OK in 219ms (Views: 204.0ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/assets/shrunk-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:25:37 -0400
+
+
+Started GET "/assets/mobile-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:25:37 -0400
+
+
+Started GET "/assets/style-c4b12bf61537b6ea35e2234607a090a3.css?body=1" for ::1 at 2015-04-12 05:25:37 -0400
+
+
+Started GET "/assets/welcome-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:25:37 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-04-12 05:25:37 -0400
+
+
+Started GET "/assets/turbolinks-686d2bf7d9d383528c901c64187a8c31.js?body=1" for ::1 at 2015-04-12 05:25:37 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-04-12 05:25:37 -0400
+
+
+Started GET "/assets/welcome-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-04-12 05:25:37 -0400
+
+
+Started POST "/welcome_controller/sendVals" for ::1 at 2015-04-12 05:25:41 -0400
+Processing by WelcomeController#sendVals as JS
+  Parameters: {"first"=>"Thomas Aquinas", "second"=>"dota2", "third"=>"personal fitness"}
+  Rendered welcome/sendVals.js.erb (0.0ms)
+Completed 200 OK in 441ms (Views: 6.0ms | ActiveRecord: 0.0ms)
+
+
+Started DELETE "/users/sign_out" for ::1 at 2015-04-12 05:25:56 -0400
+Processing by Devise::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"jk5HQloNN354B12grGDlztoK2EkViTqt4IdNJM1IlYU+RTAWioqKT8Dw/aLnktAJW7pGcXd/r+nyJXWEU4ik0A=="}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 34ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-04-12 05:25:56 -0400
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (15.0ms)
+Completed 200 OK in 98ms (Views: 97.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/shrunk-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:25:57 -0400
+
+
+Started GET "/assets/mobile-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:25:57 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-04-12 05:25:57 -0400
+
+
+Started GET "/assets/welcome-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:25:57 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-04-12 05:25:57 -0400
+
+
+Started GET "/assets/turbolinks-686d2bf7d9d383528c901c64187a8c31.js?body=1" for ::1 at 2015-04-12 05:25:57 -0400
+
+
+Started GET "/assets/welcome-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-04-12 05:25:57 -0400
+
+
+Started GET "/users/auth/facebook" for ::1 at 2015-04-12 05:25:58 -0400
+
+
+Started GET "/users/auth/facebook" for ::1 at 2015-04-12 05:25:59 -0400
+
+
+Started GET "/users/auth/facebook/callback?code=AQASf61yZKzNBcCaLBybyxfjF90FPVAiF9vDyN5x7gUBPJ_7Ov68y8Uay9YoVwK6tnRxhsiPtZtfL5-9pn-qS-8yd7b1ZyoG_DFJgqCg3E-SFnQwjR4Rm-EtjIDlPtzyIGmM0XIKw2ECzlwCfMGYWhKphJuJrN0ITBzLCFnr2KcdryEx8BR2iDXDbqZUIfTgHhh7vYed8fiFF-Q6qNCi3Dg2sm-BwIrliUjouWDeL4-ZBqXVqhxGktKpO3FN5P7EBSXL-aLEy_x939tOcgNUGXAkQL7KHu9OfHPUGx5dhKReSRkczoo8LFAaR6inODkaL78gLARegX8dKE30Af0m0-vL&state=67325a32684bee2a97e5c391fa1851f1f025831d881e3e3d" for ::1 at 2015-04-12 05:25:59 -0400
+Processing by OmniauthCallbacksController#facebook as HTML
+  Parameters: {"code"=>"AQASf61yZKzNBcCaLBybyxfjF90FPVAiF9vDyN5x7gUBPJ_7Ov68y8Uay9YoVwK6tnRxhsiPtZtfL5-9pn-qS-8yd7b1ZyoG_DFJgqCg3E-SFnQwjR4Rm-EtjIDlPtzyIGmM0XIKw2ECzlwCfMGYWhKphJuJrN0ITBzLCFnr2KcdryEx8BR2iDXDbqZUIfTgHhh7vYed8fiFF-Q6qNCi3Dg2sm-BwIrliUjouWDeL4-ZBqXVqhxGktKpO3FN5P7EBSXL-aLEy_x939tOcgNUGXAkQL7KHu9OfHPUGx5dhKReSRkczoo8LFAaR6inODkaL78gLARegX8dKE30Af0m0-vL", "state"=>"67325a32684bee2a97e5c391fa1851f1f025831d881e3e3d"}
+  [1m[35mIdentity Load (1.0ms)[0m  SELECT  "identities".* FROM "identities" WHERE "identities"."uid" = ? AND "identities"."provider" = ? LIMIT 1  [["uid", "10206558574742295"], ["provider", "facebook"]]
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (1.0ms)[0m  [1mUPDATE "users" SET "last_sign_in_at" = ?, "current_sign_in_at" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["last_sign_in_at", "2015-04-11 19:09:48.727771"], ["current_sign_in_at", "2015-04-12 09:25:59.838421"], ["sign_in_count", 3], ["updated_at", "2015-04-12 09:25:59.839421"], ["id", 1]]
+  [1m[35m (132.0ms)[0m  commit transaction
+Redirected to http://localhost:3000/
+Completed 302 Found in 217ms (ActiveRecord: 136.0ms)
+
+
+Started GET "/" for ::1 at 2015-04-12 05:25:59 -0400
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (16.0ms)
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+Completed 200 OK in 97ms (Views: 96.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/shrunk-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:26:00 -0400
+
+
+Started GET "/assets/mobile-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:26:00 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-04-12 05:26:00 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-04-12 05:26:00 -0400
+
+
+Started GET "/assets/welcome-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:26:00 -0400
+
+
+Started GET "/assets/welcome-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-04-12 05:26:00 -0400
+
+
+Started GET "/assets/turbolinks-686d2bf7d9d383528c901c64187a8c31.js?body=1" for ::1 at 2015-04-12 05:26:00 -0400
+
+
+Started POST "/welcome_controller/sendVals" for ::1 at 2015-04-12 05:26:07 -0400
+Processing by WelcomeController#sendVals as JS
+  Parameters: {"first"=>"Thomas Aquinas", "second"=>"dota2", "third"=>"personal fitness"}
+  Rendered welcome/sendVals.js.erb (0.0ms)
+Completed 200 OK in 404ms (Views: 5.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-04-12 05:50:11 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (25.0ms)
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+Completed 200 OK in 204ms (Views: 191.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/mobile-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:50:11 -0400
+
+
+Started GET "/assets/shrunk-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:50:11 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-04-12 05:50:11 -0400
+
+
+Started GET "/assets/style-c4b12bf61537b6ea35e2234607a090a3.css?body=1" for ::1 at 2015-04-12 05:50:11 -0400
+
+
+Started GET "/assets/welcome-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:50:11 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-04-12 05:50:11 -0400
+
+
+Started GET "/assets/turbolinks-686d2bf7d9d383528c901c64187a8c31.js?body=1" for ::1 at 2015-04-12 05:50:11 -0400
+
+
+Started GET "/assets/welcome-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-04-12 05:50:11 -0400
+
+
+Started POST "/welcome_controller/sendVals" for ::1 at 2015-04-12 05:50:21 -0400
+Processing by WelcomeController#sendVals as JS
+  Parameters: {"first"=>"Thomas Aquinas", "second"=>"dota2", "third"=>"personal fitness"}
+  Rendered welcome/sendVals.js.erb (0.0ms)
+Completed 200 OK in 763ms (Views: 6.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/welcome_controller/updateSocial?_=1428832211923" for ::1 at 2015-04-12 05:50:41 -0400
+Processing by WelcomeController#updateSocial as JS
+  Parameters: {"_"=>"1428832211923"}
+  Rendered welcome/_rails_data_partial.erb (1.0ms)
+  Rendered welcome/updateSocial.js.erb (6.0ms)
+Completed 200 OK in 420ms (Views: 12.0ms | ActiveRecord: 0.0ms)
+
+
+Started DELETE "/users/sign_out" for ::1 at 2015-04-12 05:50:44 -0400
+Processing by Devise::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"O5MZWMlm+6m4IootbhKOhbkJaA1px+OKIIFEbwovekAdUMfdBp/Oj0iETOYYrsuh5wA5I7EL+eSAk7WXcBtrDQ=="}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 15ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-04-12 05:50:44 -0400
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (17.0ms)
+Completed 200 OK in 103ms (Views: 102.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/shrunk-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:50:45 -0400
+
+
+Started GET "/assets/style-c4b12bf61537b6ea35e2234607a090a3.css?body=1" for ::1 at 2015-04-12 05:50:45 -0400
+
+
+Started GET "/assets/mobile-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:50:45 -0400
+
+
+Started GET "/assets/turbolinks-686d2bf7d9d383528c901c64187a8c31.js?body=1" for ::1 at 2015-04-12 05:50:45 -0400
+
+
+Started GET "/assets/welcome-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:50:45 -0400
+
+
+Started GET "/assets/welcome-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-04-12 05:50:45 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-04-12 05:50:45 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-04-12 05:50:45 -0400
+
+
+Started POST "/welcome_controller/sendVals" for ::1 at 2015-04-12 05:50:46 -0400
+Processing by WelcomeController#sendVals as JS
+  Parameters: {"first"=>"Thomas Aquinas", "second"=>"dota2", "third"=>"personal fitness"}
+  Rendered welcome/sendVals.js.erb (0.0ms)
+Completed 200 OK in 13573ms (Views: 5.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-04-12 05:51:01 -0400
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (17.0ms)
+Completed 200 OK in 102ms (Views: 102.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/mobile-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:51:01 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-04-12 05:51:01 -0400
+
+
+Started GET "/assets/style-c4b12bf61537b6ea35e2234607a090a3.css?body=1" for ::1 at 2015-04-12 05:51:01 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-04-12 05:51:01 -0400
+
+
+Started GET "/assets/welcome-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:51:01 -0400
+
+
+Started GET "/assets/shrunk-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:51:01 -0400
+
+
+Started GET "/assets/turbolinks-686d2bf7d9d383528c901c64187a8c31.js?body=1" for ::1 at 2015-04-12 05:51:01 -0400
+
+
+Started GET "/assets/welcome-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-04-12 05:51:01 -0400
+
+
+Started POST "/welcome_controller/sendVals" for ::1 at 2015-04-12 05:51:04 -0400
+Processing by WelcomeController#sendVals as JS
+  Parameters: {"first"=>"Thomas Aquinas", "second"=>"dota2", "third"=>"personal fitness"}
+  Rendered welcome/sendVals.js.erb (0.0ms)
+Completed 200 OK in 5699ms (Views: 5.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-04-12 05:51:12 -0400
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (19.0ms)
+Completed 200 OK in 116ms (Views: 115.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/mobile-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:51:12 -0400
+
+
+Started GET "/assets/shrunk-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:51:12 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-04-12 05:51:12 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-04-12 05:51:12 -0400
+
+
+Started GET "/assets/style-c4b12bf61537b6ea35e2234607a090a3.css?body=1" for ::1 at 2015-04-12 05:51:12 -0400
+
+
+Started GET "/assets/welcome-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:51:12 -0400
+
+
+Started GET "/assets/turbolinks-686d2bf7d9d383528c901c64187a8c31.js?body=1" for ::1 at 2015-04-12 05:51:12 -0400
+
+
+Started GET "/assets/welcome-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-04-12 05:51:12 -0400
+
+
+Started GET "/" for ::1 at 2015-04-12 05:51:18 -0400
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (45.0ms)
+Completed 200 OK in 122ms (Views: 120.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/mobile-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:51:18 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-04-12 05:51:18 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-04-12 05:51:18 -0400
+
+
+Started GET "/assets/shrunk-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:51:18 -0400
+
+
+Started GET "/assets/style-c4b12bf61537b6ea35e2234607a090a3.css?body=1" for ::1 at 2015-04-12 05:51:18 -0400
+
+
+Started GET "/assets/welcome-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:51:18 -0400
+
+
+Started GET "/assets/turbolinks-686d2bf7d9d383528c901c64187a8c31.js?body=1" for ::1 at 2015-04-12 05:51:18 -0400
+
+
+Started GET "/assets/welcome-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-04-12 05:51:18 -0400
+
+
+Started GET "/" for ::1 at 2015-04-12 05:51:43 -0400
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (16.0ms)
+Completed 200 OK in 96ms (Views: 95.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/style-c4b12bf61537b6ea35e2234607a090a3.css?body=1" for ::1 at 2015-04-12 05:51:43 -0400
+
+
+Started GET "/assets/shrunk-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:51:43 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-04-12 05:51:43 -0400
+
+
+Started GET "/assets/welcome-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:51:43 -0400
+
+
+Started GET "/assets/mobile-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:51:43 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-04-12 05:51:43 -0400
+
+
+Started GET "/assets/turbolinks-686d2bf7d9d383528c901c64187a8c31.js?body=1" for ::1 at 2015-04-12 05:51:43 -0400
+
+
+Started GET "/assets/welcome-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-04-12 05:51:43 -0400
+
+
+Started GET "/" for ::1 at 2015-04-12 05:51:48 -0400
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (20.0ms)
+Completed 200 OK in 116ms (Views: 115.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/shrunk-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:51:48 -0400
+
+
+Started GET "/assets/style-c4b12bf61537b6ea35e2234607a090a3.css?body=1" for ::1 at 2015-04-12 05:51:48 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-04-12 05:51:48 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-04-12 05:51:48 -0400
+
+
+Started GET "/assets/mobile-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:51:48 -0400
+
+
+Started GET "/assets/welcome-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:51:48 -0400
+
+
+Started GET "/assets/turbolinks-686d2bf7d9d383528c901c64187a8c31.js?body=1" for ::1 at 2015-04-12 05:51:48 -0400
+
+
+Started GET "/assets/welcome-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-04-12 05:51:48 -0400
+
+
+Started POST "/welcome_controller/sendVals" for ::1 at 2015-04-12 05:51:51 -0400
+Processing by WelcomeController#sendVals as JS
+  Parameters: {"first"=>"Thomas Aquinas", "second"=>"dota2", "third"=>"personal fitness"}
+  Rendered welcome/sendVals.js.erb (0.0ms)
+Completed 200 OK in 643ms (Views: 5.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-04-12 05:52:02 -0400
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (27.0ms)
+Completed 200 OK in 113ms (Views: 112.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/welcome-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:52:03 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-04-12 05:52:03 -0400
+
+
+Started GET "/assets/shrunk-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:52:03 -0400
+
+
+Started GET "/assets/style-c4b12bf61537b6ea35e2234607a090a3.css?body=1" for ::1 at 2015-04-12 05:52:03 -0400
+
+
+Started GET "/assets/mobile-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:52:03 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-04-12 05:52:03 -0400
+
+
+Started GET "/assets/turbolinks-686d2bf7d9d383528c901c64187a8c31.js?body=1" for ::1 at 2015-04-12 05:52:03 -0400
+
+
+Started GET "/assets/welcome-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-04-12 05:52:03 -0400
+
+
+Started GET "/" for ::1 at 2015-04-12 05:52:06 -0400
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (17.0ms)
+Completed 200 OK in 99ms (Views: 98.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/style-c4b12bf61537b6ea35e2234607a090a3.css?body=1" for ::1 at 2015-04-12 05:52:06 -0400
+
+
+Started GET "/assets/shrunk-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:52:06 -0400
+
+
+Started GET "/assets/mobile-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:52:06 -0400
+
+
+Started GET "/assets/welcome-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:52:06 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-04-12 05:52:06 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-04-12 05:52:06 -0400
+
+
+Started GET "/assets/turbolinks-686d2bf7d9d383528c901c64187a8c31.js?body=1" for ::1 at 2015-04-12 05:52:06 -0400
+
+
+Started GET "/assets/welcome-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-04-12 05:52:06 -0400
+
+
+Started GET "/welcome_controller/updateSocial?_=1428832326359" for ::1 at 2015-04-12 05:52:36 -0400
+Processing by WelcomeController#updateSocial as JS
+  Parameters: {"_"=>"1428832326359"}
+  Rendered welcome/_rails_data_partial.erb (0.0ms)
+  Rendered welcome/updateSocial.js.erb (2.0ms)
+Completed 200 OK in 435ms (Views: 7.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/welcome_controller/updateSocial?_=1428832326360" for ::1 at 2015-04-12 05:53:15 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by WelcomeController#updateSocial as JS
+  Parameters: {"_"=>"1428832326360"}
+  Rendered welcome/_rails_data_partial.erb (1.0ms)
+  Rendered welcome/updateSocial.js.erb (8.0ms)
+Completed 200 OK in 6835ms (Views: 22.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-04-12 05:53:22 -0400
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (24.0ms)
+Completed 200 OK in 152ms (Views: 151.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-04-12 05:53:22 -0400
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (21.0ms)
+Completed 200 OK in 119ms (Views: 119.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/shrunk-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:53:22 -0400
+
+
+Started GET "/assets/mobile-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:53:22 -0400
+
+
+Started GET "/assets/style-7c767fb354003276139aaa634a8c6584.css?body=1" for ::1 at 2015-04-12 05:53:22 -0400
+
+
+Started GET "/assets/welcome-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-04-12 05:53:22 -0400
+
+
+Started GET "/assets/turbolinks-686d2bf7d9d383528c901c64187a8c31.js?body=1" for ::1 at 2015-04-12 05:53:22 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-04-12 05:53:22 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-04-12 05:53:22 -0400
+
+
+Started GET "/assets/welcome-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-04-12 05:53:22 -0400
+
+
+Started POST "/welcome_controller/sendVals" for ::1 at 2015-04-12 05:53:25 -0400
+Processing by WelcomeController#sendVals as JS
+  Parameters: {"first"=>"Thomas Aquinas", "second"=>"Dota 2", "third"=>"personal fitness"}
+  Rendered welcome/sendVals.js.erb (0.0ms)
+Completed 200 OK in 457ms (Views: 6.0ms | ActiveRecord: 0.0ms)
