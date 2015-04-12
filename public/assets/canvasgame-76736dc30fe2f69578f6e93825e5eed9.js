@@ -1,11 +1,11 @@
 //  Creating canvas
-var img = new Image();
-img.src = '<%= asset_path 'images/backdrop0.jpg' %>'
-
 function runGame(first,second,third)
 {
+
 var ctx = document.getElementById('canvasGame').getContext('2d');  
 /* more info: http://stackoverflow.com/questions/7381041/url-of-images-in-javascript-code-using-rails-3-1-asset-pipeline */
+
+
 
 var freeFloatingOrganelles = new Array();
 var freeFloatingNutrients = new Array();
@@ -113,8 +113,7 @@ var checkCollisions = function()
 		if(distanceBetweenCellAndOrganelle < cellRadius + organelleRadius)
 		{
 			//  We have a collision	between cell and organelle
-			cell.addOrganelle(freeFloatingOrganelles[i]);//	Add to cells organelle list		
-			freeFloatingOrganelles.splice(i,1);//  Delete from array add to cell 
+			freeFloatingOrganelles.splice(i,1);//  Delete from array add to cell 		
 			//		Play absorption sound
 			//		Create particle effect
 		}
@@ -126,7 +125,7 @@ var checkCollisions = function()
 					  Math.pow(cell.worldY-freeFloatingNutrients[i].worldY,2));
 
 		var nutrientRadius = 6;
-		if(distanceBetweenCellAndNutrient < cellCollisionRadius + nutrientRadius)
+		if(distanceBetweenCellAndNutrient < cellRadius + nutrientRadius)
 		{
 
 			//  We have a collision	between cell and nutrient
@@ -143,11 +142,10 @@ var checkCollisions = function()
 
 var render = function()
 {
-	ctx.drawImage(img,0,0);
-	// ctx.beginPath();
-	// ctx.fillStyle = 'white';
-	// ctx.fillRect(0,0,800,600);
-	// ctx.closePath();
+	ctx.beginPath();
+	ctx.fillStyle = 'white';
+	ctx.fillRect(0,0,800,600);
+	ctx.closePath();
 	//  Check if images is ready
 	//		Dislay image, ctx.drawImage();
 
