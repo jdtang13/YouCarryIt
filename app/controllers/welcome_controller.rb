@@ -32,8 +32,9 @@ class WelcomeController < ApplicationController
 	  			@statuses.push(text)
 	  			@sentiments.push(Indico.sentiment(text))
 	  			count += 1
-	  			#puts count
-	  			#puts status.text.to_s
+	  			
+	  			puts count
+	  			puts status.text.to_s
 	  		else
 	  			break
 	  		end

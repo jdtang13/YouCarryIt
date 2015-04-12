@@ -12,12 +12,20 @@
 <%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>
 
 <script>
-setInterval(function(){
+/*setInterval(function(){
   $.get("/welcome/updateSocial.js", function(data){
     $("rails-data").html(data);
   },
   "html")
-}, 500);
+}, 500);*/
+
+setInterval(function() {
+jQuery.ajax({
+  url: "/updateSocial",
+  type: "GET",
+  dataType: "script"
+});
+}, 1000); // in milliseconds
 </script>
 
 <div id = "rails-data">
