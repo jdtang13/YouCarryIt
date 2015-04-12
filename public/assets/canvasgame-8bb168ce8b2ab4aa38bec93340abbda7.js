@@ -1,5 +1,5 @@
 //  Creating canvas
-function runGame(first,second,third)
+function runGame()
 {
 
 var ctx = document.getElementById('canvasGame').getContext('2d');  
@@ -188,21 +188,6 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 //  Starting game loop
 var then = Date.now();
 main();
-}//  End of run game
+}
 
-
-function createGame()
-{
-	var forms = document.getElementById('threeOptions');
-	forms.style.display = "none";
-
-	var game = document.getElementById('canvasGame');
-	game.style.display = "block";
-
-	//Pull the text box's value
-	runGame(
-		document.getElementById("first").value,
-		document.getElementById("second").value,
-		document.getElementById("third").value);
-};
-
+window.onload = runGame;
