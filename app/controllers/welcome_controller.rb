@@ -2,7 +2,7 @@ class WelcomeController < ApplicationController
 
   require 'twitter'
 
-  MAX_TWEETS = 7
+  MAX_TWEETS = 25
 
   $first = ""
   $second = ""
@@ -23,6 +23,8 @@ class WelcomeController < ApplicationController
   	$first = params[:first]
   	$second = params[:second]
   	$third = params[:third]
+
+  	updateSocial # run the first calc as soon as the 3 params are done
   end
 
   def updateSocial
@@ -32,8 +34,12 @@ class WelcomeController < ApplicationController
 	  @tweet_limit = MAX_TWEETS
 	  count = 0
 
-	  require 'indico'
-	  Indico.api_key = 'a20e64f1e4fd1dd002ec661f62caa444'
+	  indico_enabled = 0
+
+	  if (indico_enabled)
+	  	require 'indico'
+	  	Indico.api_key = 'a20e64f1e4fd1dd002ec661f62caa444'
+	   end
 
 	  @statuses = []
 	  @sentiments = []
@@ -51,7 +57,12 @@ class WelcomeController < ApplicationController
 
 	 			text = (status.text).to_s
 	  			@statuses.push(text)
-	  			@sentiments.push(Indico.sentiment(text))
+
+	  			if (indico_enabled)
+	  				@sentiments.push(Indico.sentiment(text))
+	  			else
+	  				@sentiments.push(rand)
+	  			end
 
 	  			count += 1
 	  			
