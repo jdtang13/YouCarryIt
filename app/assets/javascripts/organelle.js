@@ -1,11 +1,7 @@
 // TODO: Specify actual parameters of our game.
-var MAXIMUM_NUTRIENT_LEVEL = 1000; 
-var DEFAULT_NUTRIENT_LEVEL = 500;
-var NUTRIENT_LOSS_QUANTITY = 5;
-var NUTRIENT_EFFICIENCY_FACTOR = 1.1;
+
 // associated nutrients for each organelle 
 var ORGANELLE_NUTRIENTS = {mitchondrion: "energy", ribosome: "protein", vacuole: "water" };
-
 
 var RIBOSOME_RADIUS = 5;
 
@@ -17,65 +13,6 @@ var VACUOLE_RADIUS = 20;
 // stores all bacteria cells. TODO: make sure you store all bacteria cells
 var allCells;
 
-// change in angle in radians by which free organelle moves */
-var THETA_CHANGE = .25;
-
-// maximum factor of radius from which ingested organelle can be from center 
-var ORGANELLE_DISTANCE_FACTOR = (2/3);
-
-
-/** Main bacterium */
-function Eukaryote () 
-{
-	this.organelles = {mitochondria: 0; ribosomes: 0; vacuoles: 0};
-
-    this.nutrientLevels = { energyLevel: DEFAULT_NUTRIENT_LEVEL, proteinLevel: DEFAULT_NUTRIENT_LEVEL, 
-    	waterLevel: DEFAULT_NUTRIENT_LEVEL};
-
-    this.nutrientLossQuantity = { energyLoss: NUTRIENT_LOSS_QUANTITY, proteinLoss: NUTRIENT_LOSS_QUANTITY, 
-    	waterLoss: NUTRIENT_LOSS_QUANTITY};
-
-
-
-    this.addOrganelle = function(organelle) {
-    	if (ORGANELLE_NUTRIENTS[organelle] === "energy") {
-    		this.nutrientLossQuantity.energyLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
-    		organelles[mitochondria]++;
-    	}
-
-    	if (ORGANELLE_NUTRIENTS[organelle] === "protein") {
-    		this.nutrientLossQuantity.proteinLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
-    		organelles[ribosomes]++;
-    	}
-
-    	if (ORGANELLE_NUTRIENTS[organelle] === "vacuole") {
-    		this.nutrientLossQuantity.waterLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
-    		organelles[vacuoles]++;
-    	}
-    };
-
-    this.expendResources = function() {
-    	this.nutrientLevels.energyLevel -= this.nutrientLossQuantity.energyLoss;
-    	this.nutrientLevels.proteinLevel -= this.nutrientLossQuantity.proteinLoss;
-    	this.nutrientLevels.waterLevel -= this.nutrientLossQuantity.waterLoss;
-    };
-	
-	/* Rendering handled by Oliver */
-
-	/* Make sure everything in TODO is covered in update.*/
-
-		// TODO: 
-		// If you detect nutrients, increase relevant nutrient levels.
-		// If you detect the loss of an organelle, increase relevant nutrient loss quantity.
-		// If you die (have no nutrient levels for at least one nutrient), die.
-		// If you have ripe nutrient levels for all, engage in asexual reproduction.
-		// Battle?
-
-	};
-
-	// TODO: Create nutrient classes, draw nutrients, handle nutrient ingestion, and passage of nutrients to bacterium 
-}
-
 /** Main organelles */
 function Mitochondrion (worldX, worldY) 
 {
@@ -86,7 +23,6 @@ function Mitochondrion (worldX, worldY)
 	this.worldOuterX = worldX;
 	this.worldOuterY = worldY;
 
-	
 	this.relativeInnerX = 0;
 	this.relativeInnerY = 0;
 	this.relativeOuterX = 0;
