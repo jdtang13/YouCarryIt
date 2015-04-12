@@ -63,6 +63,7 @@ function Cell (worldX,worldY)
         }
     };
 
+
     this.expendResources = function() {
         this.nutrientLevels.energyLevel -= this.nutrientLossQuantity.energyLoss;
         this.nutrientLevels.proteinLevel -= this.nutrientLossQuantity.proteinLoss;

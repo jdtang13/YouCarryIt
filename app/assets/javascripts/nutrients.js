@@ -2,11 +2,11 @@
 var GLUCOSE_WIDTH = 3;
 var GLUCOSE_HEIGHT = 2;
 
-var PROTEIN_LENGTH = 3;
+var PROTEIN_LENGTH = 5;
 
 var PROTEIN_LEG = (PROTEIN_LENGTH ^2 / 2)^.5;
 
-var WATER_RADIUS = 3;
+var WATER_RADIUS = 4;
 
 var THETA_CHANGE = .25;
 
@@ -27,8 +27,8 @@ function Glucose(worldX, worldY, streamData) {
 
 
 	this.render = function(ctx) {
-		if (counter % 5 == 0) clockwise = !clockwise;
-		if (!clockwise){
+		if (this.counter % 5 == 0) this.clockwise = !this.clockwise;
+		if (!this.clockwise){
 			this.worldX +=  GLUCOSE_WIDTH * Math.cos(this.theta);
 			this.worldY +=  GLUCOSE_HEIGHT * Math.sin(this.theta);
 		}
@@ -41,7 +41,7 @@ function Glucose(worldX, worldY, streamData) {
 	};
 
 	this.update = function(dt) {
-		counter++;
+		this.counter++;
 		// TODO: make tweet appear and gracefully slide off screen
 		this.theta += THETA_CHANGE;
 	};
@@ -63,8 +63,8 @@ function Protein(worldX, worldY, streamData) {
 
 
 	this.render = function(ctx) {
-		if (counter % 5 == 0) clockwise = !clockwise;
-		if (!clockwise){
+		if (this.counter % 5 == 0) this.clockwise = !this.clockwise;
+		if (!this.clockwise){
 			this.worldX +=  PROTEIN_LENGTH * Math.cos(this.theta);
 			this.worldY +=  PROTEIN_LENGTH * Math.sin(this.theta);
 		}
@@ -75,23 +75,23 @@ function Protein(worldX, worldY, streamData) {
 		}
 		ctx.beginPath();
 		ctx.moveTo(this.worldX, this.worldY);
-		ctx.LineTo(this.worldX + PROTEIN_LEG, this.worldY + PROTEIN_LEG);
-		ctx.Stroke();
+		ctx.lineTo(this.worldX + PROTEIN_LEG, this.worldY + PROTEIN_LEG);
+		ctx.stroke();
 		ctx.beginPath();
 		ctx.moveTo(this.worldX, this.worldY + PROTEIN_LEG);
-		ctx.LineTo(this.worldX + PROTEIN_LEG, this.worldY);
-		ctx.Stroke();
+		ctx.lineTo(this.worldX + PROTEIN_LEG, this.worldY);
+		ctx.stroke();
 	};
 
 	this.update = function(dt) {
-		counter_++;
+		this.counter_++;
 		// TODO: make tweet appear and gracefully slide off screen
 		this.theta += THETA_CHANGE;
 	};
 }
 
 /* Water nutrient: small blue circle */ 
-function Water(worldX, worldY) {
+function Water(worldX, worldY, streamData) {
 	// nutrient is only created when streamData > .5 so  1 <= nutrious Factor <= 2
 	this.nutritiousFactor = streamData * 2; 
 	this.clockwise = false;
@@ -106,8 +106,9 @@ function Water(worldX, worldY) {
 
 
 	this.render = function(ctx) {
-		if (counter % 5 == 0) clockwise = !clockwise;
-		if (!clockwise){
+		ctx.beginPath();
+		if (this.counter % 5 == 0) this.clockwise = !this.clockwise;
+		if (!this.clockwise){
 			this.worldX +=  WATER_RADIUS * Math.cos(this.theta);
 			this.worldY +=  WATER_RADIUS * Math.sin(this.theta);
 		}
@@ -115,17 +116,15 @@ function Water(worldX, worldY) {
 			this.worldX -= WATER_RADIUS * Math.cos(this.theta);
 			this.worldY -= WATER_RADIUS * Math.sin(this.theta);
 		}
-		ctx.beginPath();
 		ctx.arc(this.worldX, this.worldY, WATER_RADIUS, 0, Math.PI*2);
 		ctx.closePath();
-		ctx.fillStyle = "#F0FFFF";
+		ctx.fillStyle = "#00FFFF";
 		ctx.fill();
 	};
 
 	this.update = function(dt) {
-		counter++;
+		this.counter++;
 		// TODO: make tweet appear and gracefully slide off screen
 		this.theta += THETA_CHANGE;
 	};
-	
 }

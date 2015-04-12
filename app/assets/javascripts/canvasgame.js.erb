@@ -36,7 +36,7 @@ var createNutrient = function(type, worldX, worldY, streamData)
 		//Glucose
 		freeFloatingNutrients.push(new Glucose(worldX,worldY,streamData));
 	}
-	else if(type == "water")	
+	else if(type == "protein")	
 	{
 		//Protein
 		freeFloatingNutrients.push(new Protein(worldX,worldY,streamData));
@@ -46,12 +46,15 @@ var createNutrient = function(type, worldX, worldY, streamData)
 		//Water
 		freeFloatingNutrients.push(new Water(worldX,worldY,streamData));
 	}
-}
+};
 
 var cell = new Cell(100,100);
 createOrganelle("ribo",600,200);
 createOrganelle("mito",400,400);
 createOrganelle("vacu",200,200);
+createNutrient("glucose", 300, 300, .75);
+createNutrient("protein", 350, 350, .75);
+createNutrient("water", 450, 450, .75);
 
 var update = function(dt)
 {
@@ -62,6 +65,10 @@ var update = function(dt)
 	for (var i = 0; i < freeFloatingOrganelles.length; i++) {
 		freeFloatingOrganelles[i].update(dt);
 	};
+
+	for (var i = 0; i < freeFloatingNutrients.length; i++) {
+		freeFloatingNutrients[i].update(dt);
+	}
 
 	checkCollisions();
 };
@@ -151,6 +158,10 @@ var render = function()
 
 	for (var i = 0; i < freeFloatingOrganelles.length; i++) {
 		freeFloatingOrganelles[i].render(ctx);
+	};
+
+	for (var i = 0; i < freeFloatingNutrients.length; i++) {
+		freeFloatingNutrients[i].render(ctx);
 	};
 
 	cell.render(ctx);

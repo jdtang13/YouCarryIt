@@ -13,3 +13,4 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( cell.js )
 Rails.application.config.assets.precompile += %w( organelle.js )
 Rails.application.config.assets.precompile += %w( canvasgame.js )
+Rails.application.config.assets.precompile += %w( nutrients.js )
