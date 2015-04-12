@@ -125,20 +125,12 @@ function Cell (worldX,worldY)
 	};
 
     
-    
-    /* Rendering handled by Oliver */
-
-    /* Make sure everything in TODO is covered in update.*/
-
-        // TODO: 
-        // If you detect nutrients, increase relevant nutrient levels.
-        // If you detect the loss of an organelle, increase relevant nutrient loss quantity.
+   
         // If you die (have no nutrient levels for at least one nutrient), die.
         // If you have ripe nutrient levels for all, engage in asexual reproduction.
         // Battle?
 
     
-
-    // TODO: Create nutrient classes, draw nutrients, handle nutrient ingestion, and passage of nutrients to bacterium 
+        // TODO: Create nutrient classes, draw nutrients, handle nutrient ingestion, and passage of nutrients to bacterium 
 
 }

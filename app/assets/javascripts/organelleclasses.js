@@ -1,9 +1,11 @@
 // TODO: Specify actual parameters of our game.
-
+var MAXIMUM_NUTRIENT_LEVEL = 1000; 
+var DEFAULT_NUTRIENT_LEVEL = 500;
+var NUTRIENT_LOSS_QUANTITY = 5;
+var NUTRIENT_EFFICIENCY_FACTOR = 1.1;
 // associated nutrients for each organelle 
 var ORGANELLE_NUTRIENTS = {mitchondrion: "energy", ribosome: "protein", vacuole: "water" };
 
-var DEFAULT_NUTRITION_BOOST = 20;
 
 var RIBOSOME_RADIUS = 5;
 
@@ -63,22 +65,14 @@ function Eukaryote ()
     	this.nutrientLevels.proteinLevel -= this.nutrientLossQuantity.proteinLoss;
     	this.nutrientLevels.waterLevel -= this.nutrientLossQuantity.waterLoss;
     };
-
-    this.addNutrient = function(nutrient) {
-    	if (nutrient.feature === "energy") {
-    		this.nutrientLevel.energyLevel +=  nutrient.nutritiousFactor * DEFAULT_NUTRITION_BOOST;
-    	};    	
-
-    	if (nutrient.feature === "protein") {
-    		this.nutrientLevel.proteinLevel +=  nutrient.nutritiousFactor * DEFAULT_NUTRITION_BOOST;    	}
-
-    	if (nutrient.feature === "water") {
-    		this.nutrientLevel.waterLevel += nutrient.nutriousFactor * DEFAULT_NUTRITION_BOOST;
-    	}
-
-    };
 	
+	/* Rendering handled by Oliver */
+
 	/* Make sure everything in TODO is covered in update.*/
+
+		// TODO: 
+		// If you detect nutrients, increase relevant nutrient levels.
+		// If you detect the loss of an organelle, increase relevant nutrient loss quantity.
 		// If you die (have no nutrient levels for at least one nutrient), die.
 		// If you have ripe nutrient levels for all, engage in asexual reproduction.
 		// Battle?
@@ -88,8 +82,6 @@ function Eukaryote ()
 	// TODO: Create nutrient classes, draw nutrients, handle nutrient ingestion, and passage of nutrients to bacterium 
 }
 
-=======
->>>>>>> f12a61b579deb79438a69ca5f7f585699de7e6cd:app/assets/javascripts/organelle.js
 /** Main organelles */
 function Mitochondrion (worldX, worldY) 
 {
@@ -100,6 +92,7 @@ function Mitochondrion (worldX, worldY)
 	this.worldOuterX = worldX;
 	this.worldOuterY = worldY;
 
+	
 	this.relativeInnerX = 0;
 	this.relativeInnerY = 0;
 	this.relativeOuterX = 0;
