@@ -78,13 +78,14 @@ function Mitochondrion (worldX, worldY)
 				cx + this.relativeX,
 				cy + this.relativeY, MITOCHONDRION_OUTER_RADIUS, 0, Math.PI*2);
 			ctx.closePath();
+			ctx.fillStyle = "#00ff00";
 			ctx.fill();
 			ctx.beginPath();
 			ctx.arc(
 				cx + this.relativeX,
 				cy + this.relativeY, MITOCHONDRION_INNER_RADIUS, 0, Math.PI*2);
 			ctx.closePath();
-			ctx.fillStyle = "#8FBC8F";
+			ctx.fillStyle = "#8FFF8F";
 			ctx.fill();
 			this.worldX = cx + this.relativeX;
 			this.worldX = cy + this.relativeY;

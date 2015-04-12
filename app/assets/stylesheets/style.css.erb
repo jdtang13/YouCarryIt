@@ -4,8 +4,10 @@ html, body
     padding: 0px;
     height:100%;
 
-    background-image: url("paper.gif");
+    background-image: url('<%= asset_path 'images/sitebackdrop.jpg' %>');
     background-size:cover;
+    background: #222222;
+    font-family:sans-serif;
 }
 
 a:link {
@@ -67,11 +69,13 @@ header
 
 article
 {
+    background:#DDDDDD;
     padding: 1em 2em 2em 2em;
     margin:auto;
     margin-top:1.5em;
     margin-bottom:2.5em;
     width:60em;
+    box-shadow: 1px 1px 1px #111111;
 }
 content
 {
@@ -86,7 +90,7 @@ canvas
     margin:auto;
     width:800px;
     height:600px;
-    background: #659CEF;
+    background: #000000;
 }
 
 footer
