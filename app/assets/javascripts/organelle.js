@@ -37,16 +37,17 @@ function Mitochondrion (worldX, worldY)
 	{
 		this.floatDirection = 1;
 	}
+	this.speed = organelleFloatSpeed + (Math.random()/4);
 	
 	this.update = function(dt) 
 	{
 		if(this.floatDirection == 0)
 		{
-			this.angleFromCenter -= organelleFloatSpeed;
+			this.angleFromCenter -= this.speed;
 		}
 		else
 		{
-			this.angleFromCenter += organelleFloatSpeed;
+			this.angleFromCenter += this.speed;
 		}
 
 
@@ -113,18 +114,18 @@ function Ribosome(worldX, worldY)
 	{
 		this.floatDirection = 1;
 	}
+	this.speed = organelleFloatSpeed + (Math.random()/4);
 	
 	this.update = function(dt) 
 	{
 		if(this.floatDirection == 0)
 		{
-			this.angleFromCenter -= organelleFloatSpeed;
+			this.angleFromCenter -= this.speed;
 		}
 		else
 		{
-			this.angleFromCenter += organelleFloatSpeed;
+			this.angleFromCenter += this.speed;
 		}
-
 
 		this.relativeX = (Math.cos(this.angleFromCenter) * this.distanceFromCenter);
 		this.relativeY = (Math.sin(this.angleFromCenter) * this.distanceFromCenter);
@@ -170,16 +171,17 @@ function Vacuole (worldX, worldY)
 	{
 		this.floatDirection = 1;
 	}
+	this.speed = organelleFloatSpeed + (Math.random()/4);
 	
 	this.update = function(dt) 
 	{
 		if(this.floatDirection == 0)
 		{
-			this.angleFromCenter -= organelleFloatSpeed;
+			this.angleFromCenter -= this.speed;
 		}
 		else
 		{
-			this.angleFromCenter += organelleFloatSpeed;
+			this.angleFromCenter += this.speed;
 		}
 
 

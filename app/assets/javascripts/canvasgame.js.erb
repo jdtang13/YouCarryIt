@@ -11,6 +11,9 @@ var ctx = document.getElementById('canvasGame').getContext('2d');
 
 var freeFloatingOrganelles = new Array();
 var freeFloatingNutrients = new Array();
+var enemies = new Array();
+var bullets = new Array();
+
 
 var createOrganelle = function(type, worldX, worldY)
 {
@@ -54,6 +57,13 @@ var cell = new Cell(100,100);
 createOrganelle("ribo",600,200);
 createOrganelle("mito",400,400);
 createOrganelle("vacu",200,200);
+createOrganelle("vacu",200,400);
+createOrganelle("vacu",200,500);
+createOrganelle("vacu",200,600);
+createOrganelle("vacu",300,200);
+enemies.push(new Enemy(450,350));
+enemies.push(new Enemy(350,350));
+enemies.push(new Enemy(350,450));
 
 var update = function(dt)
 {
@@ -64,7 +74,19 @@ var update = function(dt)
 	for (var i = 0; i < freeFloatingOrganelles.length; i++) {
 		freeFloatingOrganelles[i].update(dt);
 	};
+	for (var i = 0; i < enemies.length; i++) {
+		enemies[i].update(dt);
+	};
+	for (var i = 0; i < bullets.length; i++) {
+		bullets[i].update(dt);
+		if(bullets[i].dead)
+		{
+			bullets.splice(i,1);
+			i--;
+		}
+	};
 
+	enemyAI();
 	checkCollisions();
 };
 
@@ -106,6 +128,7 @@ var input = function(dt)
 
 var checkCollisions = function()
 {
+	//  Collecting organelles
 	for (var i = 0; i < freeFloatingOrganelles.length; i++) 
 	{
 		var distanceBetweenCellAndOrganelle = 
@@ -120,7 +143,9 @@ var checkCollisions = function()
 			//		Play absorption sound
 			//		Create particle effect
 		}
-	};	
+	};
+
+	//  Collecting nutrients	
 	for (var i = 0; i < freeFloatingNutrients.length; i++) 
 	{
 		var distanceBetweenCellAndNutrient = 
@@ -140,8 +165,51 @@ var checkCollisions = function()
 		}
 	};	
 
+	//  Collecting bullets
+	for (var i = 0; i < bullets.length; i++) 
+	{
+		var distanceBetweenCellAndBullet = 
+			Math.sqrt(Math.pow(cell.worldX-bullets[i].worldX,2) + 
+					  Math.pow(cell.worldY-bullets[i].worldY,2));
+
+		if(distanceBetweenCellAndBullet < cellCollisionRadius + bulletRadius)
+		{
+			//  We have a collision	between cell and bullet
+			bullets.splice(i,1);//  Delete from array
+			//		Hurt player
+			//		Create particle effect		
+			//		Play ouch sound	
+
+		}
+	};	
 };
 
+var enemyAI = function()
+{
+	for (var i = 0; i < enemies.length; i++) {
+			if(enemies[i].canShoot)
+			{
+				var xToPlayer = cell.worldX-enemies[i].worldX;
+				var yToPlayer = cell.worldY-enemies[i].worldY;
+
+				var distanceBetweenCellAndEnemy = 
+					Math.sqrt(Math.pow(xToPlayer,2) + 
+					  	      Math.pow(yToPlayer,2));
+				if(distanceBetweenCellAndEnemy< enemyRange)
+				{
+					//  Enemy is in range of player
+					enemies[i].canShoot = false;
+
+
+					bullets.push(new Bullet(
+						enemies[i].worldX,
+						enemies[i].worldY,
+						xToPlayer/distanceBetweenCellAndEnemy,
+						yToPlayer/distanceBetweenCellAndEnemy));
+				}
+			}
+		};	
+};
 
 var render = function()
 {
@@ -155,6 +223,14 @@ var render = function()
 
 	for (var i = 0; i < freeFloatingOrganelles.length; i++) {
 		freeFloatingOrganelles[i].render(ctx);
+	};
+
+	for (var i = 0; i < bullets.length; i++) {
+		bullets[i].render(ctx);
+	};
+
+	for (var i = 0; i < enemies.length; i++) {
+		enemies[i].render(ctx);
 	};
 
 	cell.render(ctx);
