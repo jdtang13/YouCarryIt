@@ -24302,3 +24302,25 @@ Started GET "/" for ::1 at 2015-04-12 02:48:43 -0400
 Processing by WelcomeController#index as HTML
   Rendered welcome/index.html.erb within layouts/application (30.6ms)
 Completed 200 OK in 118ms (Views: 117.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-04-12 03:04:05 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (78.4ms)
+Completed 200 OK in 239ms (Views: 228.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/style-01f9845404989254505f13b46239b74c.css?body=1" for ::1 at 2015-04-12 03:04:05 -0400
+
+
+Started GET "/" for ::1 at 2015-04-12 03:05:00 -0400
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (36.8ms)
+Completed 200 OK in 114ms (Views: 113.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-04-12 03:09:42 -0400
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (44.7ms)
+Completed 200 OK in 125ms (Views: 125.0ms | ActiveRecord: 0.0ms)
