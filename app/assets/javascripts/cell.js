@@ -12,6 +12,7 @@ var NUTRIENT_EFFICIENCY_FACTOR = 1.1;
 
 var cellRadius = 50;
 var undulationAmplitude = 5;
+var growthAmplitude = 7;
 
 var plasmidRadius = 4;
 var wallPieceRadius = 0.5;
@@ -85,15 +86,16 @@ function Cell (worldX,worldY)
         };
 
         //  The undulating of cell walls
-        this.undulationAngle += this.undulationSpeed;
+        this.undulationAngle += this.undulationSpeed*3;
 
         for (var i = 0; i < this.cellWallX.length; i++) 
         {
 			var atEveryRadians = Math.PI*2/this.cellWallX.length;
-        	var undulation = (Math.sin(this.undulationAngle + atEveryRadians*i) * undulationAmplitude);
+        	var undulation = Math.sin((this.undulationAngle + atEveryRadians*i)*7) * undulationAmplitude;
+            var growth = Math.sin(this.undulationAngle) * growthAmplitude;
         	 
-            this.cellWallX[i] = Math.cos(atEveryRadians*i) * (cellRadius + undulation);
-            this.cellWallY[i] = Math.sin(atEveryRadians*i) * (cellRadius + undulation);
+            this.cellWallX[i] = Math.cos(atEveryRadians*i) * (cellRadius + undulation + growth);
+            this.cellWallY[i] = Math.sin(atEveryRadians*i) * (cellRadius + undulation + growth);
         };
     };
 	this.render = function(ctx)
