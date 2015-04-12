@@ -11,11 +11,16 @@
 <%= javascript_include_tag "organelle", "data-turbolinks-track" => true %>
 <%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>
 
+<script>
+setInterval(function(){
+  $.get("/welcome/updateSocial.js", function(data){
+    $("rails-data").html(data);
+  },
+  "html")
+}, 500);
+</script>
+
 <div id = "rails-data">
-<% for i in 0..(@tweet_limit-1) %>
-sentiment: <%= @sentiments[i].to_s %>,
-status: <%= @statuses[i].to_s %>;
-<% end %>
 </div>
 
 </article>
