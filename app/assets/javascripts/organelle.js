@@ -14,6 +14,8 @@ var VACUOLE_RADIUS = 9;
 // stores all bacteria cells. TODO: make sure you store all bacteria cells
 var allCells;
 
+var organelleFloatSpeed = 0.01;
+
 /** Main organelles */
 function Mitochondrion (worldX, worldY) 
 {
@@ -22,31 +24,34 @@ function Mitochondrion (worldX, worldY)
 	this.worldX = worldX;
 	this.worldY = worldY;
 
-	this.relativeX = 0;
-	this.relativeY = 0;
+	this.angleFromCenter = 0;
+
+	this.distanceFromCenter = 0;
 	this.relativeX = 0;
 	this.relativeY = 0;
 
 	this.theta = 0;
+
+	this.floatDirection = 0;
+	if(Math.random()>0.5)
+	{
+		this.floatDirection = 1;
+	}
 	
 	this.update = function(dt) 
 	{
-		// /* after ingestion, establish new position in safe space relative to cell. */
-		// /* safe zone: 2/3 of the bacterium radius, given random angle and position */
-		// allCells.forEach(function(bacterium) {
-		// 	if (Math.abs(bacterium.worldX - this.worldX) < (MITOCHONDRION_OUTER_RADIUS + bacterium.radius) ||
-		// 		Math.abs(bacterium.worldY - this.worldY) < (MITOCHONDRION_OUTER_RADIUS + bacterium.radius)) {
-		// 		bacterium.addOrganelle(this);
-		// 		var distanceFromBacteriumCenter = Math.random() * bacterium.radius; 
-		// 		var organelleTheta = Math.random() * 2*Math.PI();
-		// 		this.relativeX = bacterium.worldX + distanceFromBacteriumCenter * Math.cos(organelleTheta);
-		// 		this.relativeY = bacterium.worldY + distanceFromBacteriumCenter * Math.sin(organelleTheta);
-		// 		this.relativeX = bacterium.worldX + distanceFromBacteriumCenter * Math.cos(organelleTheta);
-		// 		this.relativeY = bacterium.worldY + distanceFromBacteriumCenter * Math.sin(organelleTheta);
-		// 	}
-		// });
+		if(this.floatDirection == 0)
+		{
+			this.angleFromCenter -= organelleFloatSpeed;
+		}
+		else
+		{
+			this.angleFromCenter += organelleFloatSpeed;
+		}
 
-		// this.theta += THETA_CHANGE;
+
+		this.relativeX = (Math.cos(this.angleFromCenter) * this.distanceFromCenter);
+		this.relativeY = (Math.sin(this.angleFromCenter) * this.distanceFromCenter);
 	};
 
 	// handle stylistics
@@ -69,23 +74,20 @@ function Mitochondrion (worldX, worldY)
 		}
 		else 
 		{
-			this.relativeX = cx + (MITOCHONDRION_INNER_RADIUS * Math.cos(this.theta));
-			this.relativeY = cy + (MITOCHONDRION_INNER_RADIUS * Math.sin(this.theta));
-			this.relativeX = cx + (MITOCHONDRION_OUTER_RADIUS * Math.cos(this.theta));
-			this.relativeY = cy + (MITOCHONDRION_OUTER_RADIUS * Math.sin(this.theta));
-
-			ctx.arc(this.relativeX,  this.relativeY, MITOCHONDRION_OUTER_RADIUS, 0, Math.PI*2);
+			ctx.arc(
+				cx + this.relativeX,
+				cy + this.relativeY, MITOCHONDRION_OUTER_RADIUS, 0, Math.PI*2);
 			ctx.closePath();
 			ctx.fill();
 			ctx.beginPath();
-			ctx.arc(this.relativeX,  this.relativeY, MITOCHONDRION_INNER_RADIUS, 0, Math.PI*2);
+			ctx.arc(
+				cx + this.relativeX,
+				cy + this.relativeY, MITOCHONDRION_INNER_RADIUS, 0, Math.PI*2);
 			ctx.closePath();
 			ctx.fillStyle = "#8FBC8F";
 			ctx.fill();
-			this.worldX = this.relativeX;
-			this.worldX = this.relativeX;
-			this.worldY = this.relativeY;
-			this.worldX = this.relativeX;
+			this.worldX = cx + this.relativeX;
+			this.worldX = cy + this.relativeY;
 		}
 	};
 };
@@ -97,29 +99,34 @@ function Ribosome(worldX, worldY)
 
 	this.worldX = worldX;
 	this.worldY = worldY;
+
+	this.angleFromCenter = 0;
+	this.distanceFromCenter = 0;
 	this.relativeX = 0;
 	this.relativeY = 0;
 
 	this.theta = 0;
 
+	this.floatDirection = 0;
+	if(Math.random()>0.5)
+	{
+		this.floatDirection = 1;
+	}
+	
 	this.update = function(dt) 
 	{
-		// /* after ingestion, establish new position in safe space relative to cell. */
-		// /* safe zone: 2/3 of the bacterium radius, given random angle and position */
-		// allCells.forEach(function(bacterium) 
-		// {
-		// 	if (Math.abs(bacterium.worldX - this.worldX) < (RIBOSOME_RADIUS + bacterium.radius) ||
-		// 		Math.abs(bacterium.worldY - this.worldY) < (RIBOSOME_RADIUS + bacterium.radius))
-		// 	{
-		// 		bacterium.addOrganelle(this);
-		// 		var distanceFromBacteriumCenter = Math.random() * bacterium.radius; 
-		// 		var organelleTheta = Math.random() * 2*Math.PI();
-		// 		this.relativeX = bacterium.worldX + distanceFromBacteriumCenter * Math.cos(organelleTheta);
-		// 		this.relativeY = bacterium.worldY + distanceFromBacteriumCenter * Math.sin(organelleTheta);
-		// 	}
-		// });
+		if(this.floatDirection == 0)
+		{
+			this.angleFromCenter -= organelleFloatSpeed;
+		}
+		else
+		{
+			this.angleFromCenter += organelleFloatSpeed;
+		}
 
-		// this.theta += THETA_CHANGE;
+
+		this.relativeX = (Math.cos(this.angleFromCenter) * this.distanceFromCenter);
+		this.relativeY = (Math.sin(this.angleFromCenter) * this.distanceFromCenter);
 	};
 
 	// Ribosome is rendered as small circle
@@ -133,9 +140,7 @@ function Ribosome(worldX, worldY)
 		}
 		else 
 		{
-			this.relativeX = cx + (RIBOSOME_RADIUS * Math.cos(this.theta));
-			this.relativeY = cy + (RIBOSOME_RADIUS * Math.sin(this.theta));
-			ctx.arc(this.relativeX, this.relativeY, RIBOSOME_RADIUS, 0, Math.PI*2);
+			ctx.arc(cx + this.relativeX, cy + this.relativeY, RIBOSOME_RADIUS, 0, Math.PI*2);
 			this.worldX = this.relativeX;
 			this.worldY = this.relativeY;
 		}
@@ -151,28 +156,34 @@ function Vacuole (worldX, worldY)
 
 	this.worldX = worldX;
 	this.worldY = worldY;
+
+	this.angleFromCenter = 0;
+	this.distanceFromCenter = 0;
 	this.relativeX = 0;
 	this.relativeY = 0;
 
 	this.theta = 0;
 	
+	this.floatDirection = 0;
+	if(Math.random()>0.5)
+	{
+		this.floatDirection = 1;
+	}
+	
 	this.update = function(dt) 
 	{
+		if(this.floatDirection == 0)
+		{
+			this.angleFromCenter -= organelleFloatSpeed;
+		}
+		else
+		{
+			this.angleFromCenter += organelleFloatSpeed;
+		}
 
-		// /* after ingestion, establish new position in safe space relative to cell. */
-		// /* safe zone: 2/3 of the bacterium radius, given random angle and position */
-		// allCells.forEach(function(bacterium) {
-		// 	if (Math.abs(bacterium.worldX - this.worldX) < (VACUOLE_RADIUS + bacterium.radius) ||
-		// 		Math.abs(bacterium.worldY - this.worldY) < (VACUOLE_RADIUS + bacterium.radius)) {
-		// 		bacterium.addOrganelle(this);
-		// 		var distanceFromBacteriumCenter = Math.random() * bacterium.radius; 
-		// 		var organelleTheta = Math.random() * 2*Math.PI();
-		// 		this.relativeX = bacterium.worldX + distanceFromBacteriumCenter * Math.cos(organelleTheta);
-		// 		this.relativeY = bacterium.worldY + distanceFromBacteriumCenter * Math.sin(organelleTheta);
-		// 	}
-		// });
 
-		// this.theta += THETA_CHANGE;
+		this.relativeX = (Math.cos(this.angleFromCenter) * this.distanceFromCenter);
+		this.relativeY = (Math.sin(this.angleFromCenter) * this.distanceFromCenter);
 	};
 
 	this.render = function(ctx, cx, cy)
@@ -185,9 +196,7 @@ function Vacuole (worldX, worldY)
 		}
 		else 
 		{
-			this.relativeX = cx + (VACUOLE_RADIUS * Math.cos(this.theta));
-			this.relativeY = cy + (VACUOLE_RADIUS * Math.sin(this.theta));
-			ctx.arc(this.relativeX, this.relativeY, VACUOLE_RADIUS, 0, Math.PI*2);
+			ctx.arc(cx + this.relativeX, cy + this.relativeY, VACUOLE_RADIUS, 0, Math.PI*2);
 			this.worldX = this.relativeX;
 			this.worldY = this.relativeY;
 		}

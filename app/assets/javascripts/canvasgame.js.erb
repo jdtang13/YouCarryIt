@@ -113,7 +113,8 @@ var checkCollisions = function()
 		if(distanceBetweenCellAndOrganelle < cellRadius + organelleRadius)
 		{
 			//  We have a collision	between cell and organelle
-			freeFloatingOrganelles.splice(i,1);//  Delete from array add to cell 		
+			cell.addOrganelle(freeFloatingOrganelles[i]);//	Add to cells organelle list		
+			freeFloatingOrganelles.splice(i,1);//  Delete from array add to cell 
 			//		Play absorption sound
 			//		Create particle effect
 		}
@@ -125,7 +126,7 @@ var checkCollisions = function()
 					  Math.pow(cell.worldY-freeFloatingNutrients[i].worldY,2));
 
 		var nutrientRadius = 6;
-		if(distanceBetweenCellAndNutrient < cellRadius + nutrientRadius)
+		if(distanceBetweenCellAndNutrient < cellCollisionRadius + nutrientRadius)
 		{
 
 			//  We have a collision	between cell and nutrient

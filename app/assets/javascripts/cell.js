@@ -18,6 +18,9 @@ var centerUndulationRadius = 1.5;
 var plasmidRadius = 7;
 var wallPieceRadius = 1.75;
 
+var cellCollisionRadius = 30;
+var minimumOrganelleDistance = 20;
+var maxOrganelleDistance = 30;
 
 function Cell (worldX,worldY) 
 {
@@ -38,6 +41,7 @@ function Cell (worldX,worldY)
     };
 
     this.organelles = {mitochondria: {}, ribosomes: {}, vacuoles: {}};
+    this.allOrganelles = new Array();
 
     this.nutrientLevels = { 
         energyLevel: DEFAULT_NUTRIENT_LEVEL, 
@@ -50,20 +54,34 @@ function Cell (worldX,worldY)
         waterLoss: NUTRIENT_LOSS_QUANTITY};
 
     this.addOrganelle = function(organelle) {
+        var xToOrganelle = organelle.worldX - this.worldX;
+        var yToOrganelle = organelle.worldY - this.worldY;
+
+        var startingAngle = Math.atan2(yToOrganelle,xToOrganelle);
+        var startingDistance = minimumOrganelleDistance + (Math.random() * (maxOrganelleDistance - minimumOrganelleDistance));
+        var relativeX = Math.cos(startingAngle) * startingDistance;
+        var relativeY = Math.sin(startingAngle) * startingDistance;
+
+        organelle.relativeX = relativeX;
+        organelle.relativeY = relativeY;
+        organelle.angleFromCenter = startingAngle;
+        organelle.distanceFromCenter = startingDistance;
+
+        this.allOrganelles.push(organelle);
 
         if (ORGANELLE_NUTRIENTS[organelle] === "energy") {
             this.nutrientLossQuantity.energyLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
-            organelles["mitochondria"].push(organelle);
+            this.organelles["mitochondria"].push(organelle);
         }
 
         if (ORGANELLE_NUTRIENTS[organelle] === "protein") {
             this.nutrientLossQuantity.proteinLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
-            organelles["ribosomes"].push(organelle);
+            this.organelles["ribosomes"].push(organelle);
         }
 
         if (ORGANELLE_NUTRIENTS[organelle] === "vacuole") {
             this.nutrientLossQuantity.waterLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
-            organelles["vacuoles"].push(organelle);
+            this.organelles["vacuoles"].push(organelle);
         }
     };
 
@@ -76,6 +94,10 @@ function Cell (worldX,worldY)
     this.update = function(dt)
     {
         this.expendResources();
+
+        for (var i = 0; i < this.allOrganelles.length; i++) {
+            this.allOrganelles[i].update(dt);
+        };
 
         for (var i = 0; i < this.organelles["mitochondria"].length; i++) {
             this.organelles["mitochondria"][i].update(dt);
@@ -104,15 +126,18 @@ function Cell (worldX,worldY)
     };
 	this.render = function(ctx)
 	{
+        for (var i = 0; i < this.allOrganelles.length; i++) {
+            this.allOrganelles[i].render(ctx,this.worldX,this.worldY);
+        };
         //  Rendering this.organelles
         for (var i = 0; i < this.organelles["mitochondria"].length; i++) {
-            this.organelles["mitochondria"][i].render(ctx,worldX,worldY);
+            this.organelles["mitochondria"][i].render(ctx,this.worldX,this.worldY);
         };
         for (var i = 0; i < this.organelles["ribosomes"].length; i++) {
-            this.organelles["ribosomes"][i].render(ctx,worldX,worldY);
+            this.organelles["ribosomes"][i].render(ctx,this.worldX,this.worldY);
         };
         for (var i = 0; i < this.organelles["vacuoles"].length; i++) {
-            this.organelles["vacuoles"][i].render(ctx,worldX,worldY);
+            this.organelles["vacuoles"][i].render(ctx,this.worldX,this.worldY);
         };
         //  Rendering center of bacteria 
         ctx.beginPath();
