@@ -12,11 +12,9 @@ var NUTRIENT_EFFICIENCY_FACTOR = 1.1;
 
 var cellRadius = 50;
 var undulationAmplitude = 5;
-var growthAmplitude = 7;
-var centerUndulationRadius = 1.5;
 
-var plasmidRadius = 7;
-var wallPieceRadius = 1.75;
+var plasmidRadius = 4;
+var wallPieceRadius = 0.5;
 
 
 function Cell (worldX,worldY) 
@@ -29,8 +27,6 @@ function Cell (worldX,worldY)
     this.cellWallY = new Array();
     this.undulationAngle = 0;
     this.undulationSpeed = 0.01;
-
-    this.centerRadius = plasmidRadius;
 	
     for (var i = 0; i < 360; i++) {
         this.cellWallX.push(0);
@@ -88,18 +84,15 @@ function Cell (worldX,worldY)
         };
 
         //  The undulating of cell walls
-        this.undulationAngle += this.undulationSpeed*3;
-
-        this.centerRadius = plasmidRadius + ( Math.sin(this.undulationAngle) * centerUndulationRadius);
+        this.undulationAngle += this.undulationSpeed;
 
         for (var i = 0; i < this.cellWallX.length; i++) 
         {
 			var atEveryRadians = Math.PI*2/this.cellWallX.length;
-        	var undulation = Math.sin((this.undulationAngle + atEveryRadians*i)*7) * undulationAmplitude;
-            var growth = Math.sin(this.undulationAngle) * growthAmplitude;
+        	var undulation = (Math.sin(this.undulationAngle + atEveryRadians*i) * undulationAmplitude);
         	 
-            this.cellWallX[i] = Math.cos(atEveryRadians*i) * (cellRadius + undulation + growth);
-            this.cellWallY[i] = Math.sin(atEveryRadians*i) * (cellRadius + undulation + growth);
+            this.cellWallX[i] = Math.cos(atEveryRadians*i) * (cellRadius + undulation);
+            this.cellWallY[i] = Math.sin(atEveryRadians*i) * (cellRadius + undulation);
         };
     };
 	this.render = function(ctx)
@@ -116,7 +109,7 @@ function Cell (worldX,worldY)
         };
         //  Rendering center of bacteria 
         ctx.beginPath();
-        ctx.arc(this.worldX, this.worldY, this.centerRadius, 0, 2 * Math.PI, false);
+        ctx.arc(this.worldX, this.worldY, plasmidRadius, 0, 2 * Math.PI, false);
         ctx.fillStyle = 'red';
         ctx.fill();
         ctx.closePath();
@@ -149,3 +142,4 @@ function Cell (worldX,worldY)
     // TODO: Create nutrient classes, draw nutrients, handle nutrient ingestion, and passage of nutrients to bacterium 
 
 }
+;

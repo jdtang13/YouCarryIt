@@ -2,15 +2,39 @@
 <html lang="en">
 
 <article>
-<p><b>Twitter stream with Indico analysis (<%= @tweet_limit %> scraped)</b></p>
 
-<% for i in 0..(@tweet_limit-1) %>
-<p><b><%= @sentiments[i].to_s %></b>: <%= @statuses[i].to_s %></p>
-<% end %>
+<!-- <p><b>Twitter stream with Indico analysis (<%= @tweet_limit %> scraped)</b></p> -->
 
-<canvas id="canvasGame" width="800" height="600">></canvas>
-<%= javascript_include_tag "cell", "data-turbolinks-track" => true %>
-<%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>
+    <p><b>Use the arrow keys to move!</b></p>
+
+    <%= javascript_include_tag "cell",       "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "organelle",  "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "canvasgame", "data-turbolinks-track" => true %>
+
+    <div id="threeOptions">
+        <ul style="list-style-type: none;">
+            <li>First Item (Mitochrondia):  <input id="first" type="text" name="first" value="Rose Bowl"></li>
+            <li>Second Item (Ribosome):     <input id="second" type="text" name="second" value="Hack Princeton"></li>
+            <li>Third Item (Vacuole):       <input id="third" type="text" name="third" value="#gaming"></li>
+        </ul>
+        <input type="submit" onclick="createGame()">
+    </div>
+
+    <canvas id="canvasGame" width="800" height="600">></canvas>
+
+<script>
+/*setInterval(function() {
+jQuery.ajax({
+  url: "/updateSocial",
+  type: "GET",
+  dataType: "script"
+});
+}, 10000); */
+// in milliseconds
+</script>
+
+<div id = "rails-data">
+</div>
 
 </article>
        
