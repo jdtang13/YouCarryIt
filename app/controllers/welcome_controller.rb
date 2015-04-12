@@ -2,6 +2,7 @@ class WelcomeController < ApplicationController
 
   require 'twitter'
 
+  @twitter_factor = 0
   MAX_TWEETS = 25
 
   $first = ""
@@ -29,54 +30,60 @@ class WelcomeController < ApplicationController
 
   def updateSocial
 
-	  client = makeClient
+  	@tweet_limit = MAX_TWEETS
 
-	  puts "attempting to log into twitter..."
+  	  if (@twitter_factor)
+		  client = makeClient
 
-	  @tweet_limit = MAX_TWEETS
-	  count = 0
+		  puts "attempting to log into twitter..."
+		  
+		  count = 0
 
-	  indico_enabled = 1
+		  indico_enabled = 0
 
-	  if (indico_enabled)
-	  	require 'indico'
-	  	Indico.api_key = 'a20e64f1e4fd1dd002ec661f62caa444'
-	   end
+		  if (indico_enabled)
+		  	require 'indico'
+		  	Indico.api_key = 'a20e64f1e4fd1dd002ec661f62caa444'
+		   end
 
-	  @statuses = []
-	  @sentiments = []
+		  @statuses = []
+		  @sentiments = []
 
-	  topics = [$first, $second, $third]
+		  topics = [$first, $second, $third]
 
-	  puts "topics are: " + topics.join(",")
+		  puts "topics are: " + topics.join(",")
 
-	  client.sample do |status| 
-	 	#client.filter(track: topics.join(",")) do |status| 
-	 		if status.is_a?(Twitter::Tweet) and count < @tweet_limit
+		  client.sample do |status| 
+		 	#client.filter(track: topics.join(",")) do |status| 
+		 		if status.is_a?(Twitter::Tweet) and count < @tweet_limit
 
-	 			if status.text.to_s == ""
-	 				continue
-	 			end
+		 			if status.text.to_s == ""
+		 				continue
+		 			end
 
-	 			text = (status.text).to_s
-	  			@statuses.push(text)
+		 			text = (status.text).to_s
+		  			@statuses.push(text)
 
-	  			if (indico_enabled)
-	  				@sentiments.push(Indico.sentiment(text))
-	  			else
-	  				@sentiments.push(rand)
-	  			end
+		  			if (indico_enabled)
+		  				@sentiments.push(Indico.sentiment(text))
+		  			else
+		  				@sentiments.push(rand)
+		  			end
 
-	  			count += 1
-	  			
-	  			puts count
-	  			puts status.text.to_s
-	  		else
-	  			break
-	  		end
-	  	end
+		  			count += 1
+		  			
+		  			puts count
+		  			puts status.text.to_s
+		  		else
+		  			break
+		  		end
+		  	end
 
-	  	@tweet_limit = count
+		  	@tweet_limit = count
+		 else
+
+
+		 end
 
 	  respond_to do |format|
 	    format.js

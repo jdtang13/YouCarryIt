@@ -15,7 +15,7 @@ function hasher(tweet) {
 
 //  Creating canvas
 var img = new Image();
-img.src = '<%= asset_path 'images/backdrop0.jpg' %>'
+img.src = '/assets/images/backdrop0-2c363a96759b923e853c1dae858ac3bb.jpg'
 
 function runGame(first,second,third)
 {
@@ -150,60 +150,50 @@ var populateTweets = function()
 }
 
 else {
-
-	var limitRails = 3;
+	var limitRails = 15;
 
 	var hash;
 	for (var i = 0; i < limitRails; i++) {
 		// create nutrient
 		if (Math.random() > .5) {
-			createNutrient("glucose", (Math.random() * 800), (Math.random() * 600), 
+			createNutrient("glucose", (Math.random() * 600), (Math.random() * 400), 
 				Math.random(), "Gonna be some tough matches for Man");
 		}
 	};
 
-	createOrganelle("vacu",Math.random() * 800,Math.random() * 600);
+	createOrganelle("vacu",Math.random() * 650,Math.random() * 500);
 
 
 	for (var i = 0; i < limitRails; i++) {
 		// create nutrient
 		if (Math.random() > .5) {
-			createNutrient("protein", (Math.random() * 800), (Math.random() * 600), 
+			createNutrient("protein", (Math.random() * 600), (Math.random() * 400), 
 				Math.random(), "THE VENUE IS SO HUGE! SEATING CAPACITY IS THE SAME AS TOKYO DOME!");
 		}
 	};
 
-	createOrganelle("ribo",Math.random() * 800,Math.random() * 600);
+	createOrganelle("ribo",Math.random() * 650,Math.random() * 500);
 
 	for (var i = 0; i < limitRails; i++) {
 		// create nutrient
 		if (Math.random() > .5) {
-			createNutrient("water", (Math.random() * 800), (Math.random() * 600), 
+			createNutrient("water", (Math.random() * 600), (Math.random() * 400), 
 				Math.random(), "RT @NiallOfficial: What a day @TheMasters ");
 		}
 	};
 
 	// create organelles based off of tweets, Math.random()omly, or what?
 
-	createOrganelle("mito",Math.random() * 800,Math.random() * 600);
+	createOrganelle("mito",Math.random() * 650,Math.random() * 500);
 }
 
 };
 
 var cell = new Cell(100,100);
 
-var oldTime = Date.now() - 10001;
-
 var update = function(dt)
 {
-
-	var newTime = Date.now();
-
-	if (newTime - oldTime > 10000) {
-    	populateTweets();
-    	oldTime = Date.now();
-    	newTime = Date.now() + 1;
-	}
+    populateTweets();
 
 	input(dt);
 

@@ -15,7 +15,7 @@ function hasher(tweet) {
 
 //  Creating canvas
 var img = new Image();
-img.src = '<%= asset_path 'images/backdrop0.jpg' %>'
+img.src = '/assets/images/backdrop0-2c363a96759b923e853c1dae858ac3bb.jpg'
 
 function runGame(first,second,third)
 {
@@ -192,14 +192,14 @@ else {
 
 var cell = new Cell(100,100);
 
-var oldTime = Date.now() - 10001;
+var oldTime = Date.now() - 4000;
 
 var update = function(dt)
 {
 
 	var newTime = Date.now();
 
-	if (newTime - oldTime > 10000) {
+	if (newTime - oldTime > 3000) {
     	populateTweets();
     	oldTime = Date.now();
     	newTime = Date.now() + 1;

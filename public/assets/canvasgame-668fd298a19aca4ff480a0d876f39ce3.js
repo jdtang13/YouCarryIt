@@ -15,7 +15,7 @@ function hasher(tweet) {
 
 //  Creating canvas
 var img = new Image();
-img.src = '<%= asset_path 'images/backdrop0.jpg' %>'
+img.src = '/assets/images/backdrop0-2c363a96759b923e853c1dae858ac3bb.jpg'
 
 function runGame(first,second,third)
 {
@@ -86,124 +86,72 @@ var populateTweets = function()
 		var rawRailsData = rawRailsString.split("~");
 	}
 
-	if (twitter_factor) {
+	if (rawRailsData.length > 1 && rawRailsData[rawRailsData.length-1] != lastTweet) {
 
-		if (rawRailsData.length > 1 && rawRailsData[rawRailsData.length-1] != lastTweet) {
-
-			for (var i = 0; i < rawRailsData.length - 1; i += 2) {
-				var tweets = firstStreamTweets;
-				var sents = firstStreamSentiments;
-				if (i % 3 == 1) {
-					tweets = secondStreamTweets;
-					sents = secondStreamSentiments;
-				}
-				else if (i % 3 == 2) {
-					tweets = thirdStreamTweets;
-					sents = thirdStreamSentiments;
-				}
-
-				tweets.push(rawRailsData[i+1]);
-				sents.push(rawRailsData[i])
-
-				lastTweet = rawRailsData[i+1];
+		for (var i = 0; i < rawRailsData.length - 1; i += 2) {
+			var tweets = firstStreamTweets;
+			var sents = firstStreamSentiments;
+			if (i % 3 == 1) {
+				tweets = secondStreamTweets;
+				sents = secondStreamSentiments;
+			}
+			else if (i % 3 == 2) {
+				tweets = thirdStreamTweets;
+				sents = thirdStreamSentiments;
 			}
 
-			var hash;
-			for (var i = 0; i < firstStreamSentiments.length; i++) {
-				// create nutrient
-				if (firstStreamSentiments[i] > .5) {
-					hash = hasher(firstStreamTweets[i]);
-					createNutrient("glucose", (hash % 600), (hash % 400), 
-						firstStreamSentiments[i], firstStreamTweets[i]);
-				}
-			};
+			tweets.push(rawRailsData[i+1]);
+			sents.push(rawRailsData[i])
 
-			createOrganelle("vacu",hash % 650,hash % 500);
-
-
-			for (var i = 0; i < secondStreamSentiments.length; i++) {
-				// create nutrient
-				if (secondStreamSentiments[i] > .5) {
-					hash = hasher(secondStreamTweets[i]);
-					createNutrient("protein", (hash % 600), (hash % 400), 
-						secondStreamSentiments[i], secondStreamTweets[i]);
-				}
-			};
-
-			createOrganelle("ribo",hash % 650,hash % 500);
-
-			for (var i = 0; i < thirdStreamSentiments.length; i++) {
-				// create nutrient
-				if (thirdStreamSentiments[i] > .5) {
-					hash = hasher(thirdStreamTweets[i]);
-					createNutrient("water", (hash % 600), (hash % 400), 
-						thirdStreamSentiments[i], thirdStreamTweets[i]);
-				}
-			};
-
-			// create organelles based off of tweets, Math.random()omly, or what?
-
-			createOrganelle("mito",hash % 650,hash % 500);
-
+			lastTweet = rawRailsData[i+1];
 		}
 
-}
+		var hash;
+		for (var i = 0; i < firstStreamSentiments.length; i++) {
+			// create nutrient
+			if (firstStreamSentiments[i] > .5) {
+				hash = hasher(firstStreamTweets[i]);
+				createNutrient("glucose", (hash % 600), (hash % 400), 
+					firstStreamSentiments[i], firstStreamTweets[i]);
+			}
+		};
 
-else {
-
-	var limitRails = 3;
-
-	var hash;
-	for (var i = 0; i < limitRails; i++) {
-		// create nutrient
-		if (Math.random() > .5) {
-			createNutrient("glucose", (Math.random() * 800), (Math.random() * 600), 
-				Math.random(), "Gonna be some tough matches for Man");
-		}
-	};
-
-	createOrganelle("vacu",Math.random() * 800,Math.random() * 600);
+		createOrganelle("vacu",hash % 650,hash % 500);
 
 
-	for (var i = 0; i < limitRails; i++) {
-		// create nutrient
-		if (Math.random() > .5) {
-			createNutrient("protein", (Math.random() * 800), (Math.random() * 600), 
-				Math.random(), "THE VENUE IS SO HUGE! SEATING CAPACITY IS THE SAME AS TOKYO DOME!");
-		}
-	};
+		for (var i = 0; i < secondStreamSentiments.length; i++) {
+			// create nutrient
+			if (secondStreamSentiments[i] > .5) {
+				hash = hasher(secondStreamTweets[i]);
+				createNutrient("protein", (hash % 600), (hash % 400), 
+					secondStreamSentiments[i], secondStreamTweets[i]);
+			}
+		};
 
-	createOrganelle("ribo",Math.random() * 800,Math.random() * 600);
+		createOrganelle("ribo",hash % 650,hash % 500);
 
-	for (var i = 0; i < limitRails; i++) {
-		// create nutrient
-		if (Math.random() > .5) {
-			createNutrient("water", (Math.random() * 800), (Math.random() * 600), 
-				Math.random(), "RT @NiallOfficial: What a day @TheMasters ");
-		}
-	};
+		for (var i = 0; i < thirdStreamSentiments.length; i++) {
+			// create nutrient
+			if (thirdStreamSentiments[i] > .5) {
+				hash = hasher(thirdStreamTweets[i]);
+				createNutrient("water", (hash % 600), (hash % 400), 
+					thirdStreamSentiments[i], thirdStreamTweets[i]);
+			}
+		};
 
-	// create organelles based off of tweets, Math.random()omly, or what?
+		// create organelles based off of tweets, randomly, or what?
 
-	createOrganelle("mito",Math.random() * 800,Math.random() * 600);
-}
+		createOrganelle("mito",hash % 650,hash % 500);
+
+	}
 
 };
 
 var cell = new Cell(100,100);
 
-var oldTime = Date.now() - 10001;
-
 var update = function(dt)
 {
-
-	var newTime = Date.now();
-
-	if (newTime - oldTime > 10000) {
-    	populateTweets();
-    	oldTime = Date.now();
-    	newTime = Date.now() + 1;
-	}
+    populateTweets();
 
 	input(dt);
 
