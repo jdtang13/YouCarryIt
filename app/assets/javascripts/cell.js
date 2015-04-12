@@ -12,15 +12,15 @@ var NUTRIENT_EFFICIENCY_FACTOR = 1.1;
 
 var cellRadius = 50;
 var undulationAmplitude = 5;
-var growthAmplitude = 7;
+var growthAmplitude = 5;
 var centerUndulationRadius = 1.5;
 
 var plasmidRadius = 7;
 var wallPieceRadius = 1.75;
 
 var cellCollisionRadius = 30;
-var minimumOrganelleDistance = 20;
-var maxOrganelleDistance = 30;
+var minimumOrganelleDistance = 15;
+var maxOrganelleDistance = 20;
 
 function Cell (worldX,worldY) 
 {
