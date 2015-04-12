@@ -3,6 +3,8 @@
 // associated nutrients for each organelle 
 var ORGANELLE_NUTRIENTS = {mitchondrion: "energy", ribosome: "protein", vacuole: "water" };
 
+var DEFAULT_NUTRITION_BOOST = 20;
+
 var organelleRadius = 7;
 var RIBOSOME_RADIUS = 5;
 
@@ -11,9 +13,80 @@ var MITOCHONDRION_INNER_RADIUS = 5;
 
 var VACUOLE_RADIUS = 9;
 
+var GLUCOSE_WIDTH = 5;
+
+var GLUCOSE_HEIGHT = 3;
+
 // stores all bacteria cells. TODO: make sure you store all bacteria cells
 var allCells;
 
+// change in angle in radians by which free organelle moves */
+var THETA_CHANGE = .25;
+
+// maximum factor of radius from which ingested organelle can be from center 
+var ORGANELLE_DISTANCE_FACTOR = (2/3);
+
+
+
+
+/** Main bacterium */
+function Eukaryote () 
+{
+	this.organelles = {mitochondria: 0, ribosomes: 0, vacuoles: 0};
+
+    this.nutrientLevels = { energyLevel: DEFAULT_NUTRIENT_LEVEL, proteinLevel: DEFAULT_NUTRIENT_LEVEL, 
+    	waterLevel: DEFAULT_NUTRIENT_LEVEL};
+
+    this.nutrientLossQuantity = { energyLoss: NUTRIENT_LOSS_QUANTITY, proteinLoss: NUTRIENT_LOSS_QUANTITY, 
+    	waterLoss: NUTRIENT_LOSS_QUANTITY};
+
+
+
+    this.addOrganelle = function(organelle) {
+    	if (ORGANELLE_NUTRIENTS[organelle] === "energy") {
+    		this.nutrientLossQuantity.energyLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
+    		organelles[mitochondria]++;
+    	}
+
+    	if (ORGANELLE_NUTRIENTS[organelle] === "protein") {
+    		this.nutrientLossQuantity.proteinLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
+    		organelles[ribosomes]++;
+    	}
+
+    	if (ORGANELLE_NUTRIENTS[organelle] === "vacuole") {
+    		this.nutrientLossQuantity.waterLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
+    		organelles[vacuoles]++;
+    	}
+    };
+
+    this.expendResources = function() {
+    	this.nutrientLevels.energyLevel -= this.nutrientLossQuantity.energyLoss;
+    	this.nutrientLevels.proteinLevel -= this.nutrientLossQuantity.proteinLoss;
+    	this.nutrientLevels.waterLevel -= this.nutrientLossQuantity.waterLoss;
+    };
+
+    this.addNutrient = function(nutrient) {
+    	if (nutrient.feature === "energy") {
+    		this.nutrientLevel.energyLevel +=  nutrient.nutritiousFactor * DEFAULT_NUTRITION_BOOST;
+    	};    	
+
+    	if (nutrient.feature === "protein") {
+    		this.nutrientLevel.proteinLevel +=  nutrient.nutritiousFactor * DEFAULT_NUTRITION_BOOST;    	}
+
+    	if (nutrient.feature === "water") {
+    		this.nutrientLevel.waterLevel += nutrient.nutriousFactor * DEFAULT_NUTRITION_BOOST;
+    	}
+
+    };
+	
+	/* Make sure everything in TODO is covered in update.*/
+		// If you die (have no nutrient levels for at least one nutrient), die.
+		// If you have ripe nutrient levels for all, engage in asexual reproduction.
+		// Battle?
+
+	};
+
+	
 /** Main organelles */
 function Mitochondrion (worldX, worldY) 
 {
@@ -31,22 +104,8 @@ function Mitochondrion (worldX, worldY)
 	
 	this.update = function(dt) 
 	{
-		// /* after ingestion, establish new position in safe space relative to cell. */
-		// /* safe zone: 2/3 of the bacterium radius, given random angle and position */
-		// allCells.forEach(function(bacterium) {
-		// 	if (Math.abs(bacterium.worldX - this.worldX) < (MITOCHONDRION_OUTER_RADIUS + bacterium.radius) ||
-		// 		Math.abs(bacterium.worldY - this.worldY) < (MITOCHONDRION_OUTER_RADIUS + bacterium.radius)) {
-		// 		bacterium.addOrganelle(this);
-		// 		var distanceFromBacteriumCenter = Math.random() * bacterium.radius; 
-		// 		var organelleTheta = Math.random() * 2*Math.PI();
-		// 		this.relativeX = bacterium.worldX + distanceFromBacteriumCenter * Math.cos(organelleTheta);
-		// 		this.relativeY = bacterium.worldY + distanceFromBacteriumCenter * Math.sin(organelleTheta);
-		// 		this.relativeX = bacterium.worldX + distanceFromBacteriumCenter * Math.cos(organelleTheta);
-		// 		this.relativeY = bacterium.worldY + distanceFromBacteriumCenter * Math.sin(organelleTheta);
-		// 	}
-		// });
-
-		// this.theta += THETA_CHANGE;
+		
+		this.theta += THETA_CHANGE;
 	};
 
 	// handle stylistics
@@ -88,7 +147,7 @@ function Mitochondrion (worldX, worldY)
 			this.worldX = this.relativeX;
 		}
 	};
-};
+}
 
 
 function Ribosome(worldX, worldY) 
@@ -104,22 +163,7 @@ function Ribosome(worldX, worldY)
 
 	this.update = function(dt) 
 	{
-		// /* after ingestion, establish new position in safe space relative to cell. */
-		// /* safe zone: 2/3 of the bacterium radius, given random angle and position */
-		// allCells.forEach(function(bacterium) 
-		// {
-		// 	if (Math.abs(bacterium.worldX - this.worldX) < (RIBOSOME_RADIUS + bacterium.radius) ||
-		// 		Math.abs(bacterium.worldY - this.worldY) < (RIBOSOME_RADIUS + bacterium.radius))
-		// 	{
-		// 		bacterium.addOrganelle(this);
-		// 		var distanceFromBacteriumCenter = Math.random() * bacterium.radius; 
-		// 		var organelleTheta = Math.random() * 2*Math.PI();
-		// 		this.relativeX = bacterium.worldX + distanceFromBacteriumCenter * Math.cos(organelleTheta);
-		// 		this.relativeY = bacterium.worldY + distanceFromBacteriumCenter * Math.sin(organelleTheta);
-		// 	}
-		// });
-
-		// this.theta += THETA_CHANGE;
+		this.theta += THETA_CHANGE;
 	};
 
 	// Ribosome is rendered as small circle
@@ -156,24 +200,6 @@ function Vacuole (worldX, worldY)
 
 	this.theta = 0;
 	
-	this.update = function(dt) 
-	{
-
-		// /* after ingestion, establish new position in safe space relative to cell. */
-		// /* safe zone: 2/3 of the bacterium radius, given random angle and position */
-		// allCells.forEach(function(bacterium) {
-		// 	if (Math.abs(bacterium.worldX - this.worldX) < (VACUOLE_RADIUS + bacterium.radius) ||
-		// 		Math.abs(bacterium.worldY - this.worldY) < (VACUOLE_RADIUS + bacterium.radius)) {
-		// 		bacterium.addOrganelle(this);
-		// 		var distanceFromBacteriumCenter = Math.random() * bacterium.radius; 
-		// 		var organelleTheta = Math.random() * 2*Math.PI();
-		// 		this.relativeX = bacterium.worldX + distanceFromBacteriumCenter * Math.cos(organelleTheta);
-		// 		this.relativeY = bacterium.worldY + distanceFromBacteriumCenter * Math.sin(organelleTheta);
-		// 	}
-		// });
-
-		// this.theta += THETA_CHANGE;
-	};
 
 	this.render = function(ctx, cx, cy)
 	{
@@ -193,6 +219,15 @@ function Vacuole (worldX, worldY)
 		}
 		ctx.fillStyle = "#0000CD"
 		ctx.fill();
-		ctx.closePath();
+
+	};
+
+
+	this.update = function(dt) 
+	{
+
+		this.theta += THETA_CHANGE;
+
 	};
 }
+
