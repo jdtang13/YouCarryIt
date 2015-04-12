@@ -14,6 +14,10 @@ var MITOCHONDRION_INNER_RADIUS = 5;
 
 var VACUOLE_RADIUS = 20;
 
+var GLUCOSE_WIDTH = 5;
+
+var GLUCOSE_HEIGHT = 3;
+
 // stores all bacteria cells. TODO: make sure you store all bacteria cells
 var allCells;
 
@@ -22,6 +26,8 @@ var THETA_CHANGE = .25;
 
 // maximum factor of radius from which ingested organelle can be from center 
 var ORGANELLE_DISTANCE_FACTOR = (2/3);
+
+
 
 
 /** Main bacterium */
@@ -207,7 +213,7 @@ function Ribosome(worldX, worldY)
 	};
 }
 
-function Vacuole () 
+function Vacuole (worldX, worldY) 
 {
 	this.nutrient = ORGANELLE_NUTRIENTS[vacuole];
 
@@ -262,13 +268,14 @@ function Vacuole ()
 
 /* Main nutrients associated with each organelle */
 
-/*function Glucose () 
+function Glucose (worldX, worldY) 
 {
 	this.nutrient = ORGANELLE_NUTRIENTS[mitochondrion];
 	
 
 	this.render = function(ctx)
 	{
+		ct.
 
 	};
 
@@ -277,41 +284,7 @@ function Vacuole ()
 	{
 
 	};
-} */
+}
 
-/* function Protein () 
-{
-	this.nutrient = ORGANELLE_NUTRIENTS[ribosome];
-	
-
-	this.render = function(ctx)
-	{
-
-	};
-
-
-	this.update = function(dt) 
-	{
-
-	};
-} */
-
-/*
-function Water () 
-{
-	this.nutrient = ORGANELLE_NUTRIENTS[vacuole];
-	
-
-	this.render = function(ctx)
-	{
-
-	};
-
-
-	this.update = function(dt) 
-	{
-
-	};
-} */
 
 
