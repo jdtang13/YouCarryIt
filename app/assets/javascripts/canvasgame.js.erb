@@ -1,11 +1,11 @@
 //  Creating canvas
+var img = new Image();
+img.src = '<%= asset_path 'images/backdrop0.jpg' %>'
+
 function runGame(first,second,third)
 {
-
 var ctx = document.getElementById('canvasGame').getContext('2d');  
 /* more info: http://stackoverflow.com/questions/7381041/url-of-images-in-javascript-code-using-rails-3-1-asset-pipeline */
-
-
 
 var freeFloatingOrganelles = new Array();
 var freeFloatingNutrients = new Array();
@@ -143,10 +143,11 @@ var checkCollisions = function()
 
 var render = function()
 {
-	ctx.beginPath();
-	ctx.fillStyle = 'white';
-	ctx.fillRect(0,0,800,600);
-	ctx.closePath();
+	ctx.drawImage(img,0,0);
+	// ctx.beginPath();
+	// ctx.fillStyle = 'white';
+	// ctx.fillRect(0,0,800,600);
+	// ctx.closePath();
 	//  Check if images is ready
 	//		Dislay image, ctx.drawImage();
 
