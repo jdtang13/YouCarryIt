@@ -71,65 +71,75 @@ var firstStreamTweets = []; //["RT @Ashton5SOS: http://t.co/j8usF8QTem", "Même 
 var secondStreamTweets = []; //["RT @PourLesSportifs: Ton corps reflète l'image de ton alimentation. http://t.co/9C6VhBqvbn"];
 var thirdStreamTweets = []; //["@mzveegh Dancehall Queen! mi so proud of u.. more awards ahead #workhard"];
 
+var lastTweet = "";
+
 var populateTweets = function()
 {
+
 	var rawRailsData = (document.getElementById("rails-data").innerHTML).split("~");
 
-	for (var i = 0; i < rawRailsData.length - 1; i += 2) {
-		var tweets = firstStreamTweets;
-		var sents = firstStreamSentiments;
-		if (i % 3 == 1) {
-			tweets = secondStreamTweets;
-			sents = secondStreamSentiments;
+	if (!(rawRailsData.length <= 1 || (rawRailsData.length > 0 && rawRailsData[rawRailsData.length-1] == lastTweet))) {
+
+		for (var i = 0; i < rawRailsData.length - 1; i += 2) {
+			var tweets = firstStreamTweets;
+			var sents = firstStreamSentiments;
+			if (i % 3 == 1) {
+				tweets = secondStreamTweets;
+				sents = secondStreamSentiments;
+			}
+			else if (i % 3 == 2) {
+				tweets = thirdStreamTweets;
+				sents = thirdStreamSentiments;
+			}
+
+			tweets.push(rawRailsData[i+1]);
+			sents.push(rawRailsData[i])
+
+			lastTweet = rawRailsData[i+1];
 		}
-		else if (i % 3 == 2) {
-			tweets = thirdStreamTweets;
-			sents = thirdStreamSentiments;
-		}
 
-		tweets.push(rawRailsData[i+1]);
-		sents.push(rawRailsData[i])
-	}
+		var hash;
+		for (var i = 0; i < firstStreamSentiments.length; i++) {
+			// create nutrient
+			if (firstStreamSentiments[i] > .5) {
+				hash = hasher(firstStreamTweets[i]);
+				createNutrient("glucose", (hash % 600), (hash % 400), 
+					firstStreamSentiments[i], firstStreamTweets[i]);
+			}
+		};
 
-	var hash;
-	for (var i = 0; i < firstStreamSentiments.length; i++) {
-		// create nutrient
-		if (firstStreamSentiments[i] > .5) {
-			hash = hasher(firstStreamTweets[i]);
-			createNutrient("glucose", (hash % 600), (hash % 400), 
-				firstStreamSentiments[i], firstStreamTweets[i]);
-		}
-	};
+		for (var i = 0; i < secondStreamSentiments.length; i++) {
+			// create nutrient
+			if (secondStreamSentiments[i] > .5) {
+				hash = hasher(secondStreamTweets[i]);
+				createNutrient("protein", (hash % 600), (hash % 400), 
+					secondStreamSentiments[i], secondStreamTweets[i]);
+			}
+		};
 
-	for (var i = 0; i < secondStreamSentiments.length; i++) {
-		// create nutrient
-		if (secondStreamSentiments[i] > .5) {
-			hash = hasher(secondStreamTweets[i]);
-			createNutrient("protein", (hash % 600), (hash % 400), 
-				secondStreamSentiments[i], secondStreamTweets[i]);
-		}
-	};
+		for (var i = 0; i < thirdStreamSentiments.length; i++) {
+			// create nutrient
+			if (thirdStreamSentiments[i] > .5) {
+				hash = hasher(thirdStreamTweets[i]);
+				createNutrient("water", (hash % 600), (hash % 400), 
+					thirdStreamSentiments[i], thirdStreamTweets[i]);
+			}
+		};
 
-	for (var i = 0; i < thirdStreamSentiments.length; i++) {
-		// create nutrient
-		if (thirdStreamSentiments[i] > .5) {
-			hash = hasher(thirdStreamTweets[i]);
-			createNutrient("water", (hash % 600), (hash % 400), 
-				thirdStreamSentiments[i], thirdStreamTweets[i]);
-		}
-	};
-
-	// create organelles based off of tweets, randomly, or what?
-	createOrganelle("ribo",600,200);
-	createOrganelle("mito",400,400);
-	createOrganelle("vacu",200,200);
-
+		// create organelles based off of tweets, randomly, or what?
+		createOrganelle("ribo",600,200);
+		createOrganelle("mito",400,400);
+		createOrganelle("vacu",200,200);
 }
 
+};
 var cell = new Cell(100,100);
 
 var update = function(dt)
 {
+
+    populateTweets();
+
 	input(dt);
 
 	cell.update(dt);
