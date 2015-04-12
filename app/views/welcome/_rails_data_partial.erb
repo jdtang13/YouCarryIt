@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 
 <% for i in 0..(@tweet_limit-1) %>
 <%= @sentiments[i].to_s.gsub('~', '') %>~
 <%= @statuses[i].to_s.gsub('~', '') %>~
+=======
+<%#= render partial: 'posts/updateSocial', object: @user.posts.last, as: :post %>
+
+<% for i in 0..(@tweet_limit-1) %>
+<%= @sentiments[i].to_s %>, 
+<%= @statuses[i].to_s %>, 
+>>>>>>> origin/master
 <% end %>

@@ -2,6 +2,7 @@
 // change in angle in radians by which free organelle moves */
 var THETA_CHANGE = .25;
 
+
 // maximum factor of radius from which ingested organelle can be from center 
 var ORGANELLE_DISTANCE_FACTOR = (2/3);
 
@@ -41,7 +42,9 @@ function Cell (worldX,worldY)
     };
 
     this.organelles = {mitochondria: {}, ribosomes: {}, vacuoles: {}};
+
     this.allOrganelles = new Array();
+
 
     this.nutrientLevels = { 
         energyLevel: DEFAULT_NUTRIENT_LEVEL, 
@@ -54,6 +57,7 @@ function Cell (worldX,worldY)
         waterLoss: NUTRIENT_LOSS_QUANTITY};
 
     this.addOrganelle = function(organelle) {
+
         var xToOrganelle = organelle.worldX - this.worldX;
         var yToOrganelle = organelle.worldY - this.worldY;
 
@@ -72,16 +76,20 @@ function Cell (worldX,worldY)
         if (ORGANELLE_NUTRIENTS[organelle] === "energy") {
             this.nutrientLossQuantity.energyLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
             this.organelles["mitochondria"].push(organelle);
+
         }
 
         if (ORGANELLE_NUTRIENTS[organelle] === "protein") {
             this.nutrientLossQuantity.proteinLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
+
             this.organelles["ribosomes"].push(organelle);
         }
 
         if (ORGANELLE_NUTRIENTS[organelle] === "vacuole") {
             this.nutrientLossQuantity.waterLoss /=  NUTRIENT_EFFICIENCY_FACTOR;
+
             this.organelles["vacuoles"].push(organelle);
+
         }
     };
 
@@ -95,8 +103,10 @@ function Cell (worldX,worldY)
     {
         this.expendResources();
 
+
         for (var i = 0; i < this.allOrganelles.length; i++) {
             this.allOrganelles[i].update(dt);
+
         };
 
         //  The undulating of cell walls
@@ -116,6 +126,7 @@ function Cell (worldX,worldY)
     };
 	this.render = function(ctx, cameraX,cameraY)
 	{
+
         var screenX = this.worldX - cameraX + 400;
         var screenY = this.worldY - cameraY + 300;
 
@@ -126,6 +137,7 @@ function Cell (worldX,worldY)
         //  Rendering center of bacteria 
         ctx.beginPath();
         ctx.arc(screenX,screenY, this.centerRadius, 0, 2 * Math.PI, false);
+
         ctx.fillStyle = 'red';
         ctx.fill();
         ctx.closePath();
@@ -133,28 +145,12 @@ function Cell (worldX,worldY)
         //  "Wall" rendering
         for (var i = 0; i < this.cellWallX.length; i++) {
         	ctx.beginPath();
+
             ctx.arc(screenX + this.cellWallX[i], screenY + this.cellWallY[i], wallPieceRadius, 0 , 2*Math.PI, false);
+
             ctx.fillStyle = 'blue';
         	ctx.fill();  
             ctx.closePath();          
         };
 	};
-
-    
-    
-    /* Rendering handled by Oliver */
-
-    /* Make sure everything in TODO is covered in update.*/
-
-        // TODO: 
-        // If you detect nutrients, increase relevant nutrient levels.
-        // If you detect the loss of an organelle, increase relevant nutrient loss quantity.
-        // If you die (have no nutrient levels for at least one nutrient), die.
-        // If you have ripe nutrient levels for all, engage in asexual reproduction.
-        // Battle?
-
-    
-
-    // TODO: Create nutrient classes, draw nutrients, handle nutrient ingestion, and passage of nutrients to bacterium 
-
 }
